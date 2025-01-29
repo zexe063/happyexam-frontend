@@ -1,7 +1,10 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
 import "./welcome.css"
 import {  useNavigate } from "react-router-dom";
+
+import { getSubject } from "../../happyexamReducer/happyexam";
 
 
 function Welcome(){
@@ -11,15 +14,26 @@ function Welcome(){
  const navigate = useNavigate()
  const [isgreen, setIsgreen] = useState(false)
 const [selectcardIndex, setSelectcardIndex] = useState(null);
+const [SelectData, setSelectData]= useState({});
+const dispatch = useDispatch()
 
- function Selectcard(index){
+console.log(SelectData)
+
+ function Selectcard(e,index){
+setSelectData((prev)=>({...prev, [welcomeData[welcomeIndex].key]: e.target.innerHTML}))
  setSelectcardIndex(index);
 setIsgreen(true)
 
  }
 
  function handleclick(e){
-    if(welcomeIndex>0) return  navigate("/subject")
+    if(welcomeIndex>0) {
+         dispatch(getSubject(SelectData.class))
+          navigate(`/${SelectData.class}`)
+         return;
+
+        
+    }
     setwelcomeIndex((prev)=>prev+1);
 setIsgreen(false);
 setSelectcardIndex(null);
@@ -40,7 +54,7 @@ setSelectcardIndex(null);
                 {
                     welcomeData[welcomeIndex].element.map((item, index)=>{
                         return(
-                            <div key={index} className={` w-[150px] h-[150px] md:w-[200px] md:h-[200px] rounded-lg  md:rounded-xl flex justify-center items-center font-Nunito text-[20px] md:text-[25px] cursor-pointer transition-all duration-100 ease-in-out translate-y-0 active:shadow-none active:translate-y-[3px] ${selectcardIndex === index ?" bg-background_blue shadow-blue_shadow border-[2px] border-solid border-border_blue text-text_blue" : "bg-white border-[2px] border-solid border-border_grey shadow-grey_shadow " }` } onClick={()=>Selectcard(index)} id="card">{item.data}</div>
+                            <div key={index} className={` w-[150px] h-[150px] md:w-[200px] md:h-[200px] rounded-lg  md:rounded-xl flex justify-center items-center font-Nunito text-[20px] md:text-[25px] cursor-pointer transition-all duration-100 ease-in-out translate-y-0 active:shadow-none active:translate-y-[3px] ${selectcardIndex === index ?" bg-background_blue shadow-blue_shadow border-[2px] border-solid border-border_blue text-text_blue" : "bg-white border-[2px] border-solid border-border_grey shadow-grey_shadow " }` } onClick={(e)=>Selectcard(e,index)} id="card">{item.data}</div>
                         )
                     })
                 }

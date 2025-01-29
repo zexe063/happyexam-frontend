@@ -7,27 +7,30 @@ import { Provider } from 'react-redux';
 import happyexamReducer from "./happyexamReducer/happyexam"
 import { Route, RouterProvider,Routes,createBrowserRouter, createRoutesFromChildren} from 'react-router-dom';
 import Welcome from './components/welcome/welcome';
-import Subject from './components/subject/subject';
 import Dashboard from './components/dashboard/dashboard';
-import Chapter from './components/chapter/chapter';
-import Question from './components/question/question';
-import Level from './components/level/level';
-
+import Subject from './components/dashboard/subject/subject';
+import Chapter from './components/dashboard/chapter/chapter';
+import Level from './components/dashboard/level/level';
+import Question from './components/dashboard/question/question';
+import LandingPage from './landingpage/landingpage';
 
 const router = createBrowserRouter(
    createRoutesFromChildren(
     <>
-   <Route path='/' element=<App/>></Route>
+   <Route path='/' element=<App/>>
+  <Route path='/' element=<LandingPage></LandingPage>></Route>
+   </Route>
+   
    <Route path='/welcome' element=<Welcome />></Route>
-   <Route path='/subject' element=<Dashboard />> 
-   <Route path='/subject' element=<Subject></Subject>></Route>
-   <Route path='/subject/chapter' element=<Chapter></Chapter>></Route>
-   <Route path='/subject/level' element=<Level></Level>></Route>
+   <Route path='/' element=<Dashboard />> 
+   <Route path='/:classId' element=<Subject></Subject>></Route>
+   <Route path='/:classId/:subjectId' element=<Chapter></Chapter>></Route>
+   <Route path='/:classId/:subjectId/:chapterId' element=<Level></Level>></Route>
    
 
    </Route>
-   <Route path='/question' element=<Question></Question>></Route>
-   
+   <Route path='/:classId/:subjectId/:chapterId/:levelId' element=<Question></Question>></Route>
+   <Route path=' /a'></Route> 
    </>
    )
 )

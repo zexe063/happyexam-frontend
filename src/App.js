@@ -1,16 +1,20 @@
 
+import HomeHeader from "./landingpage/HomeHeader/HomeHeader";
+import Footer from "./landingpage/footer/footer";
+import { Outlet } from "react-router-dom";
 
 
-import { useSelector } from 'react-redux';
-
-import { LockIcon } from './svgicon/icon';
 function App() {
   
   return (
-    <div className=" w-full h-full flex justify-center items-center font-Nunito">
-   
-  happyexam
-   
+    <div className=" w-full h-full" >
+  <HomeHeader></HomeHeader>
+ 
+<main className=" flex-grow">
+  <Outlet></Outlet>
+</main>
+
+<Footer></Footer>
     </div>
   );
 }

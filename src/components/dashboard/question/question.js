@@ -3,16 +3,19 @@
 import { useSelector,useDispatch } from "react-redux";
 import Progress from "../progress/progress";
 import { useState } from "react";
-import { Height } from "../../happyexamReducer/happyexam";
+import { ExplanationOpenOrClose, Height } from "../../../happyexamReducer/happyexam";
 import { TbJumpRope, TbNavigationUp, TbPlayerTrackNextFilled } from "react-icons/tb";
 import { use } from "react";
 import { FaHandHolding, FaLeaf } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import correctAudio from '../../audio/correct.mp3';
-import wrongAudio  from  '../../audio/wrong.mp3'
-
+import correctAudio from "../../../audio/correct.mp3"
+import wrongAudio from "../../../audio/correct.mp3"
+import ClipLoader from "react-spinners/ClipLoader";
 import { TiTick } from "react-icons/ti";
 import { IoClose } from "react-icons/io5";
+import { FaBomb } from "react-icons/fa6";
+import { MdOutlinedFlag } from "react-icons/md";
+import Explanation from "./explanation/explanation";
 
 
 
@@ -21,6 +24,8 @@ import { IoClose } from "react-icons/io5";
 function Question(){
 
     const  Questiondata = useSelector((state)=>state.happyexam.question);
+const explanation = useSelector((state)=>state.happyexam.explanation);
+   console.log(explanation)
     const user = useSelector((state)=>state.happyexam.user);
     const dispatch = useDispatch();
     const [isblue, setIsblue] = useState(false);
@@ -31,15 +36,13 @@ function Question(){
     const [questionIndex, setQuetsionIndex] = useState(0);
     const [isAnimating,  setIsAnimating] = useState(false);
    const question =Questiondata[questionIndex];
-   
    const [correctSound] = useState((new Audio(correctAudio)))
    const [wrongSound] = useState((new Audio(wrongAudio)));
    const height = useSelector((state)=>state.happyexam.height);
+   const [popupToggle, setPopupToggle] = useState(false)
+   
   
 const navigate = useNavigate()
-  
-  
-
    function HandleSelectoption(index){
     
     if(attempt) return   null;
@@ -109,22 +112,37 @@ const navigate = useNavigate()
 
    
    
-   function renderSVG(){
-    if(!question.image)
-      dispatch(Height("200px"))
+   function renderSVG(image){
     
-    else
-      dispatch(Height("70px"))
+  
 
     return(
-      <div dangerouslySetInnerHTML={{__html: question.image}}/>)
+      <>
+     {
+      typeof image  === 'object' ? image : (<div dangerouslySetInnerHTML={{__html: image}}/>)
+     }
+    </>
+    )
    }
 
+   renderSVG()
+
+   function  handleExplanationOpen(){
+    dispatch(ExplanationOpenOrClose(true))
+   }
 
     
     return(
-        <div className=" relative select-none flex  flex-col items-center justify-between gap-2  w-full h-full overflow-hidden">
-            <Progress  currentLength={questionIndex+1} totalLength={Questiondata.length}></Progress>
+      <>
+      {
+   !Questiondata.length ?  <div className=" w-full
+    h-full flex items-center justify-center"> <ClipLoader ></ClipLoader></div>
+      :
+
+        <div className=" relative  flex  flex-col items-center justify-between gap-2  w-full h-full overflow-hidden">
+       {explanation ?   <Explanation   data={user.language === "english" ? ({explain:question.explanation.english, solution:question.solution}) :({explain:question.explanation.hindi, solution:question.solution})}></Explanation>: null}
+
+             <Progress  currentLength={questionIndex+1} totalLength={Questiondata.length}></Progress>
 
        
             <div  className={`  relative left-0  w-full h-auto flex flex-col  items-center justify-center gap-5 transition-all duration-300 ease-out
@@ -146,7 +164,7 @@ const navigate = useNavigate()
             {/* here the image */}
 
 {
-  question.image ? renderSVG() : null
+  question.image ? renderSVG(question.image): null
 }
 
           {/* here the option */}
@@ -178,35 +196,43 @@ const navigate = useNavigate()
             </div>
 
 
-            <div className={`  relative w-full h-[200px] flex flex-col md:flex md:flex-row  transition-all duration-100  ease-in-out  ${ correct ===   null ? "border-[1px] border-solid border-border_grey" : correct ? " bg-popup_green" :" bg-popup_red" } `}>
+            <div  className={`   w-full  h-[200px] flex  flex-col justify-around  md:flex md:flex-row  transition-all duration-100  ease-in-out  ${ attempt  ?  correct  ? " bg-popup_green text-text_green" :" bg-popup_red text-text_red" : "border-[1px] border-solid border-border_grey" } `}>
             
-            {
-              correct === null ? null : correct ?
-              <div className=" flex gap-5 transition-all duration-100  ease-in-out justify-center items-center  absolute top-3 md:top-[20%] left-[10%]">
-                <div className=" bg-white w-[30px] h-[30px]   rounded-full flex justify-center items-center"><TiTick size={30} color="#d7ffb8"></TiTick></div>
-              <div className=" font-Nunito text-[25px] font-semibold text-text_green tracking-wide">Awesome !</div>
-              </div>
-              :
-              <div className=" flex gap-5  justify-center items-center  absolute top-5 md:top-[20%] left-[10%]">
-              <div className=" bg-white w-[30px] h-[30px]  rounded-full flex justify-center items-center">
-                <IoClose size={25} color="#d32f2f"></IoClose>
-              </div>
-            <div className=" font-Nunito text-[25px] text-text_red font-semibold tracking-wide">Correct Solution  : {String.fromCharCode(97+question.answer)}</div>
-            </div>
-              
-            }
-        
-            <div className={` select-none tracking-wide  absolute  top-[30%] md:top-[20%] left-[10%] md:left-[80%] w-[calc(100%-20%)] md:w-[200px] h-[50px] flex items-center justify-center gap-2 rounded-xl  font-Nunito text-[18px] font-semibold  transition-all duration-100 ease-in-out translate-y-0 active:shadow-none active:translate-y-[5px]   cursor-pointer ${attempt ? correct ?   "bg-button_green shadow-green_button_shadow text-white  border-border_green" : " bg-button_red shadow-wrong_shadow  border-[1px] border-solid  border-border_red text-white" : isgreen ?   " bg-button_green shadow-green_button_shadow text-white  border-border_green" : "bg-check_grey shadow-grey_shadow round   text-check_text_grey"}`}  onClick={HandleCheckorNext}>
-              {attempt ? questionIndex ===  Questiondata.length -1 ? "Complete" :"Next" :"Check"}
-              </div>
+            
 
+         <div className=" flex md:flex-col justify-around md:justify-center gap-2">
+          {
+            attempt ?(
+              <>
+               <div className="flex gap-2 justify-center items-center font-Nunito text-[20px] font-semibold ">
+             {correct ? <TiTick></TiTick> : <FaBomb></FaBomb>}
+              <span>{correct ? "Awesome!" :  `Correct Answer : ${String.fromCharCode(97+question.answer)}` }</span>
+             </div>
+
+            <div className=" flex justify-center items-center cursor-pointer"><MdOutlinedFlag size={20}></MdOutlinedFlag></div>
+             </>
+            ) : null
+          }                 
+         </div>
+
+         <div className=" flex justify-around items-center  gap-5">
+        {
+          attempt ? !correct ?    <div className=" flex justify-center items-center border-[2px] border-solid border-border_red rounded-xl  min-w-[150px] min-h-[50px] md:min-h-[45px] font-Nunito  font-medium text-text_red text-[20px] cursor-pointer" onClick={handleExplanationOpen}>Why</div> : null : null
+        }
+
+          <div className={`  flex justify-center items-center p-2   min-w-[150px] min-h-[50px] md:min-h-[45px] rounded-xl  translate-y-0 transition-all ease-in-out duration-100 cursor-pointer font-Nunito text-[16px] font-semibold active:translate-y-[3px]  active:shadow-none ${attempt ?  correct ? "bg-button_green  shadow-check_next_green  text-white"  : " bg-button_red shadow-check_next_red text-white" : isgreen ?  "bg-button_green    shadow-check_next_green text-white" : "  bg-check_grey shadow-grey_shadow "}`} onClick={HandleCheckorNext}>{attempt ?  questionIndex === Questiondata.length-1  ? "Complete" :  "Next" : "Check"}</div>
+         </div>
              
 
               
       
-            </div> 
+            </div>  
 
-            </div>
+
+            </div>//  parent div
+}
+            </>
+
     )
 }
 

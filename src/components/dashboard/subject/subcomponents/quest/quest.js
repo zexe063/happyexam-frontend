@@ -1,5 +1,5 @@
 
-import { yellowLockIcon } from "../../../../svgicon/icon";
+import { yellowLockIcon } from "../../../../../svgicon/icon";
 
 function Quest(){
     return(

@@ -17,6 +17,14 @@ module.exports = {
            background_grey:"#e5e5e5",
            text_grey:"#E3E3E3",
            chapter_text_grey:'#FCD6D6',
+           review_grey:"#F8F4F4",
+           review_border:"#EAD9D9",
+           path_bg:"#041326",
+           donwload_button:"#061527",
+           download_border:"#4FB6F6",
+        
+
+        
            
            
 
@@ -30,6 +38,9 @@ module.exports = {
          text_green:"#58a700",
          option_green:"rgb(165, 237, 110)",
          popup_green:"#d7ffb8",
+         explanation_green:"#57E974",
+         border_explanation_green:"#1FD043",
+         text_explanation:"#407719",
 
          wrong_red:"#ffdfe0",
          border_red:"#d32f2f",
@@ -41,23 +52,29 @@ module.exports = {
         //  blue color start
          background_blue:"#E0EEFD",
          border_blue:"#B9E1FA",
-         text_blue:"#5791CF"
+         text_blue:"#5791CF",
+         text_solution:"#0D5484",
+         step_blue:"#004FEC",
+         solution_blue:"#467FF1"
 
 
       },
 
       boxShadow:{
-        grey_shadow:"0px 5px 0px #e5e5e5",
+        grey_shadow:"0px 3px 0px #e5e5e5",
         correct_shadow:" 0 3px 0 rgba(0, 255, 0, 0.8)",
-        wrong_shadow: "0 3px 0 #d32f2f ",
+        wrong_shadow: "0 3px 0 #A92E2E",
         blue_shadow:"0 3px 0 #B9E1FA",
         level_shadow:"0px 8px 0px #C8D3CC",
-        green_button_shadow:"0px 5px 0px #52C419",
+        check_next_green:"0px 3px 0px #52C419",
+        check_next_red:"0 3px 0 #A23434"
+      
         
       },
   
       fontFamily:{
-         Nunito:["Barlow", 'serif']
+        //  Nunito:["Barlow", 'serif']
+        Nunito:["Mukta", 'serif']
 
       }
     }

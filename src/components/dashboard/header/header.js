@@ -2,7 +2,7 @@
 import { MdLeaderboard } from "react-icons/md";
 import { IoMdHome } from "react-icons/io";
 import { FaUser } from "react-icons/fa";
- import { HEPicon } from "../../svgicon/icon";
+ import { HEPicon } from "../../../svgicon/icon";
 function Header(){
     return (
         <div className=" w-full h-[70px] bg-white fixed z-50  border-[1px] border-solid border-border_grey flex  justify-between items-center">

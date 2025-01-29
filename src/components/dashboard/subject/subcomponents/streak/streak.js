@@ -1,4 +1,4 @@
-import { HEPicon } from "../../../../svgicon/icon";
+import { HEPicon } from "../../../../../svgicon/icon";
 
 
 function Streak(){
