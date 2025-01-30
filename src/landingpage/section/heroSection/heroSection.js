@@ -3,7 +3,7 @@ import { logoSectionSVG } from "./heroSvg"
 function LogoSection(){
     return (
         <div className="w-full h-[600px] md:h-[600px] flex flex-col gap-5 justify-center items-center">
-             <div><p className="  w-[250px]  h-[50px] border-[1px] border-solid border-border_grey  rounded-full flex justify-center items-center ">Indroducing happyexam</p></div> 
+             <div><p className="  w-[250px]  h-[50px] border-[2px] border-solid border-border_grey  rounded-full flex justify-center items-center ">Indroducing happyexam</p></div> 
 
              <header className=" w-full flex justify-center items-center">
          {logoSectionSVG}
