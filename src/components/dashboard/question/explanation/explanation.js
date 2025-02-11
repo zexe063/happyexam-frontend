@@ -6,7 +6,7 @@ import { ExplanationOpenOrClose } from "../../../../happyexamReducer/happyexam";
 
 function Explanation({data}){
 
-  const user = useSelector((state)=>state.happyexam.user)
+  const user = useSelector((state)=>state.auth.user)
 
   const dispatch = useDispatch();
     function handleExplanationClose(){
