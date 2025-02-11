@@ -22,6 +22,8 @@ module.exports = {
            path_bg:"#041326",
            donwload_button:"#061527",
            download_border:"#4FB6F6",
+           toggle_grey:"#EEEDED",
+           toggle_header_grey:"#E6E0E0",
         
 
         
@@ -33,48 +35,68 @@ module.exports = {
           
           progress_green:"#66E742",
           button_green:"#5AD41D",
-          correct_green:"#d7ffb8",
-         border_green:"rgba(0, 255, 0, 0.8)",
+          correct_green:"#EBFFDB",
+         border_green:"#04F204",
          text_green:"#58a700",
          option_green:"rgb(165, 237, 110)",
-         popup_green:"#d7ffb8",
+         popup_green:"#F2FEE8",
          explanation_green:"#57E974",
          border_explanation_green:"#1FD043",
          text_explanation:"#407719",
+         green_tick_rectangle:"#54CD09",
+         hero_green:"#91F8AC",
+         hero_green_border:"#08C23A",
+         here_green_text:"#0D791F",
+         level_completed_green:"10E55A",
 
-         wrong_red:"#ffdfe0",
+         wrong_red:"#FEEBE6",
          border_red:"#d32f2f",
          text_red:"#d32f2f",
-         popup_red:"#FFDFE0",
-         button_red:"#AD4848",
+         popup_red:"#FFF5D3",
+         button_red:"#FCD38D",
+         chcek_text_red:"#BB7219",
+          border_check_red:"#F7A71E",
+          red_tick_rectangle:"#F24E23",
+          
         
         
         //  blue color start
-         background_blue:"#E0EEFD",
-         border_blue:"#B9E1FA",
+         background_blue:"#EEF3FF",
+         border_blue: "#b9e1fa",
          text_blue:"#5791CF",
          text_solution:"#0D5484",
          step_blue:"#004FEC",
-         solution_blue:"#467FF1"
+         solution_blue:"#467FF1",
+         toggle_blue:"#325DEF",
+         toggle_header_blue:"#7894F2",
+         
+        //  yellow
+
+         button_yellow:"#F4D562",
+         border_yellow:"#EBB900",
 
 
       },
 
       boxShadow:{
+        button_yellow:" 0px 3px 0px #EBB900",
+        toggle_blue_shadow:"0px 2px 0px #6B8ESEE",
+        toggle_grey_shadow:"0px 2px 0px #DBD3D3",
+        setting_shadow:"0 4px 5px rgb(0 0 0 / 0.05), 0 -4px 5px rgb(0 0 0 / 0.05)",
         grey_shadow:"0px 3px 0px #e5e5e5",
-        correct_shadow:" 0 3px 0 rgba(0, 255, 0, 0.8)",
-        wrong_shadow: "0 3px 0 #A92E2E",
+        correct_shadow:" 0 4px 0 rgba(0, 255, 0, 0.8)",
+        wrong_shadow: "0 3px 0 #FEC762",
         blue_shadow:"0 3px 0 #B9E1FA",
         level_shadow:"0px 8px 0px #C8D3CC",
         check_next_green:"0px 3px 0px #52C419",
-        check_next_red:"0 3px 0 #A23434"
+        check_next_red:"0 3px 0 #FCBE4C"
       
         
       },
   
       fontFamily:{
         //  Nunito:["Barlow", 'serif']
-        Nunito:["Mukta", 'serif']
+        Nunito:["Plus Jakarta Sans", 'serif']
 
       }
     }

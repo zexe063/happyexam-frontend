@@ -14,7 +14,7 @@ function ReviewSection(){
                     reviewdata?.map((item)=>{
                         return(
                            
-                            <div className=" w-[150px]  md:w-[250px]   p-4 bg-review_grey border-[2px] border-solid border-review_border rounded-xl flex flex-col items-center ">
+                            <div key={item.id} className=" w-[150px]  md:w-[250px]   p-4 bg-review_grey border-[2px] border-solid border-review_border rounded-xl flex flex-col items-center ">
                              <div className=" flex items-center gap-2 ">
                                 <FaRegUserCircle></FaRegUserCircle>
                                 <div className=" text-[10px] md:text-[15px] font-medium ">{item.name}</div>

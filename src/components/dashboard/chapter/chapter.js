@@ -1,47 +1,85 @@
+ import { useLocation, useNavigate,useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-// import { getLevel } from "../../../happyexamReducer/happyexam";
-import { getLevel } from "../../../happyexamReducer/happyexam";
+import { getChapter, getLevel } from "../../../happyexamReducer/happyexam";
+import ClipLoader from "react-spinners/ClipLoader";
+import Error from "../../error/error";
+import React, { useEffect, useRef } from "react";
 
 function Chapter(){
 
     const chapter = useSelector((state)=>state.happyexam.chapter);
-    const user = useSelector((state)=>state.happyexam.user);
+    const Loading = useSelector((state) => state.happyexam.Loading);
+    const user = useSelector((state)=>state.auth.user);
     const navigate =useNavigate()
     const dispatch = useDispatch()
+    const location =  useLocation()
+    const mounted = useRef(false)
     const params = useParams();
+    if(!user.id){
+        navigate("/")
+       } 
+    useEffect(()=>{
+        if(!mounted.current && !location?.state?.isClick){
+          dispatch(getChapter(params))
+          mounted.current = true;
+        }
+    },[])
 
     function navigateLevel(chapterId){
         dispatch(getLevel({classId:params.classId, subjectId:params.subjectId,chapterId:chapterId}))
- navigate(`/${params.classId}/${params.subjectId}/${chapterId}`)
+ navigate(`/${params.classId}/${params.subjectId}/${chapterId}`, {state:{isClick:true}})
 
-  return;
+
     }
 
+    
+    function renderSVG(SVGcode){
+   
+        return(
+            <>
+            {
+              typeof SVGcode === "string" ? (<div dangerouslySetInnerHTML={{__html:SVGcode}}></div>) :  null
+            }
+            
+              </>
+        )
+     }
     return(
-        <div className=" relative top-[100px] w-full h-full flex flex-col justify-center items-center gap-16">
+        <>
+
+        { Loading ?     (<div className="w-full
+    h-screen flex items-center justify-center"> <ClipLoader></ClipLoader></div>) : chapter?.length === 0 ?
+    <Error></Error>
+
+        :<div className=" relative top-[50px] w-full h-full flex flex-shrink flex-col justify-center items-center gap-16">
             <div className="  flex flex-col font-Nunito  font-semibold">
            <div className=" text-[40px] tracking-wide">Chapter Path</div>
            <div className=" text-text_grey tracking-wide">Happy to Happy Complete Chapter</div>
             </div>
 
-            <div className="  grid  gap-10 md:gap-[50px] justify-center items-center  grid-rows-2  grid-cols-2 md:grid-rows-2 md:grid-cols-5">
+            <div className=" px-2 grid  gap-10 md:gap-[50px] justify-center items-center  grid-rows-2  grid-cols-2 md:grid-rows-2 md:grid-cols-5">
                 {
  chapter?.map((item, index)=>{
     return(
-        <div className=" flex  gap-[10px] flex-col justify-center">
+        <div key={item._id} className=" flex  gap-[10px] flex-col justify-center">
+
             <div className=" font-Nunito text-text_grey ml-1">chap-{index+1}</div>
         <div key={index} className=" select-none flex justify-center  items-center  w-[150px] h-[150px] md:w-[200px] md:h-[200px] bg-white border-[2px] border-solid border-border_grey  rounded-xl shadow-grey_shadow active:shadow-none active:translate-y-[5px] transition-all duration-100 ease-in-out cursor-pointer font-Nunito text-[12px] md:text-[15px] " onClick={()=>navigateLevel(item.chapter_name.english)}> 
-    {item.image ? item.image : "image  not found"}
+        
+    {item?.chapter_image ? renderSVG(item.chapter_image) : "image  not found"}
+   
         </div>
 
-       <div className="  flex justify-center items-center font-Nunito tracking-wide text-[12px] md:text-[15px]  w-[120px]">  {user.language ==="english" ?  item.chapter_name.english : item.chapter_name.hindi}</div>
+       <div className=" flex-shrink px-1 font-Nunito font-medium tracking-wide text-[12px] md:text-[15px] w-[200px]">  {user.language ==="english" ?  item.chapter_name.english : item.chapter_name.hindi}</div>
         </div>
     )
  })
                 }
             </div>
         </div>
+       
+       }
+        </>
     )
 }
 

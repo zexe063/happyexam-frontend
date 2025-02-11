@@ -3,7 +3,7 @@ import { yellowLockIcon } from "../../../../../svgicon/icon";
 
 function Quest(){
     return(
-    <div className=" w-[300px] h-[100px] border-[2px] border-solid border-border_grey rounded-xl flex  items-center  gap-4 cursor-pointer pl-5">
+    <div className=" relative w-[300px] h-[100px] border-[2px] border-solid border-border_grey rounded-xl flex  items-center  gap-4 cursor-pointer pl-5">
 
         <div className="">
         {yellowLockIcon}
