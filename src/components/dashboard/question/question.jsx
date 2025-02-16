@@ -7,7 +7,7 @@ import { ExplanationOpenOrClose, getQuestion, ToggleReport } from "../../../happ
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import correctAudio from "../../../audio/correct.mp3"
 import wrongAudio from "../../../audio/correct.mp3"
-import ClipLoader from "react-spinners/ClipLoader";
+import LottieLoading from "../../../loading/loading";
 import { TiTick } from "react-icons/ti";
 import { IoClose } from "react-icons/io5";
 import { MdOutlinedFlag } from "react-icons/md";
@@ -21,6 +21,7 @@ import ReportQuestion from "./ReportQuestion/ReportQuestion";
 import { useRef } from "react";
 import { questionAnalysis } from "../../../happyexamReducer/happyexam";
 import { increaseHappyPoints } from "../../../happyexamReducer/auth";
+import Loading from "../../../loading/loading";
 
 
 
@@ -148,7 +149,7 @@ function Question(){
       
     { Loading ? 
     (<div className=" w-full
-    h-full flex items-center justify-center"> <ClipLoader ></ClipLoader></div>)
+    h-full flex items-center justify-center"><LottieLoading></LottieLoading></div>)
 
     :Questiondata?.length  === 0 ? (<Error></Error>)
 

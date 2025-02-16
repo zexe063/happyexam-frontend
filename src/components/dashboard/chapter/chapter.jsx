@@ -1,7 +1,7 @@
  import { useLocation, useNavigate,useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getChapter, getLevel } from "../../../happyexamReducer/happyexam";
-import ClipLoader from "react-spinners/ClipLoader";
+import LottieLoading from "../../../loading/loading";
 import Error from "../../error/error";
 import React, { useEffect, useRef } from "react";
 
@@ -48,7 +48,7 @@ function Chapter(){
         <>
 
         { Loading ?     (<div className="w-full
-    h-screen flex items-center justify-center"> <ClipLoader></ClipLoader></div>) : chapter?.length === 0 ?
+    h-screen flex items-center justify-center"><LottieLoading></LottieLoading></div>) : chapter?.length === 0 ?
     <Error></Error>
 
         :<div className=" relative top-[50px] w-full h-full flex flex-shrink flex-col justify-center items-center gap-16">

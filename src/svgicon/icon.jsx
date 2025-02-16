@@ -68,9 +68,20 @@ export const LeftwingIcon = <svg width="23" height="52" viewBox="0 0 86 205" fil
 
 
 
-export const HEPicon = <svg width="15" height="35" viewBox="0 0 35 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M20.3226 21.9512L28.2258 0H13.5484L0 31.7073H13.5484V50L35 21.9512H20.3226Z" fill="#E5E5E5"/>
+export const HEPicon = <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1 1H7.5C8.05228 1 8.5 1.44772 8.5 2V12.5C8.5 13.0523 8.94772 13.5 9.5 13.5H15.5M15.5 1V7C15.5 7.55228 15.0523 8 14.5 8H2C1.44772 8 1 8.44772 1 9V14.5" stroke="url(#paint0_linear_473_14)" stroke-width="2"/>
+<defs>
+<linearGradient id="paint0_linear_473_14" x1="8.25" y1="1" x2="8.25" y2="14.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="#6BCDF8"/>
+<stop offset="0.5" stop-color="#45AAE1"/>
+<stop offset="1" stop-color="#6BCDF8"/>
+</linearGradient>
+</defs>
 </svg>
+
+
+
+
 
 
  export const yellowLockIcon = <svg width="58" height="58" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -102,6 +113,10 @@ export const LevelCompletedLogo = <svg width="369" height="157" viewBox="0 0 369
 
 export const FaCheck =({colorValue})=>( <svg width="10" height="10" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M11.9966 0.251862C11.767 0.124247 11.5145 0.0431153 11.2535 0.0130994C10.9925 -0.0169166 10.7282 0.00477163 10.4756 0.0769255C10.223 0.149079 9.98714 0.270285 9.78141 0.43362C9.57567 0.596955 9.40413 0.79922 9.27658 1.02886L5.56358 7.71086L3.43858 5.58586C3.25408 5.39484 3.03339 5.24248 2.78939 5.13766C2.54538 5.03284 2.28294 4.97767 2.01738 4.97536C1.75182 4.97305 1.48846 5.02366 1.24267 5.12422C0.996876 5.22478 0.773572 5.37329 0.585787 5.56107C0.398001 5.74886 0.249495 5.97216 0.148933 6.21795C0.0483713 6.46375 -0.00223212 6.72711 7.55134e-05 6.99266C0.00238315 7.25822 0.0575557 7.52066 0.162374 7.76467C0.267192 8.00868 0.419556 8.22937 0.610576 8.41386L4.61058 12.4139C4.98858 12.7929 5.49858 13.0009 6.02458 13.0009L6.30158 12.9809C6.60813 12.938 6.90054 12.8245 7.1558 12.6494C7.41105 12.4744 7.62219 12.2424 7.77258 11.9719L12.7726 2.97186C12.9002 2.74231 12.9814 2.48987 13.0115 2.22894C13.0416 1.96801 13.02 1.70372 12.9479 1.45114C12.8759 1.19856 12.7548 0.96265 12.5915 0.756877C12.4283 0.551104 12.2261 0.3795 11.9966 0.251862Z" fill={colorValue}/>
+</svg>)
+
+export const MdHome = ()=>(<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-5">
+<path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
 </svg>)
 
 export const StreakFire = <svg  className=" w-[25px] h-[25px] md:w-[40px] md:h-[40px]" viewBox="0 0 35 43" fill="none" xmlns="http://www.w3.org/2000/svg">

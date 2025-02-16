@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { LockIcon, LeftwingIcon, RightwingIcon } from "../../../svgicon/icon"
-import ClipLoader from "react-spinners/ClipLoader";
+import LottieLoading from "../../../loading/loading";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getLevel, getQuestion } from "../../../happyexamReducer/happyexam";
@@ -47,8 +47,7 @@ function Level() {
        <>
         {
             Loading ? (<div className=" relative w-full  h-screen
-                flex items-center justify-center"> <ClipLoader ></ClipLoader></div>): level?.length === 0  ? (<Error></Error>)
-                 
+                flex items-center justify-center"><LottieLoading></LottieLoading> </div>)
                 :<div className="   relative top-[100px] flex flex-col justify-center items-center">
                     <div></div>
 

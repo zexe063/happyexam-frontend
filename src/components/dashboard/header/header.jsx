@@ -1,4 +1,5 @@
-import { MdHome, MdLeaderboard } from "react-icons/md";
+import {MdHeadphones, MdLeaderboard } from "react-icons/md";
+import { MdHome } from "../../../svgicon/icon";
 import { LuMenu } from "react-icons/lu";
  import { HEPicon } from "../../../svgicon/icon";
 import Setting from "../Setting/setting";
@@ -17,15 +18,14 @@ function Header(){
 
            <div className=" flex justify-center items-center gap-4 md:gap-10 pl-5 md:pl-[200px]">
 
-            <div className=" flex justify-center items-center gap-2">
-            <div className=" hidden md:block"><MdHome></MdHome></div>
-            <div className=" font-Nunito text-[15px] md:text-[20px] font-semibold underline decoration-1" >Home</div>
+            <div className=" flex justify-center items-center gap-3 p-5">
+            <div className=" hidden md:block"><MdHome /></div>
+            <div className="  relative font-Nunito text-[16px] font-medium after:content-['']  after:absolute after:left-[-5px]  after:bottom-[-22px] after:w-[60px]  after:h-[3px] after:bg-black " >Home</div>
+
             </div>
               
-            <div className=" flex justify-center items-center gap-2">
-            <div className=" hidden md:block"><MdLeaderboard></MdLeaderboard></div>
-            <div className=" font-Nunito text-[15px] md:text-[20px] font-semibold">Rank</div>
-            </div>
+            
+            
               
            </div>
       

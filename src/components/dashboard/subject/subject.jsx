@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useRef } from "react";
 import Quest from "./subcomponents/quest/quest";
 import Streak from "./subcomponents/streak/streak";
-import ClipLoader from "react-spinners/ClipLoader";
+
  import { getChapter, getSubject } from "../../../happyexamReducer/happyexam";
  import Error from "../../error/error";
   import {useLocation, useNavigate, useParams} from 'react-router-dom'
@@ -11,6 +11,8 @@ import ClipLoader from "react-spinners/ClipLoader";
   import 'swiper/css/effect-cards';
   import {Swiper, SwiperSlide} from "swiper/react"
   import {EffectCards} from "swiper/modules"
+  import LottieLoading from "../../../loading/loading";
+
 
 function Subject(){
   const user = useSelector((state)=>state.auth.user)
@@ -68,8 +70,9 @@ function Subject(){
     return(
        <>  
        {
-          Loading ?     (<div className="w-full 
-            h-screen flex items-center justify-center"> <ClipLoader ></ClipLoader></div>) :   
+          Loading ? (<div className="w-full 
+            h-screen flex items-center justify-center"><LottieLoading></LottieLoading></div>)
+        :   
             subject?.length ===0 ? <Error></Error>
 
      :  <div className=" relative top-5 md:right-[100px] overflow-hidden  w-full  h-[calc(100vh-80px)] flex flex-col md:flex-row  justify-around gap-5 items-center">
@@ -90,7 +93,7 @@ modules={[EffectCards]}
 
  }}
  speed={200}
- className="   mySwiper relative right-3 w-[calc(100vw-15%)] md:w-[550px] h-[350px] md:h-[600px]">
+ className="   mySwiper relative right-3 w-[calc(100vw-15%)] md:w-[550px] h-[350px] md:h-[550px]">
 {
        subject?.map((item,index)=>{
            return(
