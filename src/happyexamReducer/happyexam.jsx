@@ -134,7 +134,7 @@ const happyexam = createSlice({
              })
 
               builder.addCase(getChapter.rejected,(state,action)=>{
-                state.chapter = []
+                
                 state.Loading = false
               })
 
