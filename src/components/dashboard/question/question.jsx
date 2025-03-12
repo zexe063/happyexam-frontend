@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { ExplanationOpenOrClose, getQuestion, ToggleReport } from "../../../happyexamReducer/happyexam";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import correctAudio from "../../../audio/correct.mp3"
-import wrongAudio from "../../../audio/correct.mp3"
+import wrongAudio from "../../../audio/wrong.mp3"
 import LottieLoading from "../../../loading/loading";
 import { TiTick } from "react-icons/ti";
 import { IoClose } from "react-icons/io5";

@@ -130,14 +130,16 @@ module.exports = {
       },
   
       fontFamily:{
-        Nunito:["Plus Jakarta Sans", 'serif']
+        Nunito:["Geist", "sans-serif"],
+        everett: ['TWK Everett', 'sans-serif']
 
       },
       backgroundImage:{
         "Maths" :  `linear-gradient(to top, rgba(213, 226, 252, 0.7) 0%, white 100%), url("/Vector1.png")`,
         'Physics': 'linear-gradient(to top, rgba(255, 230, 162, 0.7) 0%, white 100%), url("/Vector2.png")',
         "Chemistry" :  'linear-gradient(to top, rgba(213, 226, 252, 0.7) 0%, white 100%), url("/Vector3.png")',
-        "Biology" :  'linear-gradient(to top, rgba(167, 255, 171, 0.7) 0%, white 100%), url("/Vector4.png")'
+        "Biology" :  'linear-gradient(to top, rgba(167, 255, 171, 0.7) 0%, white 100%), url("/Vector4.png")',
+        "clip" : 'url("/clip.png")'
       },
      
      
