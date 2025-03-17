@@ -16,8 +16,8 @@ function LogoSection(){
     }
     return (
         <div className="  relative w-screen bg-white bg-opacity-50 h-[600px] md:h-[600px] flex flex-col md:flex-row  gap-[150px]  md:gap-5 font-Nunito">
-            <div className=" text-center md:w-[50%] h-full text-[4rem] md:text-[7rem] font-everett  leading-none">unveiled<br />HappyExam</div>
-            <div className=" md:w-[50%] h-full bg-clip bg-contain bg-repeat flex justify-center items-center">{logoSectionSVG}</div>
+            <div className="relative text-center md:w-[50%]  text-[4rem] md:text-[7rem] font-everett  leading-none">unveiled<br /><span className="text-[#205039]">HappyExam</span></div>
+            <div className=" md:w-[50%] h-full bg-clip  bg-contain bg-repeat flex justify-center items-center">{logoSectionSVG}</div>
 
             
             

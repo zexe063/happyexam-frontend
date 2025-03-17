@@ -65,13 +65,13 @@ function Level() {
                                         left: (index + 1) % 2 === 0 ? `${startX + 0}px` : `${startX - 100}px`
                                     }} onClick={() => navigatQuestion(item.level_number)} >
 
-                                        <div>{LeftwingIcon}</div>
-                                        <div className={`   w-[80px] h-[80px] rounded-full flex flex-col gap-1 justify-center items-center  bg-level_grey shadow-level_shadow active:shadow-none  active:translate-y-[8px] transition-all duration-100 ease-in-out`} id="level" >
+                                       
+                                        <div className=" flex justify-center items-center flex-col">
                                             <div>  {LockIcon}</div>
                                             <div className=" font-Nunito text-[10px] text-check_text_grey">Level {item.level_number}</div>
                                         </div>
 
-                                        <div>{RightwingIcon}</div>
+                                      
 
                                     </div>
                                 )
