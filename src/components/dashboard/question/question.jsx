@@ -203,7 +203,7 @@ function Question(){
                  key={index} className={` relative w-[300px]    min-h-[60px]  p-2 rounded-lg flex  gap-5 items-center cursor-pointer  transition-all duration-100 ease-in-out ${isblue  === index ? "bg-background_blue   border-border_blue border-[2px] border-solid "  : correctIndex  ===  index ? correct ? "bg-correct_green  border-border_green border-[2px] border-solid ": " bg-wrong_red  border-[2px] border-solid  border-border_red " :"bg-white border-[2px] border-solid border-border_grey "} `} onClick={()=>HandleSelectoption(index)}>
                    
                    {
-                    isblue === index ? <ArrowSVG color="#88a4f9" bgColor="#eef3ff"></ArrowSVG> :  correctIndex === index ?  correct ? <ArrowSVG color="#04F204" bgColor="#EBFFDB"></ArrowSVG> : <ArrowSVG color="#d32f2f" bgColor="#FEEBE6"></ArrowSVG> : null
+                    isblue === index ? <ArrowSVG color="#b9e1fa" bgColor="#eef3ff"></ArrowSVG> :  correctIndex === index ?  correct ? <ArrowSVG color="#04F204" bgColor="#EBFFDB"></ArrowSVG> : <ArrowSVG color="#d32f2f" bgColor="#FEEBE6"></ArrowSVG> : null
                    }
 
                   {

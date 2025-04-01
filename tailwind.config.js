@@ -20,8 +20,8 @@ module.exports = {
           option_background_grey:"#FEEDED",
           option_text_grey:"#DFBBBB",
           linear_grey:"#FFF0F0",
-           border_grey:"#e8e8e8",
-           background_grey:"#e5e5e5",
+           border_grey:"#e5e5e5",
+           background_grey:"#e8e8e8",
            text_grey:"#E3E3E3",
            chapter_text_grey:'#FCD6D6',
            review_grey:"#F8F4F4",
@@ -85,6 +85,9 @@ module.exports = {
          check_background_yellow:"#FEB200",
          check_background_grey:"#8B7575",
   
+
+        //  gradeints
+
          
 
       
@@ -134,12 +137,20 @@ module.exports = {
         everett: ['TWK Everett', 'sans-serif']
 
       },
+      
       backgroundImage:{
         "Maths" :  `linear-gradient(to top, rgba(213, 226, 252, 0.7) 0%, white 100%), url("/Vector1.png")`,
         'Physics': 'linear-gradient(to top, rgba(255, 230, 162, 0.7) 0%, white 100%), url("/Vector2.png")',
         "Chemistry" :  'linear-gradient(to top, rgba(213, 226, 252, 0.7) 0%, white 100%), url("/Vector3.png")',
         "Biology" :  'linear-gradient(to top, rgba(167, 255, 171, 0.7) 0%, white 100%), url("/Vector4.png")',
         "clip" : 'url("/clip.png")',
+         "header":`linear-gradient(to top, white,transparent), url("header.svg")`,
+         
+        "subject_gradeint": "linear-gradient(to top, #FFF7EE, #FFFFFF)",
+        "chapter_gradeint": "linear-gradient(to top, #CCDEFF, #FFFFFF)",
+        "motivated_gradeint":  "linear-gradient(to top, #FDFECD, #FFFFFF)",
+        "payment_gradeint":  "linear-gradient(to top, #B5FCBD, #FFFFFF)",
+        "Testimonials" : "url('/Testimonials.png')"
         
       },
      

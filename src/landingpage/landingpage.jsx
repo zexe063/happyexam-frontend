@@ -1,21 +1,23 @@
 import LogoSection from "./section/heroSection/heroSection";
+import MidHeroSection from "./section/midHeroSection/midHeroSection";
 import SubjectSection from "./section/subjectSection/subjectSection";
 import ChapterSection from "./section/chapterSection/chapterSection";
-import LevelSection from "./section/levelSection/levelsection";
-import QuestionSection from "./section/questionSection/questionSection";
-import ReviewSection from "./section/reviewSection/reviewSection";
+import MotivateSection from "./section/motivateSection/motivatesection";
+import PaymentSection from "./section/paymentSection/paymentsection";
+import TestimonialsSection from "./section/TestimonialsSection/TestimonialsSection";
 import PathSection from "./section/pathSection/pathSection";
+
 
 function LandingPage(){
     return(
-        <div className=" w-full h-full flex flex-col gap-[100px] relative top-[100px] overflow-hidden">
+        <div className=" w-full h-full flex flex-col   overflow-hidden">
        <LogoSection></LogoSection>
+       <MidHeroSection></MidHeroSection>
        <SubjectSection></SubjectSection>
        <ChapterSection></ChapterSection>
-       <LevelSection></LevelSection>
-       <QuestionSection></QuestionSection>
-       
-      <ReviewSection></ReviewSection>
+       <MotivateSection></MotivateSection>
+       <PaymentSection></PaymentSection>
+   
       <PathSection></PathSection>
         </div>
     )

@@ -169,7 +169,7 @@ const happyexam = createSlice({
                builder.addCase(getQuestion.rejected, (state,action)=>{
                  state.Loading = false;
                  state.question = []
-              
+                
                })
 
               //  here ReportQuetsion

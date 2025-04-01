@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux"
-import { logoSectionSVG } from "./heroSvg"
 import { Link, useNavigate } from "react-router-dom"
 
 function LogoSection(){
@@ -15,11 +14,11 @@ function LogoSection(){
    }
     }
     return (
-        <div className="  relative w-screen bg-white bg-opacity-50 h-[600px] md:h-[600px] flex flex-col md:flex-row  gap-[150px]  md:gap-5 font-Nunito">
-            <div className="relative text-center md:w-[50%]  text-[4rem] md:text-[7rem] font-everett  leading-none">unveiled<br /><span className="text-[#205039]">HappyExam</span></div>
-            <div className=" md:w-[50%] h-full bg-clip  bg-contain bg-repeat flex justify-center items-center">{logoSectionSVG}</div>
+        <div className="   relative top-4 w-screen bg-header bg-cover bg-center md:bg-left  h-[700px]  flex flex-col  gap-[45px] justify-center items-center font-Nunito">
+       
+       <h1  className="  text-[50px] md:text-[80px] font-bold font-Nunito text-black leading-[24px]"><span className=" flex justify-center items-center text-lg text-[#FF4800]">Indroduced Happyexam</span><br/>Happy at Exam</h1>
+       <button className=" px-[60px] py-[12px]  bg-button_green shadow-check_next_green flex justify-center items-center text-white font-Nunito font-medium rounded-full  border-none" onClick={getStartHandle}>Start for free</button>
 
-            
             
     
         </div>

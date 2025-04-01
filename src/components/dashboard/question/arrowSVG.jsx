@@ -5,9 +5,27 @@ function ArrowSVG({color, bgColor}){
    
 
     return(
-        <div className=" absolute  top-[30%] left-[-14px]  transition-all duration-100 ease-in-out">
+        <div className="relative">
             
-            <svg width="20" height='20' viewBox="0 0 17 35"   focusable="false" class="chakra-icon speech-bubble-tail css-onkibi"><path d="M17.0121 0.890625L4.74655 12.941C3.2299 14.3967 2.47157 15.1245 2.18744 15.9638C1.93752 16.7021 1.93752 17.4973 2.18744 18.2356C2.47157 19.0749 3.2299 19.8027 4.74655 21.2584L17.0121 33.1759V0.890625Z" fill={bgColor} strokeWidth="2"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M15 0.0429688L3.6561 11.3869C1.67601 13.367 0.685972 14.357 0.31503 15.4986C-0.01126 16.5029 -0.01126 17.5846 0.31503 18.5888C0.685972 19.7304 1.67601 20.7205 3.6561 22.7006L15 34.0445V31.223L4.74655 21.2582C3.22995 19.8026 2.47156 19.0747 2.18744 18.2354C1.93752 17.4971 1.93752 16.7019 2.18744 15.9636C2.47157 15.1243 3.2299 14.3965 4.74655 12.9408L15 2.86562V0.0429688Z" strokeWidth="2" fill={color}></path></svg>
+            
+<div className="  absolute top-[-12px]  left-[-14.8px] rotate-180  transition-all duration-100 ease-in-out">
+    <svg width="20" height="25" viewBox="0 0 20 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 3L8.76143 13.8242C7.74273 15.1317 7.23337 15.7855 7.04253 16.5394C6.87466 17.2025 6.87466 17.9168 7.04253 18.58C7.23337 19.3339 7.74273 19.9876 8.76143 21.2952L17 32V3Z" fill="white"/>
+<path d="M16.0833 3L7.94134 15.1121C6.7745 16.8479 6.81135 19.1265 8.03371 20.8237L16.0833 32" stroke={color} stroke-width="2.5"/>
+</svg>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
         </div>
     )
 }

@@ -13,7 +13,7 @@ function PathSection(){
                     <p className=" font-Nunito font-medium text-[16px]">10000+ student are Happy at Exam</p>
                 </div>
                 
-                <div className=" w-[250px] h-[60px]  flex justify-center items-center text-white font-semibold sm:text-[15px] md:text-[20px] rounded-full bg-button_green shadow-green_button_shadow">Get Started</div>
+                <button className=" w-[200px] h-[50px]  flex justify-center items-center text-white font-semibold sm:text-[15px] md:text-[20px] rounded-full bg-button_green shadow-check_next_green">Get Started</button>
 
                 <div className=" flex  gap-5">
                   
