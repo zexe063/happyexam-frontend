@@ -144,7 +144,7 @@ module.exports = {
         "Chemistry" :  'linear-gradient(to top, rgba(213, 226, 252, 0.7) 0%, white 100%), url("/Vector3.png")',
         "Biology" :  'linear-gradient(to top, rgba(167, 255, 171, 0.7) 0%, white 100%), url("/Vector4.png")',
         "clip" : 'url("/clip.png")',
-         "header":`linear-gradient(to top, white,transparent), url("header.svg")`,
+         "header":`linear-gradient(to top, white,transparent), url("/header.svg")`,
          
         "subject_gradeint": "linear-gradient(to top, #FFF7EE, #FFFFFF)",
         "chapter_gradeint": "linear-gradient(to top, #CCDEFF, #FFFFFF)",
