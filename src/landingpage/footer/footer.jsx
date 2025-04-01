@@ -5,17 +5,17 @@ import { TiHeart } from "react-icons/ti";
 
 function Footer(){
     return(
-        <footer className="   w-full   m-auto h-[600px] overflow-hidden">
+        <footer className="   w-full bg-footer m-auto h-[600px] text-footer_text overflow-hidden">
         
 
-                <div className=" w-full h-full flex flex-col  justify-around  ml-5">
+                <div className=" w-full h-full flex flex-col   justify-around  ml-5">
                 <div className="font-Nunito font-semibold text-[20px]">
                 HappyExam
             </div>
 
             <div className="  flex  flex-col md:flex-row   md:justify-end   md:mr-[300px] gap-[60px] font-Nunito ">
                 <div >
-                    <div className=" text-[18px] text-black font-semibold font-Nunito leading-tight">Product</div>
+                    <div className=" text-[18px]  font-semibold font-Nunito leading-tight ">Product</div>
                 <ul className="flex gap-[3px] flex-col">
                     <li>Subject</li>
                     <li>Chapter</li>

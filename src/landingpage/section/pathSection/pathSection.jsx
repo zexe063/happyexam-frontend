@@ -2,7 +2,20 @@
 
 import { IoLogoGooglePlaystore } from "react-icons/io5";
 import { RiAppleLine } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 function PathSection(){
+
+    const user =  useSelector((state)=>state.auth.user);
+    const navigate =  useNavigate();
+    function getStartHandle(){
+        console.log("get start")
+   if(!user.id){
+     navigate("/welcome")
+   } else{
+    navigate(`/${user.class}`)
+   }
+    }
     return(
         <div className=" w-full h-[600px]  bg-path_bg ">
             
@@ -13,7 +26,7 @@ function PathSection(){
                     <p className=" font-Nunito font-medium text-[16px]">10000+ student are Happy at Exam</p>
                 </div>
                 
-                <button className=" w-[200px] h-[50px]  flex justify-center items-center text-white font-semibold sm:text-[15px] md:text-[20px] rounded-full bg-button_green shadow-check_next_green">Get Started</button>
+                <button className=" w-[200px] h-[50px]  flex justify-center items-center text-white font-semibold sm:text-[15px] md:text-[20px] rounded-full bg-button_green shadow-check_next_green" onClick={getStartHandle}>Get Started</button>
 
                 <div className=" flex  gap-5">
                   

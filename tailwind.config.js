@@ -55,6 +55,9 @@ module.exports = {
          hero_green_border:"#08C23A",
          here_green_text:"#0D791F",
          level_completed_green:"10E55A",
+         payment : "#05D674",
+
+        //  red color start
 
          wrong_red:"#FEEBE6",
          border_red:"#d32f2f",
@@ -64,6 +67,8 @@ module.exports = {
          chcek_text_red:"#BB7219",
           border_check_red:"#F7A71E",
           red_tick_rectangle:"#F24E23",
+          confidence:"#FF4800",
+       
           
         
         
@@ -76,6 +81,7 @@ module.exports = {
          solution_blue:"#467FF1",
          toggle_blue:"#325DEF",
          toggle_header_blue:"#7894F2",
+         solve:"#041271",
          
         //  yellow
 
@@ -84,10 +90,12 @@ module.exports = {
           streak_background:"#080f28",
          check_background_yellow:"#FEB200",
          check_background_grey:"#8B7575",
+         motivated:"#FFC300",
   
 
-        //  gradeints
-
+        // footer color
+         footer:"#F3F4F7",
+         footer_text:"#083156"
          
 
       
