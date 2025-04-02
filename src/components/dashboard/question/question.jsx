@@ -7,6 +7,7 @@ import { ExplanationOpenOrClose, getQuestion, ToggleReport } from "../../../happ
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import correctAudio from "../../../audio/correct.mp3"
 import wrongAudio from "../../../audio/wrong.mp3"
+import clickAudio from "../../../audio/click.mp3"
 import LottieLoading from "../../../loading/loading";
 import { TiTick } from "react-icons/ti";
 import { IoClose } from "react-icons/io5";
@@ -46,6 +47,7 @@ function Question(){
    const [questionAnalysisData, setQuestionAnaylsisData] = useState({correct:0, wrong:0})
    const [correctSound] = useState((new Audio(correctAudio)))
    const [wrongSound] = useState((new Audio(wrongAudio)));
+   const [clickSound] = useState((new Audio(clickAudio)))
    const mounted = useRef(false)
  const params = useParams()
  const location = useLocation()
@@ -67,6 +69,7 @@ function Question(){
     
     if(attempt) return   null;
     setIsblue(index);
+    clickSound.play()
      setIsgreen(true)
  
 
