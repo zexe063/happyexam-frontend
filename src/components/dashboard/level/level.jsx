@@ -19,7 +19,7 @@ function Level() {
     const location = useLocation()
 
     const startX = window.innerWidth / 2;
-    const startY = 150;
+    const startY = 130;
     const params = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate()
@@ -55,7 +55,7 @@ function Level() {
                     <div></div>
 
                     {/* here the level content start */}
-                    <div className=" w-full  relative h-auto flex flex-col gap-3 justify-center items-center">
+                    <div className=" w-full  relative h-auto flex flex-col  justify-center items-center">
 
                         {
                             level?.map((item, index) => {

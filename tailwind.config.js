@@ -42,8 +42,8 @@ module.exports = {
           
           progress_green:"#66E742",
           button_green:"#5AD41D",
-          correct_green:"#e8fee8",
-         border_green:"#65fc65",
+          correct_green:"#f6fffb",
+         border_green:"#04c845",
          text_green:"#58a700",
          option_green:"rgb(165, 237, 110)",
          popup_green:"#F2FEE8",
