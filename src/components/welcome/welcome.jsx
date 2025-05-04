@@ -37,6 +37,7 @@ setIsgreen(true)
 
  }
 
+
  function  userData(){
 const  value = "1234567890abcdefghijklmn0pqrstuvwxyz"
  let Id = ''
@@ -84,7 +85,7 @@ setSelectcardIndex(null);
  
 
     return(
-        <div className=" w-full h-full relative  overflow-hidden  select-none">  
+        <div className=" w-full h-full relative  overflow-hidden select-none">
 
          <div  className=" w-full h-full flex justify-center items-center flex-col  ">
             <div className=" absolute top-10 font-Nunito text-[18px] md:text-[20px] border-[2px] border-solid  border-border_explanation_green px-10 py-5 rounded-xl ">

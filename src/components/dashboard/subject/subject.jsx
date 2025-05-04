@@ -10,7 +10,7 @@ import Streak from "./subcomponents/streak/streak";
   import 'swiper/css';
   import 'swiper/css/effect-cards';
   import {Swiper, SwiperSlide} from "swiper/react"
-  import {EffectCards} from "swiper/modules"
+  import {EffectCards, Pagination} from "swiper/modules"
   import LottieLoading from "../../../loading/loading";
 
 
@@ -73,9 +73,9 @@ function Subject(){
           Loading ? (<div className="w-full 
             h-screen flex items-center justify-center"><LottieLoading></LottieLoading></div>)
         :   
-            subject?.length ===0 ? <Error></Error>
+            subject?.length ===0 ? <Error></Error>  
 
-     :  <div className=" relative top-5 md:right-[100px] overflow-hidden  w-full  h-[calc(100vh-80px)] flex flex-col md:flex-row  justify-around gap-5 items-center">
+     :  <div className=" relative top-[80px] md:right-[100px] overflow-hidden  w-full  h-[calc(100vh-80px)] flex flex-col md:flex-row  justify-around gap-5 items-center">
 
 <div className=" md:hidden" >
    <Streak />
@@ -93,7 +93,9 @@ modules={[EffectCards]}
 
  }}
  speed={200}
- className="   mySwiper relative right-3 w-[calc(100vw-15%)] md:w-[550px] h-[350px] md:h-[550px]">
+
+
+ className="   mySwiper relative left-1 w-[calc(100vw-15%)] md:w-[550px] h-[350px] md:h-[550px] ">
 {
        subject?.map((item,index)=>{
            return(

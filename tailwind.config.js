@@ -42,8 +42,8 @@ module.exports = {
           
           progress_green:"#66E742",
           button_green:"#5AD41D",
-          correct_green:"#EBFFDB",
-         border_green:"#04F204",
+          correct_green:"#e8fee8",
+         border_green:"#65fc65",
          text_green:"#58a700",
          option_green:"rgb(165, 237, 110)",
          popup_green:"#F2FEE8",
@@ -59,7 +59,7 @@ module.exports = {
 
         //  red color start
 
-         wrong_red:"#FEEBE6",
+         wrong_red:"#fff7f5",
          border_red:"#d32f2f",
          text_red:"#d32f2f",
          popup_red:"#FFF5D3",
@@ -73,8 +73,8 @@ module.exports = {
         
         
         //  blue color start
-         background_blue:"#EEF3FF",
-         border_blue: "#b9e1fa",
+         background_blue:"#F1FAFF",
+         border_blue: "#6875f9",
          text_blue:"#5791CF",
          text_solution:"#0D5484",
          step_blue:"#004FEC",
@@ -125,7 +125,7 @@ module.exports = {
         toggle_blue_shadow:"0px 2px 0px #6B8ESEE",
         toggle_grey_shadow:"0px 2px 0px #DBD3D3",
         setting_shadow:"0 4px 5px rgb(0 0 0 / 0.05), 0 -4px 5px rgb(0 0 0 / 0.05)",
-        grey_shadow:"0px 3px 0px #e5e5e5",
+        grey_shadow:"0px 4px 0px #e5e5e5",
         correct_shadow:" 0 4px 0 rgba(0, 255, 0, 0.8)",
         wrong_shadow: "0 3px 0 #FEC762",
         blue_shadow:"0 3px 0 #B9E1FA",
@@ -142,7 +142,9 @@ module.exports = {
   
       fontFamily:{
         Nunito:["Geist", "sans-serif"],
+        // Nunito:["JetBrains Mono", "monospace"],
         everett: ['TWK Everett', 'sans-serif']
+
 
       },
       

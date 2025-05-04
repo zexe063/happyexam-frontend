@@ -203,11 +203,8 @@ function Question(){
                     }
                   }}
                   animate={{scale:0.96}}
-                 key={index} className={` relative w-[300px]    min-h-[60px]  p-2 rounded-lg flex  gap-5 items-center cursor-pointer  transition-all duration-100 ease-in-out ${isblue  === index ? "bg-background_blue   border-border_blue border-[2px] border-solid "  : correctIndex  ===  index ? correct ? "bg-correct_green  border-border_green border-[2px] border-solid ": " bg-wrong_red  border-[2px] border-solid  border-border_red " :"bg-white border-[2px] border-solid border-border_grey "} `} onClick={()=>HandleSelectoption(index)}>
-                   
-                   {
-                    isblue === index ? <ArrowSVG color="#b9e1fa" bgColor="#eef3ff"></ArrowSVG> :  correctIndex === index ?  correct ? <ArrowSVG color="#04F204" bgColor="#EBFFDB"></ArrowSVG> : <ArrowSVG color="#d32f2f" bgColor="#FEEBE6"></ArrowSVG> : null
-                   }
+                 key={index} className={` relative w-[300px]    min-h-[60px]  p-2 rounded-[11px] flex  gap-5 items-center cursor-pointer  transition-all duration-100 ease-in-out ${isblue  === index ? "bg-background_blue   border-border_blue border-[2px] border-solid "  : correctIndex  ===  index ? correct ? "bg-correct_green  border-border_green border-[2px] border-solid ": " bg-wrong_red  border-[2px] border-solid  border-border_red " :"bg-white border-[2px] border-solid border-border_grey "} `} onClick={()=>HandleSelectoption(index)}>
+                  
 
                   {
                     correctIndex === index ? correct ? <div  className=" w-[15px] h-[15px] absolute top-[-5px] right-[-5px] rounded-sm bg-green_tick_rectangle"><TiTick size="15" color="white"></TiTick></div> : <div className=" w-[15px] h-[15px] absolute top-[-5px] right-[-5px] rounded-sm bg-red_tick_rectangle"><IoClose color="white" size="15" stroke="5"></IoClose></div> : null
@@ -232,7 +229,7 @@ function Question(){
             </AnimatePresence>
 
 
-            <div  className={`   w-full  h-[150px] flex  flex-col justify-evenly    md:justify-between gap-1  md:flex md:flex-row  transition-all durationfont-Nunito-100  ease-in-out  ${ attempt  ?  correct  ? " bg-popup_green text-text_green" :" bg-popup_red  text-chcek_text_red" : "border-[1px] border-solid border-border_grey" } `}>
+            <div  className={`   w-full  h-[150px] flex  flex-col justify-evenly    md:justify-between gap-1  md:flex md:flex-row  transition-all durationfont-Nunito-100  ease-in-out  ${ attempt  ?  correct  ? " bg-popup_green text-text_green" :" bg-popup_red  text-chcek_text_red" : "null" } `}>
             
             
 

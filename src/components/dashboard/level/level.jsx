@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { LockIcon, LeftwingIcon, RightwingIcon } from "../../../svgicon/icon"
+import { LockIcon, LockIconBlue} from "../../../svgicon/icon"
 import LottieLoading from "../../../loading/loading";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +9,8 @@ import Error from "../../error/error";
 
 
 function Level() {
+
+    console.log(LockIcon)
 
     const level = useSelector((state) => state.happyexam.level);
     const Loading = useSelector((state) => state.happyexam.Loading);
@@ -38,6 +40,7 @@ function Level() {
         dispatch(getQuestion({ classId: params.classId, subjectId: params.subjectId, chapterId: params.chapterId, levelId: levelId }))
         navigate(`/${params.classId}/${params.subjectId}/${params.chapterId}/${levelId}`, {state:{isClick:true}});
         return;
+        
     }
 
 
@@ -52,7 +55,7 @@ function Level() {
                     <div></div>
 
                     {/* here the level content start */}
-                    <div className=" w-full  relative h-auto flex flex-col gap-5 justify-center items-center">
+                    <div className=" w-full  relative h-auto flex flex-col gap-3 justify-center items-center">
 
                         {
                             level?.map((item, index) => {
@@ -67,9 +70,8 @@ function Level() {
 
                                        
                                         <div className=" flex justify-center items-center flex-col">
-                                            <div>  {LockIcon}</div>
-                                            <div className=" font-Nunito text-[10px] text-check_text_grey">Level {item.level_number}</div>
-                                        </div>
+                                            <div>  { index === 0  ?LockIconBlue(index+1) :  LockIcon( index+1)}</div>
+                                            </div>
 
                                       
 

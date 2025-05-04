@@ -3,6 +3,7 @@ import { FiYoutube } from "react-icons/fi";
 import { FaXTwitter } from "react-icons/fa6";
 import { TiHeart } from "react-icons/ti";
 
+
 function Footer(){
     return(
         <footer className="   w-full bg-footer m-auto h-[600px] text-footer_text overflow-hidden">

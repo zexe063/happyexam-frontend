@@ -14,7 +14,7 @@ function Header(){
     const [isVisible, setIsVisible] = useState(false)
     
     return (
-        <div className="  w-full h-[70px] bg-white  relative z-50  border-[1px] border-solid border-border_grey flex  justify-between items-center">
+        <div className=" fixed   w-full h-[70px] bg-white   z-50   border-[1px] border-solid border-border_grey flex  justify-between items-center">
 
            <div className=" flex justify-center items-center gap-4 md:gap-10 pl-5 md:pl-[200px]">
 
