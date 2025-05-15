@@ -31,8 +31,8 @@ function Header(){
       
 
       <div  className=" flex justify-center items-center gap-4 md:gap-10 md:pr-[200px]">
-<div className=" flex justify-center items-center   gap-2 border-[2px] border-solid border-border_grey  w-[80px] h-[40px] rounded-full ">
-    <div className=" font-Nunito text-[18px]"><Motion value={user.HappyPoints}></Motion></div>
+<div className=" flex justify-center items-center   gap-2 border-[2px] border-solid border-border_grey  w-[100px] h-[40px] rounded-full ">
+    <div className=" font-Nunito text-[15px]"><Motion value={user.HappyPoints}></Motion></div>
     <div>{HEPicon}</div>
 </div> 
 <div  className=" relative flex flex-col justify-center items-center gap-1 pr-5 cursor-pointer">
