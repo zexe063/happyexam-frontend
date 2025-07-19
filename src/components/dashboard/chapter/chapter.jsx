@@ -38,17 +38,7 @@ function Chapter(){
     }
 
     
-    function renderSVG(SVGcode){
    
-        return(
-            <>
-            {
-              typeof SVGcode === "string" ? (<div dangerouslySetInnerHTML={{__html:SVGcode}}></div>) :  null
-            }
-            
-              </>
-        )
-     }
     return(
         
         <>
@@ -76,7 +66,7 @@ function Chapter(){
                         <div key={item._id} className="flex flex-col justify-start items-center h-[230px] md:h-[260px]">
                             <div className="font-Nunito text-text_grey ml-1">chap-{index+1}</div>
                             <div key={index} className="select-none flex justify-center items-center w-[150px] h-[150px] md:w-[180px] md:h-[175px] bg-white border-[2px] border-solid border-border_grey rounded-[20px] shadow-grey_shadow cursor-pointer font-Nunito text-[12px] md:text-[15px]" onClick={()=>navigateLevel(item.chapter_name.english)}> 
-                                {item?.chapter_image ? renderSVG(item.chapter_image) : "image not found"}
+                               {item?.chapter_image ? <img  src={item.chapter_image} style={{width:"100px", height:"100px"}}></img> : "image not found"}
                             </div>
                             <div className="w-[150px] md:w-[180px] h-[40px] md:h-[50px] flex items-start justify-center text-center font-Nunito font-medium tracking-wide text-[12px] md:text-[15px] py-8">
                                 {user.language ==="english" ? item.chapter_name.english : item.chapter_name.hindi}
