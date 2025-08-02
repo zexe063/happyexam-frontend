@@ -11,5 +11,5 @@ export default function Motion( {value}) {
         return () => controls.stop()
     }, [])
 
-    return <motion.pre className=" font-Nunito font-bold">{rounded}</motion.pre>
+    return <motion.pre className=" inline font-Space_Grotesk font-extrabold ">{rounded}</motion.pre>
 }

@@ -6,12 +6,9 @@ import { Toaster } from "react-hot-toast";
 
 function Dashboard(){
     return(
-        <div className=" relative w-full h-full">
+        <div className=" relative w-full h-[100vh]">
             <Header></Header>
-         <Toaster></Toaster>
-            <div  className=" relative">
             <Outlet></Outlet>
-            </div>
         </div>
     )
 }

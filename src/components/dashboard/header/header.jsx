@@ -1,49 +1,65 @@
 import {MdHeadphones, MdLeaderboard } from "react-icons/md";
-import { MdHome } from "../../../svgicon/icon";
+import {MdHome, FaGraduationCap, ExamKey, Streak } from "../../../svgicon/icon";
 import { LuMenu } from "react-icons/lu";
  import { HEPicon } from "../../../svgicon/icon";
 import Setting from "../Setting/setting";
 import { useState } from "react";
  import { MdClose } from "react-icons/md";
-import { useSelector } from "react-redux";
-import { use } from "react";
-import Motion from "../question/Motion";
+import { FiHome } from "react-icons/fi"
+import { useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom";
+
 
 function Header(){
+
+  const navigate = useNavigate()
      const user = useSelector((state)=>state.auth.user)
-    const [isVisible, setIsVisible] = useState(false)
+
     
     return (
-        <div className=" fixed   w-full h-[70px] bg-white   z-50   border-[1px] border-solid border-border_grey flex  justify-between items-center">
+        <section className=" sticky top-0 left-0   w-full h-[70px] bg-white   z-50   border-[1px] border-solid border-border_grey flex items-center justify-between">
 
-           <div className=" flex justify-center items-center gap-4 md:gap-10 pl-5 md:pl-[200px]">
+        
 
-            <div className=" flex justify-center items-center gap-3 p-5">
-            <div className=" hidden md:block"><MdHome /></div>
-            <div className="  relative font-Nunito text-[16px] font-medium after:content-['']  after:absolute after:left-[-5px]  after:bottom-[-22px] after:w-[60px]  after:h-[3px] after:bg-black " >Home</div>
+            <div className=" flex justify-center items-center gap-6 md:px-[200px] px-6">
 
+            <div className=" flex gap-[5px] justify-center items-center cursor-pointer"><MdHome ></MdHome><span className=" font-medium  font-Nunito text-[15px] hidden md:block ">Home</span>
             </div>
+
+
+           <div className=" flex gap-[5px] justify-center items-center cursor-pointer"><FaGraduationCap ></FaGraduationCap><span className=" font-medium  font-Nunito text-[15px] hidden md:block ">course</span>
+              </div>
+
+             
+    
+        </div>
+           
               
-            
-            
-              
-           </div>
+           
       
 
-      <div  className=" flex justify-center items-center gap-4 md:gap-10 md:pr-[200px]">
-<div className=" flex justify-center items-center   gap-2 border-[2px] border-solid border-border_grey  w-[100px] h-[40px] rounded-full ">
-    <div className=" font-Nunito text-[15px]"><Motion value={user.HappyPoints}></Motion></div>
-    <div>{HEPicon}</div>
-</div> 
-<div  className=" relative flex flex-col justify-center items-center gap-1 pr-5 cursor-pointer">
-    <div onClick={()=>setIsVisible((prev)=>!prev)}>{isVisible ? <MdClose size={25} /> : <LuMenu size={25}></LuMenu>}</div>
-  {isVisible ? <Setting></Setting> :  null}
-</div>
+{/* last part */}
+      <div  className=" flex justify-center items-center gap-4 md:gap-6  font-JetBarins md:px-[200px] px-6">
+
+ <div className="  text-[18px] flex justify-center items-center gap-1 font-semibold   md:border-solid md:border-[2px] md:border-border_grey md:px-4 md:py-2 md:rounded-full">
+  <p >{user.Examkey}</p>
+  <span>{ExamKey}</span>
+  </div>
+
+     <div className=" text-[18px] flex justify-center items-center gap-1 font-semibold  md:border-solid md:border-[2px] md:border-border_grey md:px-4 md:py-2 md:rounded-full ">
+      <p>{user.OnStreak}</p>
+      <span>{Streak}</span>
+    </div>
+
+ <div className=" w-[25px] h-[25px] cursor-pointer" onClick={()=>navigate("/profile")}>
+   <img src="https://api.dicebear.com/9.x/dylan/svg?seed=Maria" alt="avatar" className=" rounded-full"></img>
+              </div>
 
       </div>
+      {/* last part end */}
 
 
-        </div>
+        </section>
     )
 }
 

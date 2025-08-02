@@ -38,17 +38,11 @@ function Chapter(){
     }
 
     
-    function renderSVG(SVGcode){
    
-        return(
-            <>
-            {
-              typeof SVGcode === "string" ? (<div dangerouslySetInnerHTML={{__html:SVGcode}}></div>) :  null
-            }
-            
-              </>
-        )
-     }
+
+
+
+   
     return(
         
         <>
@@ -67,7 +61,7 @@ function Chapter(){
     
         {/* Add a fixed width and height container for overflow */}
         <div className="w-full max-w-[95vw] md:max-w-[90vw] overflow-x-auto pb-4">
-        <div className="px-2 flex  justify-start items-center min-w-max">
+        <div className="px-2 gap-2 flex  justify-start items-center min-w-max">
             {
                 chapter?.map((item, index)=>{
                     console.log(index,chapter.length)
@@ -75,15 +69,19 @@ function Chapter(){
                         <main className="  flex items-center justify-center">
                         <div key={item._id} className="flex flex-col justify-start items-center h-[230px] md:h-[260px]">
                             <div className="font-Nunito text-text_grey ml-1">chap-{index+1}</div>
-                            <div key={index} className="select-none flex justify-center items-center w-[150px] h-[150px] md:w-[180px] md:h-[175px] bg-white border-[2px] border-solid border-border_grey rounded-[20px] shadow-grey_shadow cursor-pointer font-Nunito text-[12px] md:text-[15px]" onClick={()=>navigateLevel(item.chapter_name.english)}> 
-                                {item?.chapter_image ? renderSVG(item.chapter_image) : "image not found"}
+
+                            {/* full chaapter card */}
+                            <div key={index} className="select-none flex justify-center items-center w-[150px] h-[170px] md:h-[150px] bg-white border-[2px] border-solid border-border_grey rounded-[20px] shadow-grey_shadow cursor-pointer font-Nunito text-[12px] md:text-[15px]" onClick={()=>navigateLevel(item.chapter_name.english)}> 
+                                {item?.chapter_image ? <img  src={item.chapter_image} style={{width:"100px", height:"100px"}}></img> : "image not found"}
                             </div>
+
+                            {/* here chapter name */}
                             <div className="w-[150px] md:w-[180px] h-[40px] md:h-[50px] flex items-start justify-center text-center font-Nunito font-medium tracking-wide text-[12px] md:text-[15px] py-8">
                                 {user.language ==="english" ? item.chapter_name.english : item.chapter_name.hindi}
                             </div>
             
                           </div>
-                          {  index+1 < chapter.length ?   <div className=" w-[20px] h-[3px] bg-[#e5e5e5] "> </div>     : null}
+                        
                           </main>
                     )
                 })

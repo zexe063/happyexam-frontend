@@ -1,6 +1,6 @@
 
 import { useDispatch, useSelector } from "react-redux";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState} from "react";
 import Quest from "./subcomponents/quest/quest";
 import Streak from "./subcomponents/streak/streak";
 
@@ -8,22 +8,25 @@ import Streak from "./subcomponents/streak/streak";
  import Error from "../../error/error";
   import {useLocation, useNavigate, useParams} from 'react-router-dom'
   import 'swiper/css';
+  import 'swiper/css/pagination';
   import 'swiper/css/effect-cards';
   import {Swiper, SwiperSlide} from "swiper/react"
   import {EffectCards, Pagination} from "swiper/modules"
   import LottieLoading from "../../../loading/loading";
+import "./subject.css"
 
 
 function Subject(){
   const user = useSelector((state)=>state.auth.user)
     const subject = useSelector((state)=>state.happyexam.subject);
     const Loading = useSelector((state)=>state.happyexam.Loading)
+    
    const navigate = useNavigate();
    const dispatch = useDispatch()
    const location = useLocation()
    const mounted = useRef(false)
    const params = useParams()
-  
+
 
  if(!user.id){
   navigate("/")
@@ -43,30 +46,22 @@ function Subject(){
 
     }
 
-    function BackgroundColor(subject){
-      switch(subject){
-          case "Maths":
-             return 'bg-Maths text-Maths shadow-Maths  border-Maths_border'
-              break;
-            
-           case "Physics":
-          return  "bg-Physics  text-Physics shadow-Physics  border-Physics_border"
-            break;
-            
-            case "Chemistry":
-             return "bg-Chemistry text-Chemistry shadow-Chemistry border-Chemistry_border"
-              break;
-              case "Biology":
-                return "bg-Biology text-Biology shadow-Biology border-Biology_border"
-                 break;
+    
+const [width, setWidth] = useState(0);
 
-                default:
-                 return null;
-      }
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    handleResize(); // Set initial width on client
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
- 
-    }
-   
+  const isDesktop = width >= 768;
+
+console.log(isDesktop)
+
+
+
     return(
        <>  
        {
@@ -75,60 +70,59 @@ function Subject(){
         :   
             subject?.length ===0 ? <Error></Error>  
 
-     :  <div className=" relative top-[80px] md:right-[100px] overflow-hidden  w-full  h-[calc(100vh-80px)] flex flex-col md:flex-row  justify-around gap-5 items-center">
-
-<div className=" md:hidden" >
-   <Streak />
-</div>
+     : <main className=" relative w-full h-[cal(100vh-70px)]  flex flex-col gap-5">
+  
+    <div className="relative w-[364px] h-[424px] md:w-[600px] md:h-[500px]">
 
 <Swiper
-effect={'cards'}
-grabCursor={true}
-modules={[EffectCards]}
- cardsEffect={{
-  slideShadows:false,
-  rotate:true,
-  perSlideOffset:8
-  
+key={isDesktop ? 'desktop' : 'mobile'} 
+      modules={isDesktop ? [EffectCards] : [Pagination]}
+       effect={isDesktop ? 'cards' : 'slide'}
+      spaceBetween={isDesktop ? 0 : 16}
+      
+       pagination={isDesktop ? false : { 
+        clickable: true,
+        bulletClass: 'swiper-pagination-bullet',
+        bulletActiveClass: 'swiper-pagination-bullet-active'
+      }}
 
- }}
- speed={200}
+       cardsEffect={ isDesktop ? {
+        slideShadows: false,
+      } : false}
+      
+    slidesPerView={1}  
+     className="w-full h-full flex flex-col gap-5"
+   
+    >
 
+      {subject?.map((item, index) => {
+        return (
+          <SwiperSlide key={item._id} className=" !w-[99.6%] h-full rounded-3xl border-[2px] border-solid  border-border_grey box-border bg-white font-Nunito ">
+           
+           <div className=" h-full w-full flex flex-col justify-center  items-center  gap-10 ">
+            <div className="flex flex-col gap-2 justify-center items-center">
+            <p className=" inline-block font-semibold  rounded-full px-3 py-1 text-[12px] text-recommended_color bg-recommended_background tracking-wider">RECOMMENDED</p>
+            <p className=" font-bold text-[18px]">{user.language === "english" ? item.chapter_name.english : item.chapter_name.hindi}</p>
+            </div>
 
- className="   mySwiper relative left-1 w-[calc(100vw-15%)] md:w-[550px] h-[350px] md:h-[550px] ">
-{
-       subject?.map((item,index)=>{
-           return(
-               <SwiperSlide key={item._id} className={` font-Nunito border-[2px] border-solid ${BackgroundColor(item.subject_name.english)} flex justify-center items-center  bg-contain gap-2 w-[380px] md:w-[500px] rounded-xl h-[350px] md:h-[350px] bg-white`}>
-               
+            <div>
+              <img src={item.chapter_image} className=" w-[152p] h-[152px] md:w-[182px] md:h-[182px]"></img>
+            </div>
 
-                <div className="flex flex-col justify-center items-center mb-5 gap-3">
-                 <div className=" font-Nunito  absolute left-5 top-5 font-medium text-[19px] ">
-               {user.language === "english" ?  item.subject_name.english : item.subject_name.hindi}
-             <span className=" font-Nunito text-[12px]">  {item?.available? null  : "(Coming soon)"}</span>
-                 </div>
+            <div className=" w-[80%]">
+            <button className=" w-full bg-start_background shadow-start h-[48px] rounded-full text-white font-medium  text-[16px]">Start</button>
+            </div>
 
-                  <div className=" absolute bottom-[20%]">
-                  <button className="w-[200px] h-[50px] font-semibold bg-white rounded-full  outline-none border-none"  onClick={()=>handleSubject(item.subject_name.english)}>Get Start</button>
-                  </div>
-                 </div>
+           </div>
+            
+          </SwiperSlide>
+        );
+      })}
+    </Swiper>
+</div> 
+    
 
-               </SwiperSlide>
-           )
-       })
-   } 
-</Swiper>
-
-<div className=" hidden  md:flex flex-col gap-2 ">
-  <Streak />
-   <Quest />
-</div>
-
-<div className=" md:hidden">
-  <Quest />
-</div>
-
-  </div>
+</main>
 
   }  
   </>

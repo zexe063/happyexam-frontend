@@ -1,21 +1,29 @@
 
 
+
 import { useSelector,useDispatch } from "react-redux";
+import { InlineMath, BlockMath } from "react-katex";
+ import "katex/dist/katex.min.css";
 import Progress from "../progress/progress";
 import { useEffect, useState } from "react";
 import { ExplanationOpenOrClose, getQuestion, ToggleReport } from "../../../happyexamReducer/happyexam";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import correctAudio from "../../../audio/correct.mp3"
-import wrongAudio from "../../../audio/wrong.mp3"
-import clickAudio from "../../../audio/click.mp3"
+import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
+import correctAudio from "../../../audio/correct.mp3";
+import wrongAudio from "../../../audio/wrong.mp3";
+import clickAudio from "../../../audio/click.mp3";
+import nextAudio from "../../../audio/next.mp3";
+import dndAudio from "../../../audio/dnd.mp3";
 import LottieLoading from "../../../loading/loading";
+
+
+
 import { TiTick } from "react-icons/ti";
-import { IoClose } from "react-icons/io5";
+import { IoClose, IoGitNetworkOutline, IoSpeedometer } from "react-icons/io5";
 import { MdOutlinedFlag } from "react-icons/md";
 import Explanation from "./explanation/explanation";
 import ArrowSVG from "./arrowSVG";
 import Motion from "./Motion";
-import {motion,easeInOut,AnimatePresence} from "motion/react"
+import {motion,easeInOut,AnimatePresence, px, color} from "motion/react";
 import { easeOut } from "motion";
 import Error from "../../error/error";
 import ReportQuestion from "./ReportQuestion/ReportQuestion";
@@ -23,23 +31,29 @@ import { useRef } from "react";
 import { questionAnalysis } from "../../../happyexamReducer/happyexam";
 import { increaseHappyPoints } from "../../../happyexamReducer/auth";
 import Loading from "../../../loading/loading";
-
-
-
-
+import Lottie from "lottie-react";
+import tick from "./tick.json";
+import Markdown from "react-markdown";
+import rehypeKatex from "rehype-katex";
+import remarkMath from "remark-math";
+import { correctIcon,wrongIcon } from "../../../svgicon/icon";
 
 
 function Question(){
 
+
+   const dispatch = useDispatch();
     const  Questiondata = useSelector((state)=>state.happyexam.question);
     const explanation = useSelector((state)=>state.happyexam.explanation);
+    console.log(explanation)
     const ToggleReportValue = useSelector((state)=>state.happyexam.ToggleReport);
     const user = useSelector((state)=>state.auth.user);
     const Loading = useSelector((state)=>state.happyexam.Loading);
-    const dispatch = useDispatch();
-    const [isblue, setIsblue] = useState(false)
-    const [correct, setCorrect]  = useState(false);
-    const [isgreen,setIsgreen] = useState(false);
+
+
+     const [isOptionSelect,SetisOptionSelect] = useState(false);
+    const [OptionSelectedIndex, setOptionSelectedIndex] = useState(null)
+    const [correct, setCorrect]  = useState(false)
   const [correctIndex, setCorrectIndex] = useState(null);
     const [attempt, setAttempt] = useState(false);
     const [questionIndex, setQuetsionIndex] = useState(0);
@@ -47,11 +61,72 @@ function Question(){
    const [questionAnalysisData, setQuestionAnaylsisData] = useState({correct:0, wrong:0})
    const [correctSound] = useState((new Audio(correctAudio)))
    const [wrongSound] = useState((new Audio(wrongAudio)));
-   const [clickSound] = useState((new Audio(clickAudio)))
-   const mounted = useRef(false)
- const params = useParams()
- const location = useLocation()
- const navigate = useNavigate()
+   const [clickSound] = useState((new Audio(clickAudio)));
+   const [nextSound]  = useState((new Audio(nextAudio)));
+   const [dndSound] = useState(new Audio(dndAudio));
+   const mounted = useRef(false);
+ const params = useParams();
+ const location = useLocation();
+ const navigate = useNavigate();
+const  blank  = useRef();
+const  [FillUp, setFillUp] = useState(false);
+
+
+console.log(question)
+  function FillBox(e,index){
+
+     if(attempt) return null;
+    const box = e.currentTarget;
+  const  boxpos  =  (e.currentTarget).getBoundingClientRect();
+ const  blankpos = blank.current.getBoundingClientRect();
+  const boxseatpos = (e.currentTarget).parentNode.getBoundingClientRect()
+
+
+//  if else start for drag abd r
+  if(box.id ==="active"){
+  dndSound.play()
+
+      Object.assign(box.style,{
+     left:`${boxseatpos.x}px`,
+     top:`${boxseatpos.y}px`,
+     transition:"all 0.3s ease"
+     })
+        box.id =  null;
+        SetisOptionSelect(false)
+        setOptionSelectedIndex(null);
+        setFillUp(false)
+       
+
+        }
+
+else{
+
+   if(FillUp) return null;
+     dndSound.play()
+
+   box.style.position = "fixed";
+  box.style.left = boxpos.x+'px';
+   box.style.top = boxpos.y +"px";
+
+ setTimeout(()=>{
+   
+ Object.assign(box.style,{
+     left:`${blankpos.x}px`,
+     top:`${blankpos.y}px`,
+     transition:"all 0.3s ease"
+ })
+ box.id = "active"
+setFillUp(true)
+SetisOptionSelect(true);
+setOptionSelectedIndex(index);
+    
+},10)
+
+}
+// end of if and elese
+
+  }
+ 
 
  if(!user.id){
   navigate("/")
@@ -68,14 +143,36 @@ function Question(){
    function HandleSelectoption(index){
     
     if(attempt) return   null;
-    setIsblue(index);
+    setOptionSelectedIndex(index);
     clickSound.play()
-     setIsgreen(true)
+     SetisOptionSelect(true)
  
 
    }
+
+   function HandleCheck(){
+      if(!isOptionSelect && !attempt) return null;
+
+    setOptionSelectedIndex(null)
+     setCorrectIndex(OptionSelectedIndex)
+      setAttempt(true);
+      
+
+    if(question.answer === OptionSelectedIndex) {
+      correctSound.play()
+      setQuestionAnaylsisData((prev)=>({...prev, correct:prev.correct+1}))
+            setCorrect(true)
+    }
+
+    else{
+  wrongSound.play()
+  setQuestionAnaylsisData((prev)=>({...prev, wrong:prev.wrong+1}))
+   setCorrect(false)
+      
+    }
+   }
  
-   function HandleCheckorNext(e){
+   function HandleContinue(e){
   
     if(attempt){
   
@@ -89,10 +186,13 @@ function Question(){
         
         
         setQuetsionIndex((prev)=>prev+1);
-        setIsgreen(false);
+        
         setAttempt(false);
         setCorrectIndex(null);
         setCorrect(null);
+        SetisOptionSelect(false)
+        setFillUp(false)
+        nextSound.play();
      
         
   
@@ -102,25 +202,11 @@ function Question(){
       
     }
 
-    if(!isgreen)  return  null;
 
-    setIsblue(null);
-   setCorrectIndex(isblue)
+    setOptionSelectedIndex(null);
+   setCorrectIndex(OptionSelectedIndex)
   setAttempt(true);
 
-    if(question.answer === isblue) {
-      setCorrect(true);
-      correctSound.play()
-      setQuestionAnaylsisData((prev)=>({...prev, correct:prev.correct+1}))
-          
-    }
-      
-    else{
-    setCorrect(false)
-  wrongSound.play()
-  setQuestionAnaylsisData((prev)=>({...prev, wrong:prev.wrong+1}))
-      
-    }
   
    } 
    
@@ -133,18 +219,18 @@ function Question(){
 
     return(
       <>
+     {/* {
+      typeof image  === 'string' ?  (<div dangerouslySetInnerHTML={{__html: image}}/>) : image.test(/(https)/gm) ?(<image src={image}></image>): null
+     } */}
      {
-      typeof image  === 'string' ?  (<div dangerouslySetInnerHTML={{__html: image}}/>) : image
+      /(https)/gm.test(image) ?  <img src={image}  style={{width:"300px", height:"300px"}}></img> :  <div dangerouslySetInnerHTML={{__html:image}}></div>
      }
     </>
     )
    }
 
-   renderSVG()
 
-   function  handleExplanationOpen(){
-    dispatch(ExplanationOpenOrClose(true))
-   }
+   
 
     
     return(
@@ -156,28 +242,22 @@ function Question(){
 
     :Questiondata?.length  === 0 ? (<Error></Error>)
 
-    :<div className=" relative  flex  flex-col items-center justify-between gap-2  w-full h-full overflow-hidden">
-        {ToggleReportValue? <ReportQuestion questionId={question._id}></ReportQuestion> : null}
-  {explanation ? <Explanation data={question}></Explanation> : null}
+    : 
+
+
+ <section className=" w-full h-full flex flex-col">
+     
     
              <Progress  currentLength={questionIndex+1} totalLength={Questiondata.length}></Progress>
 
-       <AnimatePresence mode="wait">
-            < motion.div  key={questionIndex} initial={{opacity:0, x:-500}} animate={{opacity:1, x:0}} transition={{duration:0.1, delay:0.3, ease:easeInOut}}  className={`  relative  md:left-10  w-full h-auto flex flex-col  items-center justify-center gap-5  md:gap-10 transition-all duration-300 ease-out`}>
+<div className=" relative  w-full  h-[calc(100vh-60px)] overflow-y-auto overflow-x-hidden p-10   flex  justify-start">
+      <AnimatePresence mode="wait">
+            < motion.div  key={questionIndex} initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.1, delay:0.3, ease:easeInOut}}  className={`  relative  w-full h-[100%] flex flex-col   items-center  gap-5  md:gap-10 transition-all duration-300 ease-out`}>
 
                 {/* here the question */}
 
-             <div className=" w-full  max-w-[600px] md:max-w-[700px]  px-10  flex  gap-1  font-Nunito   text-[16px] md:text-[17px] tracking-wide  font-medium">
-              <span className=" flex-shrink-0">{questionIndex+1}.</span>
-            <div className="  flex-1 break-words text-justify">
-              {
-                user.language === "english" ?
-              question.question_name.english: question.question_name.hindi
-              }
-
-            </div>
-            </div>
-
+             <div className=" w-full max-w-[700px] md:max-w-[700px] flex gap-1 px-10   font-Nunito   text-[16px] md:text-[18px] tracking-wide  font-medium">
+              <Markdown rehypePlugins={rehypeKatex} remarkPlugins={remarkMath}>{question.question_name.english}</Markdown></div>
             
             {/* here the image */}
 
@@ -185,41 +265,78 @@ function Question(){
   question.image ?  renderSVG(question.image): null
 }
 
-          {/* here the option */}
 
-          <div className=" font-Nunito text-black
-           flex flex-col gap-3  md:grid md:grid-cols-2 md:gap-5">
+
+          {/* here the option */}
+          <div className="  relative  w-full flex justify-center items-center flex-col gap-5 p-5">
+
+            {/* here the blank */}
+            {
+  question.question_type ==="DND" && <div  className=" w-[100px] h-[100px] border-[2px] border-dashed border-border_grey rounded-lg flex justify-center items-center">
+    <div ref={blank} className=" w-[48px] h-[48px] bg-[#f2f2f2] rounded-lg"></div>
+    </div>
+}
+
+          <div className={`   ${question.question_type === "DND" ? " flex gap-2 " : "flex flex-col gap-3  md:grid md:grid-cols-2 md:gap-5"}font-Nunito text-black
+           `}>
 
             {
               
               question.option?.[user.language === "english"?"english" : "hindi"].map((item,index)=>{
-                return(
+                      
+                return question.question_type === "DND" ? (
+                      <div  className="w-[48px] h-[48px] rounded-lg bg-[#f2f2f2]">
 
+                        <div className={`  flex justify-center items-center cursor-grabbing select-none  w-[48px] h-[48px] bg-white rounded-lg border-[2px] border-solid
+
+                        ${OptionSelectedIndex === index ? " shadow-box_blue border-box_blue_border text-box_blue_text " : correctIndex === index ?  correct ? " shadow-box_coreect border-box_correct_border  text-box_coreect_text" : "  shadow-box_wrong border-box_wrong_border text-box_wrong_text" : "  shadow-grey_shadow border-border_grey text-black"   }
+                          `} onClick={(e)=>FillBox(e, index)}>
+
+                          <Markdown  remarkPlugins={remarkMath} rehypePlugins={rehypeKatex}>{item}</Markdown>
+
+                        </div>
+
+                        </div>
+                      
+                    ) :
+
+                     (
+                 
+           
                   <motion.div  whileTap={{ 
                     scale: 0.95,
                     transition:{
-                      duration:0.15,
-                      ease:easeOut
+                    duration:0.15,
+                    ease:easeOut
                     }
                   }}
                   animate={{scale:0.96}}
-                 key={index} className={` relative w-[300px]    min-h-[60px]  p-2 rounded-[11px] flex  gap-5 items-center cursor-pointer  transition-all duration-100 ease-in-out ${isblue  === index ? "bg-background_blue   border-border_blue border-[2px] border-solid "  : correctIndex  ===  index ? correct ? "bg-correct_green  border-border_green border-[2px] border-solid ": " bg-wrong_red  border-[2px] border-solid  border-border_red " :"bg-white border-[2px] border-solid border-border_grey "} `} onClick={()=>HandleSelectoption(index)}>
+                 key={index} className={` relative w-[300px] border-[2px] border-solid p-2   min-h-[52px]  rounded-[10px] flex  gap-5 items-center cursor-pointer  transition-all duration-100 ease-in-out ${OptionSelectedIndex === index ? "border-border_blue" : correctIndex === index ?  correct ? " border-border_green" : " border-border_red" : "border-check_grey"   }`} onClick={()=>HandleSelectoption(index)}>
                   
+                   
+                   <p  className={` w-[22px] h-[22px] text-[13px] flex justify-center items-center ${OptionSelectedIndex  === index ?   " bg-tick_bg_blue text-white " : correctIndex === index ? correct ? " bg-tick_bg_green text-white" : " bg-tick_bg_red text-white" : " text-black  bg-tick_bg"}  rounded-full font-semibold`}>
+
+                  {user.language === "english"? String.fromCharCode(65+index) : String.fromCharCode(2325 + index)}
+                        
+                      </p>
+
+                    <div className=" font-Nunito font-medium text-[14px] "> 
+                      <Markdown  remarkPlugins={remarkMath} rehypePlugins={rehypeKatex}>{item}</Markdown>
+                      </div>
 
                   {
                     correctIndex === index ? correct ? <div  className=" w-[15px] h-[15px] absolute top-[-5px] right-[-5px] rounded-sm bg-green_tick_rectangle"><TiTick size="15" color="white"></TiTick></div> : <div className=" w-[15px] h-[15px] absolute top-[-5px] right-[-5px] rounded-sm bg-red_tick_rectangle"><IoClose color="white" size="15" stroke="5"></IoClose></div> : null
                   }
 
-                    <div className={` w-[30px] h-[30px]  flex justify-center items-center ${isblue  === index ?   " border-[1px]  border-solid  border-border_blue  text-text_blue" : correctIndex === index ? correct ? " border-[1px] border-solid border-border_green text-text_green " : " border-[1px] border-solid  text-text_red border-border_red" : "border-[1px] border-solid border-black text-black"}  rounded-md`}>{
-                       user.language === "english"? String.fromCharCode(97+index) : String.fromCharCode(2325 + index)
-                      }</div>
-                    <div className={` font-Nunito text-[14px]  font-medium ${isblue  === index ? "text-text_blue" : correctIndex === index ? correct ? "text-text_green" :"text-text_red" : "text-black"}`}>{item} </div>
+                   
                   </motion.div>
                 )
+
               })
             }
           </div>
            
+           </div>
 
    
             
@@ -228,54 +345,80 @@ function Question(){
 
             </AnimatePresence>
 
+            </div>
 
-            <div  className={`   w-full  h-[150px] flex  flex-col justify-evenly    md:justify-between gap-1  md:flex md:flex-row  transition-all durationfont-Nunito-100  ease-in-out  ${ attempt  ?  correct  ? " bg-popup_green text-text_green" :" bg-popup_red  text-chcek_text_red" : "null" } `}>
-            
-            
+    
 
-         <div className="  flex md:flex-col justify-between md:justify-center md:px-10  gap-1">
-          {
-            attempt ?(
-              <>
-               <div className=" px-10 flex gap-1 justify-center items-center font-Nunito text-[20px] font-semibold ">
-             
-            
-              <div className=" font-Nunito flex gap-3 justify-center items-center">{correct ? "Awesome !" :  `correct answer : ${String.fromCharCode(97+question.answer)}` }  
-                 {correct  ?<div className=" flex items-center font-Nunito text-[15px]"><span className="transform translate-y-[-1.5px]">+</span><Motion value={10}></Motion> </div>:null}
-        </div>
+ {/* here the contiue system  */}
 
-            
-             </div>
+ <div className=" sticky z-50 bottom-0  w-full h-[100px] border-[1px] border-solid flex justify-center items-center  border-border_grey">
+ <button className={`w-[300px] h-[48px]  font-Nunito text-lg  font-medium rounded-full   ${isOptionSelect  ? "bg-background_black shadow-black text-white" : " bg-check_grey  text-black"}`} onClick={HandleCheck}>check</button>
+ </div>
 
-            <div className=" mr-10 flex justify-center items-center cursor-pointer" onClick={()=>dispatch(ToggleReport())}><MdOutlinedFlag size={20}></MdOutlinedFlag></div>
-             </>
-            ) : null
-          }                 
-         </div>
+ {/* here the continue end */}
 
-         <div className=" flex justify-around items-center gap-5 md:pr-20">
+
+
+
+  {/* here the poup window of correct answr is start */}
+  <div  className={` ${attempt ?  "translate-y-0" : "translate-y-[150px]"}  fixed bottom-0   left-[50%] -translate-x-[50%] w-full md:w-[500px] rounded-tr-xl rounded-tl-xl    h-[150px]  transition-all duration font-Nunito-100  ease-in-out z-50  ${ correct  ? " bg-popup_green text-text_green" :" bg-popup_red  text-chcek_text_red" } `}>
+
+
+  <div className=" relative w-full h-full flex flex-col justify-between py-2">
+
+    <div className="relative top-5 w-full flex justify-between px-2 ">
+       <div className=" flex  justify-center   gap-2">
+      <span>{correct ? correctIcon : wrongIcon}</span>
+      <p className="font-Nunito text-black text-[22px]  md:text-[16px]  flex justify-center items-center gap-2 font-semibold">
+
+        {correct ? "Correct" : "Here is answer:"}
         {
-          attempt ? !correct ?    <div className=" flex justify-center items-center border-[2px] border-solid border-border_check_red rounded-xl  min-w-[150px] min-h-[50px] md:min-h-[45px] font-Nunito  font-medium text-chcek_text_red text-[20px] cursor-pointer" onClick={handleExplanationOpen}>why</div> : null : null
+        correct ?  <span className=" text-[14px]  text-text_motion_green"> +<Motion value={15}></Motion></span> 
+        :
+        <span> {String.fromCharCode(97+question.answer)} </span>
         }
 
-          <div className={`  flex justify-center items-center p-2 ${attempt ? correct ? "w-[350px]" : "w-[150px]" :"w-[350px]"} md:w-[200px] min-h-[48px] md:min-h-[45px] rounded-full  translate-y-0 transition-all ease-in-out duration-100 cursor-pointer font-Nunito text-[16px] font-semibold active:translate-y-[3px]  active:shadow-none ${attempt ?  correct ? "  bg-button_green  shadow-check_next_green  text-white"  : " bg-button_red shadow-check_next_red text-chcek_text_red" : isgreen ?  "bg-button_green    shadow-check_next_green text-white" : "  bg-check_grey shadow-grey_shadow "}`} onClick={HandleCheckorNext}>{attempt ?  questionIndex === Questiondata.length-1  ? "Complete" :  "Next" : "Check"}</div>
-         </div>
-             
+      </p>
+      </div>
 
-              
-      
-            </div>  
+      <span><MdOutlinedFlag size={20} color="grey"></MdOutlinedFlag></span>
+    </div>
 
-         
-            </div>//  parent div
+    <div className=" mb-2 flex justify-between px-2">
+      <button  onClick={()=>dispatch(ExplanationOpenOrClose(true))} className="w-[30%] h-[48px] bg-why_grey shadow-why text-black font-Nunito font-medium rounded-full">Why?</button>
+      <button className={`w-[65%] h-[48px] text-white font-Nunito font-medium rounded-full ${correct ? "bg-button_green  shadow-correct_shadow" : "bg-background_black shadow-black"}`} onClick={HandleContinue}>{Questiondata.length-1 === questionIndex  ? "Complete" : "Continue"}</button>
+    </div>
+  </div>
+
+            
+      </div>  
+
+
+  {/* here the poup window of correct answer is end */}
+          
+            
+            {/* here the report question */}
+             {ToggleReportValue? <ReportQuestion questionId={question._id}></ReportQuestion> : null}
+
+             {/* here the explaintion  */}
+          {explanation ? <Explanation data={Questiondata[questionIndex]}></Explanation> :  null}
+
+
+  
+            </section>//
 }
+
+
             </>
      
 
     )
+
+
+
+
+
+
 }
 
 export default Question;
-
-
-

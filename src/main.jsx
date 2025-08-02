@@ -6,7 +6,7 @@ import { configureStore, combineReducers} from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import happyexamReducer from "./happyexamReducer/happyexam";
 import  authReducer from "./happyexamReducer/auth"
-import { Route, RouterProvider,createBrowserRouter, createRoutesFromChildren} from 'react-router-dom';
+import { Route, Router, RouterProvider,createBrowserRouter, createRoutesFromChildren} from 'react-router-dom';
 import {persistStore, persistReducer}  from "redux-persist"
 import storage from "redux-persist/lib/storage"
 import sessionStorage from 'redux-persist/es/storage/session';
@@ -18,7 +18,10 @@ import Level from './components/dashboard/level/level';
 import Question from './components/dashboard/question/question';
 import LandingPage from './landingpage/landingpage';
 import LevelComplete from './components/LevelComplete/LevelComplete';
+import Profile from './components/profile/profile';
+import Signup from './components/auth/signup/signup';
 import { PersistGate } from 'redux-persist/integration/react';
+
 
 const router = createBrowserRouter(
    createRoutesFromChildren(
@@ -29,27 +32,32 @@ const router = createBrowserRouter(
    
    <Route path='/welcome' element=<Welcome />></Route>
    <Route path='/' element=<Dashboard />> 
+
    <Route path='/:classId' element=<Subject></Subject>></Route>
    <Route path='/:classId/:subjectId' element=<Chapter></Chapter>></Route>
    <Route path='/:classId/:subjectId/:chapterId' element=<Level></Level>></Route>
+   <Route path='/profile' element=<Profile></Profile>></Route>
   
    </Route>
 
    <Route path='/:classId/:subjectId/:chapterId/:levelId' element=<Question></Question>></Route>
    <Route path='/:classId/:subjectId/:chapterId/:levelId/Completed' element=<LevelComplete></LevelComplete>></Route>
+   <Route path='/signup' element=<Signup></Signup>></Route>
+    
    <Route path='*'></Route> 
+  
    </>
    )
 )
 
 const HappyexampersistConfig = {
-  key:'root',
+  key:'happyexam',
   storage:sessionStorage,
 
 }
 
 const authpersistConfig = {
-  key:"root",
+  key:"auth",
   storage,
   whitelist:['user']
 
@@ -69,7 +77,7 @@ const store= configureStore({
 })
 
 
-const persistor =  persistStore(store)
+ export const persistor =  persistStore(store)
 
 
 

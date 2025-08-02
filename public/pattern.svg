@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 349 131">
+    <g stroke="currentColor" stroke-miterlimit="22.926">
+        <path stroke-dasharray="4, 4" d="M-30.45.255h136.552v136.55H-30.449ZM106.102.255h136.551v136.55H106.102Z"/>
+        <path stroke-dasharray="4, 4" d="M242.645.255h136.551v136.55H242.645Z"/>
+        <path stroke-linejoin="round" d="M-166.988.238v136.551h136.551v136.55h136.551V409.89c0 75.209-61.342 136.551-136.551 136.551h-136.551v136.551h682.751V136.789C515.763 61.58 454.422.238 379.213.238Z" clip-rule="evenodd"/>
+        <path stroke-linejoin="round" d="m106.109 273.339 273.099 409.653V.238"/>
+        <path stroke-linejoin="round" d="M106.109.233c150.83 0 273.103 122.276 273.103 273.103M106.109 273.328V.227"/>
+    </g>
+</svg>

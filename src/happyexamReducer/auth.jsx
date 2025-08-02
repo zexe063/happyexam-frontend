@@ -7,9 +7,19 @@ const auth = createSlice({
     initialState:{
         user:{
           id:null,
+          Firstname:null,
+          Lastname:null,
+          email:null,
           class:null,
           language: null,
-          HappyPoints:0
+          find:null,
+          time:null,
+          ExamKey:0,
+          OnStreak:0,
+          LongestStreak:0,
+          HEP:0,
+          
+          
     
         }
     },
