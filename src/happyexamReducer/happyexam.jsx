@@ -6,7 +6,7 @@ import {  createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 export const getSubject = createAsyncThunk(
   "getSubject",
   async(classId)=>{
-const SubjectData =  await axios.get(`http://localhost:3000/chapter/course/${classId}`)
+const SubjectData =  await axios.get(`https://happyexambackend2-0.vercel.app/chapter/course/${classId}`)
 return SubjectData.data
   } 
 )

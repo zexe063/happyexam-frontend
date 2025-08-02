@@ -12,6 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.1",
     "axios": "^1.7.9",
+    "caniuse-lite": "^1.0.30001731",
     "lottie-react": "^2.4.1",
     "motion": "^12.4.3",
     "react": "^19.0.0",
