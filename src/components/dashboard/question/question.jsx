@@ -225,7 +225,7 @@ setOptionSelectedIndex(index);
       typeof image  === 'string' ?  (<div dangerouslySetInnerHTML={{__html: image}}/>) : image.test(/(https)/gm) ?(<image src={image}></image>): null
      } */}
      {
-      /(https)/gm.test(image) ?  <img src={image}  style={{width:"500px", height:"500px", objectFit:"contain"}}></img> :  <div dangerouslySetInnerHTML={{__html:image}}></div>
+      /(https)/gm.test(image) ?  <img src={image}  className=" w-[500px] h-[500px] object-contain" ></img> :  <div dangerouslySetInnerHTML={{__html:image}}></div>
      }
     </>
     )
