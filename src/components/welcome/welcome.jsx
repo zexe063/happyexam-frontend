@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import "./welcome.css"
 import {  data, useNavigate } from "react-router-dom";
 import { getUser } from "../../happyexamReducer/auth";
-import { getSubject } from "../../happyexamReducer/happyexam";
 import { IconBase } from "react-icons/lib";
 import { interpolate } from "motion/react";
  import {English, Hindi, Tenth, ITTJEE, Youtube, Instagram, Google, Family, Time} from "../../svgicon/icon";
@@ -13,8 +12,8 @@ import { interpolate } from "motion/react";
 function Welcome(){
 
   const welcomeData= [
-        {ask:"Select you langauge...", key:"language", element:[{data:"English",icon:English},{data:"हिंदी",icon:Hindi}]},
-        {ask:"Select you class...",  key:"class", element:[{data:"10", icon:Tenth}]},
+        {ask:"Select you langauge...", key:"language", element:[{data:"english",icon:English},{data:"हिंदी",icon:Hindi}]},
+        {ask:"Select you class...",  key:"class_name", element:[{data:"10", icon:Tenth}]},
         {ask:"Where from you hear...", key:"find", element:[
             {data:"Youtube", icon:Youtube}, 
             {data:"Facebook/Instagram", icon:Instagram},
@@ -40,6 +39,7 @@ function Welcome(){
 const [selectcardIndex, setSelectcardIndex] = useState(null);
 const [SelectData, setSelectData]= useState({});
 const dispatch = useDispatch()
+
 
 
 

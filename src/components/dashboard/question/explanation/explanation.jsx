@@ -18,7 +18,7 @@ const [solution, setsolution] = useState(!data.explanation ?  [data.solution[sol
 const [continueSound] = useState(new Audio(continueAudio))
 const explanation =  useSelector((state)=>state.happyexam.explanation);
 
-console.log(solution)
+
 
 
   const dispatch = useDispatch();

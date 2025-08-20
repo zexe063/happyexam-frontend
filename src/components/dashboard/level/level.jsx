@@ -10,7 +10,7 @@ import Error from "../../error/error";
 
 function Level() {
 
-    console.log(LockIcon)
+    
 
     const level = useSelector((state) => state.happyexam.level);
     const Loading = useSelector((state) => state.happyexam.Loading);
@@ -23,6 +23,7 @@ function Level() {
     const params = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate()
+    console.log(params)
 
     if(!user.id){
         navigate("/")
@@ -36,9 +37,10 @@ function Level() {
     },[])
 
 
-    function navigatQuestion(levelId) {
-        dispatch(getQuestion({ classId: params.classId, subjectId: params.subjectId, chapterId: params.chapterId, levelId: levelId }))
-        navigate(`/${params.classId}/${params.subjectId}/${params.chapterId}/${levelId}`, {state:{isClick:true}});
+    function navigatQuestion(level_name) {
+
+        dispatch(getQuestion({ class_name: params.class_name, subject_name: params.subject_name, chapter_name: params.chapter_name, level_name: level_name }))
+        navigate(`/course/${params.class_name}/${params.subject_name}/${params.chapter_name}/${level_name}`, {state:{isClick:true}});
         return;
         
     }

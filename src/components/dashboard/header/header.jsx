@@ -7,13 +7,14 @@ import { useState } from "react";
  import { MdClose } from "react-icons/md";
 import { FiHome } from "react-icons/fi"
 import { useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 function Header(){
 
   const navigate = useNavigate()
      const user = useSelector((state)=>state.auth.user)
+     const params = useParams()
 
     
     return (
@@ -23,11 +24,11 @@ function Header(){
 
             <div className=" flex justify-center items-center gap-6 md:px-[200px] px-6">
 
-            <div className=" flex gap-[5px] justify-center items-center cursor-pointer"><MdHome ></MdHome><span className=" font-medium  font-Nunito text-[15px] hidden md:block ">Home</span>
+            <div className=" flex gap-[5px] justify-center items-center cursor-pointer" onClick={()=>navigate(`/home/${params.class_name}`)}><MdHome ></MdHome><span className=" font-medium  font-Nunito text-[15px] hidden md:block ">Home</span>
             </div>
 
 
-           <div className=" flex gap-[5px] justify-center items-center cursor-pointer"><FaGraduationCap ></FaGraduationCap><span className=" font-medium  font-Nunito text-[15px] hidden md:block ">course</span>
+           <div className=" flex gap-[5px] justify-center items-center cursor-pointer" onClick={()=>navigate(`/course/${params.class_name}`)}><FaGraduationCap ></FaGraduationCap><span className=" font-medium  font-Nunito text-[15px] hidden md:block ">course</span>
               </div>
 
              

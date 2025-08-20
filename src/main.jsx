@@ -33,15 +33,15 @@ const router = createBrowserRouter(
    <Route path='/welcome' element=<Welcome />></Route>
    <Route path='/' element=<Dashboard />> 
 
-   <Route path='/:classId' element=<Subject></Subject>></Route>
-   <Route path='/:classId/:subjectId' element=<Chapter></Chapter>></Route>
-   <Route path='/:classId/:subjectId/:chapterId' element=<Level></Level>></Route>
+   <Route path='/home/:class_name' element=<Subject></Subject>></Route>
+    <Route path='/course/:class_name' element=<Chapter></Chapter> ></Route>
+   <Route path='/course/:class_name/:subject_name/:chapter_name' element=<Level></Level>></Route>
    <Route path='/profile' element=<Profile></Profile>></Route>
   
    </Route>
 
-   <Route path='/:classId/:subjectId/:chapterId/:levelId' element=<Question></Question>></Route>
-   <Route path='/:classId/:subjectId/:chapterId/:levelId/Completed' element=<LevelComplete></LevelComplete>></Route>
+   <Route path='/course/:class_name/:subject_name/:chapter_name/:level_name' element=<Question></Question>></Route>
+   <Route path='/course/:class_name/:subject_name/:chapter_name/:level_name/Completed' element=<LevelComplete></LevelComplete>></Route>
    <Route path='/signup' element=<Signup></Signup>></Route>
     
    <Route path='*'></Route> 

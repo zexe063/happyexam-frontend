@@ -37,6 +37,8 @@ import Markdown from "react-markdown";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 import { correctIcon,wrongIcon } from "../../../svgicon/icon";
+import { GrFormNext } from "react-icons/gr";
+import { IoIosArrowBack } from "react-icons/io";
 
 
 function Question(){
@@ -72,7 +74,7 @@ const  blank  = useRef();
 const  [FillUp, setFillUp] = useState(false);
 
 
-console.log(question)
+console.log(params)
   function FillBox(e,index){
 
      if(attempt) return null;
@@ -179,7 +181,7 @@ setOptionSelectedIndex(index);
       if(questionIndex ===  Questiondata.length-1){
          dispatch(questionAnalysis(questionAnalysisData))
          dispatch(increaseHappyPoints(+questionAnalysisData.correct*10))
-        navigate(`/${params.classId}/${params.subjectId}/${params.chapterId}/${params.levelId}/completed`)
+        navigate(`/course/${params.class_name}/${params.subject_name}/${params.chapter_name}/${params.level_name}/completed`)
         return;
       }
       else{
@@ -223,7 +225,7 @@ setOptionSelectedIndex(index);
       typeof image  === 'string' ?  (<div dangerouslySetInnerHTML={{__html: image}}/>) : image.test(/(https)/gm) ?(<image src={image}></image>): null
      } */}
      {
-      /(https)/gm.test(image) ?  <img src={image}  style={{width:"300px", height:"300px"}}></img> :  <div dangerouslySetInnerHTML={{__html:image}}></div>
+      /(https)/gm.test(image) ?  <img src={image}  style={{width:"500px", height:"500px", objectFit:"contain"}}></img> :  <div dangerouslySetInnerHTML={{__html:image}}></div>
      }
     </>
     )
@@ -257,7 +259,7 @@ setOptionSelectedIndex(index);
                 {/* here the question */}
 
              <div className=" w-full max-w-[700px] md:max-w-[700px] flex gap-1 px-10   font-Nunito   text-[16px] md:text-[18px] tracking-wide  font-medium">
-              <Markdown rehypePlugins={rehypeKatex} remarkPlugins={remarkMath}>{question.question_name.english}</Markdown></div>
+             <span>{questionIndex+1}.</span> <Markdown rehypePlugins={rehypeKatex} remarkPlugins={remarkMath}>{user.language ==="english"?question.question_name.english: question.question_name.hindi}</Markdown></div>
             
             {/* here the image */}
 
@@ -352,7 +354,11 @@ setOptionSelectedIndex(index);
  {/* here the contiue system  */}
 
  <div className=" sticky z-50 bottom-0  w-full h-[100px] border-[1px] border-solid flex justify-center items-center  border-border_grey">
+ 
+  <button className={` mr-10 w-[50px] h-[45px]  font-Nunito text-lg  font-medium rounded-lg  bg-background_black shadow-black text-white flex justify-center items-center top-5" `} onClick={()=>setQuetsionIndex((prev)=>prev-1)} > <IoIosArrowBack  size={25} color="white"/></button>
+
  <button className={`w-[300px] h-[48px]  font-Nunito text-lg  font-medium rounded-full   ${isOptionSelect  ? "bg-background_black shadow-black text-white" : " bg-check_grey  text-black"}`} onClick={HandleCheck}>check</button>
+  <button className={` ml-10 w-[50px] h-[45px]  font-Nunito text-lg  font-medium rounded-lg  bg-background_black shadow-black text-white flex justify-center items-center top-5" `} onClick={()=>setQuetsionIndex((prev)=>prev+1)} ><GrFormNext size={25} color="white" ></GrFormNext></button>
  </div>
 
  {/* here the continue end */}
@@ -371,11 +377,11 @@ setOptionSelectedIndex(index);
       <span>{correct ? correctIcon : wrongIcon}</span>
       <p className="font-Nunito text-black text-[22px]  md:text-[16px]  flex justify-center items-center gap-2 font-semibold">
 
-        {correct ? "Correct" : "Here is answer:"}
+        {user.language === "english" ? correct ? " Correct" : "here is answer" : correct ? "सही जवाब" : "आपका उत्तर है:" }
         {
         correct ?  <span className=" text-[14px]  text-text_motion_green"> +<Motion value={15}></Motion></span> 
         :
-        <span> {String.fromCharCode(97+question.answer)} </span>
+        <span>  {user.language === "english"? String.fromCharCode(65+question.answer) : String.fromCharCode(2325 + question.answer)}</span>
         }
 
       </p>
@@ -386,7 +392,7 @@ setOptionSelectedIndex(index);
 
     <div className=" mb-2 flex justify-between px-2">
       <button  onClick={()=>dispatch(ExplanationOpenOrClose(true))} className="w-[30%] h-[48px] bg-why_grey shadow-why text-black font-Nunito font-medium rounded-full">Why?</button>
-      <button className={`w-[65%] h-[48px] text-white font-Nunito font-medium rounded-full ${correct ? "bg-button_green  shadow-correct_shadow" : "bg-background_black shadow-black"}`} onClick={HandleContinue}>{Questiondata.length-1 === questionIndex  ? "Complete" : "Continue"}</button>
+      <button className={`w-[65%] h-[48px] text-white font-Nunito font-medium rounded-full ${correct ? "bg-button_green  shadow-correct_shadow" : "bg-background_black shadow-black"}`} onClick={HandleContinue}>{Questiondata.length-1 === questionIndex  ? "Level complete" : "Continue"}</button>
     </div>
   </div>
 

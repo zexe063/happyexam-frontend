@@ -6,11 +6,11 @@ function LogoSection(){
     const user =  useSelector((state)=>state.auth.user);
     const navigate =  useNavigate();
     function getStartHandle(){
-        console.log("get start")
+       
    if(!user.id){
      navigate("/welcome")
    } else{
-    navigate(`/${user.class}`)
+    navigate(`/home/${user.class_name}`)
    }
     }
     return (

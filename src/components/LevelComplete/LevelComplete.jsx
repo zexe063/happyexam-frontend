@@ -9,10 +9,12 @@ function LevelComplete(){
 const questionAnalysis = useSelector((state)=>state.happyexam.questionAnalysis);
     const params = useParams();
     const navigate = useNavigate()
+    
+    
     function goLevelHandle(){
-     navigate(`/${params.classId}/${params.subjectId}/${params.chapterId}`)
+     navigate(`/course/${params.class_name}/${params.subject_name}/${params.chapter_name}`)
     }
-    console.log("i am here")
+   
     return(
         <div className=" w-full h-full flex flex-col gap-[30px] justify-center items-center ">
       

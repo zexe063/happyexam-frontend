@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState} from "react";
 import Quest from "./subcomponents/quest/quest";
 import Streak from "./subcomponents/streak/streak";
 
- import { getChapter, getSubject } from "../../../happyexamReducer/happyexam";
+ import {  getRecommendedChapter, getCourse} from "../../../happyexamReducer/happyexam";
  import Error from "../../error/error";
   import {useLocation, useNavigate, useParams} from 'react-router-dom'
   import 'swiper/css';
@@ -16,9 +16,10 @@ import Streak from "./subcomponents/streak/streak";
 import "./subject.css"
 
 
+
 function Subject(){
   const user = useSelector((state)=>state.auth.user)
-    const subject = useSelector((state)=>state.happyexam.subject);
+    const  RecommendedChapter = useSelector((state)=>state.happyexam.RecommendedChapter);
     const Loading = useSelector((state)=>state.happyexam.Loading)
     
    const navigate = useNavigate();
@@ -26,7 +27,8 @@ function Subject(){
    const location = useLocation()
    const mounted = useRef(false)
    const params = useParams()
-
+   
+console.log(user)
 
  if(!user.id){
   navigate("/")
@@ -34,14 +36,14 @@ function Subject(){
    
    useEffect(()=>{
     if(!mounted.current && !location?.state?.isClick){
-    dispatch(getSubject(params.classId))
+    dispatch(getRecommendedChapter(params.class_name))
     mounted.current = true;
     }
    },[])
 
-    function handleSubject(subjectId){
-  dispatch(getChapter({classId:params.classId, subjectId:subjectId}))
- navigate(`/${params.classId}/${subjectId}`, {state:{isClick:true}})
+    function NavigateChapter(){
+  dispatch(getCourse({classId:params.classId}))
+ navigate(`/course/${params.class_name}`, {state:{isClick:true}})
     return;
 
     }
@@ -68,9 +70,9 @@ console.log(isDesktop)
           Loading ? (<div className="w-full 
             h-screen flex items-center justify-center"><LottieLoading></LottieLoading></div>)
         :   
-            subject?.length ===0 ? <Error></Error>  
+             RecommendedChapter?.length ===0 ? <Error></Error>  
 
-     : <main className=" relative w-full h-[cal(100vh-70px)]  flex flex-col gap-5">
+     : <section className=" relative w-full h-[cal(100vh-70px)]  flex flex-col gap-5">
   
     <div className="relative w-[364px] h-[424px] md:w-[600px] md:h-[500px]">
 
@@ -95,7 +97,7 @@ key={isDesktop ? 'desktop' : 'mobile'}
    
     >
 
-      {subject?.map((item, index) => {
+      { RecommendedChapter?.map((item, index) => {
         return (
           <SwiperSlide key={item._id} className=" !w-[99.6%] h-full rounded-3xl border-[2px] border-solid  border-border_grey box-border bg-white font-Nunito ">
            
@@ -106,11 +108,11 @@ key={isDesktop ? 'desktop' : 'mobile'}
             </div>
 
             <div>
-              <img src={item.chapter_image} className=" w-[152p] h-[152px] md:w-[182px] md:h-[182px]"></img>
+              <img src={item.chapter_image} className=" w-[152p] h-[152px] md:w-[182px] md:h-[182px] object-contain"></img>
             </div>
 
             <div className=" w-[80%]">
-            <button className=" w-full bg-start_background shadow-start h-[48px] rounded-full text-white font-medium  text-[16px]">Start</button>
+            <button className=" w-full bg-start_background shadow-start h-[48px] rounded-full text-white font-medium  text-[16px]" onClick={NavigateChapter}>Start</button>
             </div>
 
            </div>
@@ -122,7 +124,7 @@ key={isDesktop ? 'desktop' : 'mobile'}
 </div> 
     
 
-</main>
+</section>
 
   }  
   </>

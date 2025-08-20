@@ -10,7 +10,7 @@ const auth = createSlice({
           Firstname:null,
           Lastname:null,
           email:null,
-          class:null,
+          class_name:null,
           language: null,
           find:null,
           time:null,

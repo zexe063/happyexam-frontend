@@ -33,6 +33,7 @@ module.exports = {
            toggle_header_grey:"#E6E0E0",
            tick_bg:"#fcf9f9",
            why_grey:"rgba(0, 0, 0, 0.05)",
+           course_grey:"#f7f7f7",
         
 
         

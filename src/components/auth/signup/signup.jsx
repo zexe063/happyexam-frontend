@@ -25,7 +25,8 @@ function Signup(){
     }      
     const userData = {id:Id, ...location.state, ...SignupData, Examkey:3, OnStreak:0, LongestStreak:0 , HEP:10}
      dispatch(getUser(userData))
-      navigate(`/${userData.class}`)
+     
+      navigate(`/home/${userData.class_name}`)
  
     }
 
