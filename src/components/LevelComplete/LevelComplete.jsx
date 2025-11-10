@@ -1,14 +1,27 @@
 import Motion from "../dashboard/question/Motion";
-import {LevelCompleteIcon } from "../../svgicon/icon"
-import { useNavigate, useParams } from "react-router-dom";
+import {LevelCompleteIcon2, HEPicon, correct, wrong} from "../../svgicon/icon"
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Lottie from "lottie-react";
- import Levelbadge  from "./Levelbadge.json"
-
+ import Confetti from 'react-confetti'
+ import {useWindowSize} from "react-use"
 function LevelComplete(){
+
 const questionAnalysis = useSelector((state)=>state.happyexam.questionAnalysis);
     const params = useParams();
     const navigate = useNavigate()
+    const  location = useLocation();
+    const questionAnalysisData = location.state.questionAnalysisData;
+  
+
+
+     const ScoreCard = [
+        {tittle:"Total HEP", icon:HEPicon, bgColor:"#E6C60D", value:questionAnalysisData.correct *10 < 1  ? '00' : questionAnalysisData.correct *10},
+        {tittle:"Correct", icon:correct, bgColor:"#27C46E", value:questionAnalysisData.correct > 9  ? questionAnalysisData.correct :  `0${questionAnalysisData.correct}`},
+
+        {tittle:"Wrong", icon:wrong, bgColor:"#F67810",  value:questionAnalysisData.wrong > 9  ? questionAnalysisData.wrong :`0${questionAnalysisData.wrong}`}
+     ]
+ 
     
     
     function goLevelHandle(){
@@ -16,19 +29,39 @@ const questionAnalysis = useSelector((state)=>state.happyexam.questionAnalysis);
     }
    
     return(
-        <div className=" w-full h-full flex flex-col gap-[30px] justify-center items-center ">
+
+        <>
+        <div className=" w-full h-full flex flex-col gap-[80px] justify-center items-center ">
       
-            <div className=" flex flex-col justify-center items-center  gap-2">
-               <Lottie animationData={Levelbadge} loop={true}  autoPlay={true} className=" w-[300px] h-[300px]" >   </Lottie>
-                
-
-                <p className=" font-Nunito text-[48px] text-black flex   gap-2"><Motion value={questionAnalysis.correct*10}></Motion></p>
-
+            <div className=" flex flex-col justify-center items-center gap-5">
+            {LevelCompleteIcon2}
+            <p className=" font-semibold font-Space_Grotesk text-3xl">Level Completed</p>
             </div>
 
-            <button className="  font-Nunito text-white bg-[#F7C325] rounded-full h-[48px] w-[350px] font-semibold" onClick={goLevelHandle}> Continue</button>
+
+            <div className=" flex  gap-5">
+            {
+                ScoreCard?.map((item)=>{
+                    return (
+                        <div className={` w-[110px] h-[94px] md:w-[130px] rounded-xl flex flex-col justify-center items-center`} style={{backgroundColor:item.bgColor}} >
+                            <p className="  font-semibold text-white font-Nunito text-sm">{item.tittle}</p>
+                         <div className=" w-[105px] h-[75px] md:w-[125px]  bg-white rounded-xl  mb-[2px] flex justify-center items-center gap-4 font-Space_Grotesk font-bold text-xl">
+                            <span>{item.icon}</span>
+                            <span>{item.value}</span>
+                        </div>
+                        </div>
+                    )
+                })
+            }
+            </div>
+
+            <button className="  font-Nunito text-white bg-background_black shadow-black rounded-full h-[48px] w-[350px] font-semibold" onClick={goLevelHandle}> Continue</button>
 
         </div>
+
+
+
+        </>
     )
 }
 

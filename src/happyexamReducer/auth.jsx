@@ -18,7 +18,7 @@ const auth = createSlice({
           OnStreak:0,
           LongestStreak:0,
           HEP:0,
-          
+         LevelCompleted:[1,2,3]
           
     
         }
@@ -27,17 +27,52 @@ const auth = createSlice({
       getUser: (state,action)=>{
        state.user = action.payload
       },
+
       ToggleSetting:(state,action)=>{
         state.user.language = action.payload
          },
-         increaseHappyPoints:(state,action)=>{
+
+         increaseHEP:(state,action)=>{
+          state.user.HEP +=  action.payload
+         },
+
+         UserLevelCompleted:(state,action)=>{
+           
+           const  obj = {chapterId:action.payload.chapterId, chapter_name:{...action.payload.chapter_name},levels:[action.payload.levelId]}
+
+          if(state.user.LevelCompleted.length  === 0){ state.user.LevelCompleted.push(obj)}
           
-          state.user.HappyPoints +=  action.payload
-         }
+  else{  
+   
+  state.user.LevelCompleted.some((item)=>item.chapterId === action.payload.chapterId)  ?
+
+   state.user.LevelCompleted.forEach((item)=>  item.chapterId === action.payload.chapterId  ?  item.levels.some((id)=> id  ===  action.payload.levelId) ? null :  item.levels.push(action.payload.levelId ) : null ) :
+   
+   state.user.LevelCompleted.push(obj)
+
+  }
+           
+         },
+
+         UserAvatarSave:(state,action)=>{
+         state.user.Avatar =  action.payload;
+         },
+
+        
+         HeartsDecrease :(state,action)=>{
+          state.user.Hearts -= 1
+         },
+         HeartsRefill:(state,action) =>{
+            state.user.Hearts = 3
+         },
+        UnlockPremium:(state,action)=>{
+        state.user.isPremium = true
+        }
+     
          
     }
 })
 
-export const  { getUser, ToggleSetting, increaseHappyPoints} = auth.actions
+export const  { getUser, ToggleSetting, increaseHEP, UserLevelCompleted, UserAvatarSave, HeartsDecrease, HeartsRefill, UnlockPremium} = auth.actions
 
 export default auth.reducer;

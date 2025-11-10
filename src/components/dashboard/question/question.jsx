@@ -14,31 +14,32 @@ import clickAudio from "../../../audio/click.mp3";
 import nextAudio from "../../../audio/next.mp3";
 import dndAudio from "../../../audio/dnd.mp3";
 import LottieLoading from "../../../loading/loading";
-
+import {Howl, Howler} from 'howler';
+import { HeartsDecrease, HeartsRefill } from "../../../happyexamReducer/auth";
 
 
 import { TiTick } from "react-icons/ti";
 import { IoClose, IoGitNetworkOutline, IoSpeedometer } from "react-icons/io5";
 import { MdOutlinedFlag } from "react-icons/md";
 import Explanation from "./explanation/explanation";
-import ArrowSVG from "./arrowSVG";
 import Motion from "./Motion";
 import {motion,easeInOut,AnimatePresence, px, color} from "motion/react";
 import { easeOut } from "motion";
 import Error from "../../error/error";
 import ReportQuestion from "./ReportQuestion/ReportQuestion";
 import { useRef } from "react";
-import { questionAnalysis } from "../../../happyexamReducer/happyexam";
-import { increaseHappyPoints } from "../../../happyexamReducer/auth";
+import { increaseHEP, UserLevelCompleted } from "../../../happyexamReducer/auth";
 import Loading from "../../../loading/loading";
 import Lottie from "lottie-react";
 import tick from "./tick.json";
-import Markdown from "react-markdown";
+import  Markdown  from "react-markdown";
+ import ReactMarkdown from 'react-markdown';
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 import { correctIcon,wrongIcon } from "../../../svgicon/icon";
 import { GrFormNext } from "react-icons/gr";
 import { IoIosArrowBack } from "react-icons/io";
+import SubscriptionModel from "./subscriptionModel/subscriptionModel";
 
 
 function Question(){
@@ -46,10 +47,12 @@ function Question(){
 
    const dispatch = useDispatch();
     const  Questiondata = useSelector((state)=>state.happyexam.question);
+    const  Leveldata =  useSelector((state)=>state.happyexam.level);
+    
     const explanation = useSelector((state)=>state.happyexam.explanation);
-    console.log(explanation)
     const ToggleReportValue = useSelector((state)=>state.happyexam.ToggleReport);
     const user = useSelector((state)=>state.auth.user);
+    console.log(user)
     const Loading = useSelector((state)=>state.happyexam.Loading);
 
 
@@ -61,20 +64,33 @@ function Question(){
     const [questionIndex, setQuetsionIndex] = useState(0);
    const question =Questiondata[questionIndex];
    const [questionAnalysisData, setQuestionAnaylsisData] = useState({correct:0, wrong:0})
-   const [correctSound] = useState((new Audio(correctAudio)))
-   const [wrongSound] = useState((new Audio(wrongAudio)));
-   const [clickSound] = useState((new Audio(clickAudio)));
-   const [nextSound]  = useState((new Audio(nextAudio)));
-   const [dndSound] = useState(new Audio(dndAudio));
+  //  const [correctSound] = useState((new Audio(correctAudio)))
+
+  const correctSound = new Howl({
+    src:[correctAudio]
+  })
+   const wrongSound = new Howl({
+    src:[wrongAudio]
+  })
+   const clickSound = new Howl({
+    src:[clickAudio]
+  })
+   const nextSound  = new Howl({
+    src:[nextAudio]
+  })
+   const dndSound = new Howl({
+    src:[dndAudio]
+  })
    const mounted = useRef(false);
  const params = useParams();
  const location = useLocation();
  const navigate = useNavigate();
 const  blank  = useRef();
 const  [FillUp, setFillUp] = useState(false);
+ const [correctRow, setCorrectRow]= useState(0);
 
 
-console.log(params)
+
   function FillBox(e,index){
 
      if(attempt) return null;
@@ -163,13 +179,19 @@ setOptionSelectedIndex(index);
     if(question.answer === OptionSelectedIndex) {
       correctSound.play()
       setQuestionAnaylsisData((prev)=>({...prev, correct:prev.correct+1}))
-            setCorrect(true)
+      setCorrect(true)
+      // CHECK CORRECT ROW;
+      setCorrectRow((prev)=>prev+1)
     }
 
     else{
   wrongSound.play()
   setQuestionAnaylsisData((prev)=>({...prev, wrong:prev.wrong+1}))
    setCorrect(false)
+
+ // CHECK CORRECT ROW;
+ setCorrectRow(0)
+  !user.isPremium && dispatch(HeartsDecrease())
       
     }
    }
@@ -179,9 +201,11 @@ setOptionSelectedIndex(index);
     if(attempt){
   
       if(questionIndex ===  Questiondata.length-1){
-         dispatch(questionAnalysis(questionAnalysisData))
-         dispatch(increaseHappyPoints(+questionAnalysisData.correct*10))
-        navigate(`/course/${params.class_name}/${params.subject_name}/${params.chapter_name}/${params.level_name}/completed`)
+
+         dispatch(increaseHEP(+questionAnalysisData.correct*10))
+        const  obj = {chapterId:Leveldata[0].chapterId, chapter_name:{...Leveldata[0].chapter_name},levelId:Questiondata[0].levelId}
+          dispatch(UserLevelCompleted(obj))
+        navigate(`/course/${params.class_name}/${params.subject_name}/${params.chapter_name}/${params.level_name}/completed`,{state:{questionAnalysisData:questionAnalysisData}})
         return;
       }
       else{
@@ -213,7 +237,9 @@ setOptionSelectedIndex(index);
    } 
    
 
-   
+
+
+
    
    function renderSVG(image){
     
@@ -225,7 +251,7 @@ setOptionSelectedIndex(index);
       typeof image  === 'string' ?  (<div dangerouslySetInnerHTML={{__html: image}}/>) : image.test(/(https)/gm) ?(<image src={image}></image>): null
      } */}
      {
-      /(https)/gm.test(image) ?  <img src={image}  className=" w-[500px] h-[500px] object-contain" ></img> :  <div dangerouslySetInnerHTML={{__html:image}}></div>
+      /(https)/gm.test(image) ?  <img src={image}  className="w-[90vw] h-full  md:w-[400px] md:max-h-[300px]  object-contain" ></img> :  <div dangerouslySetInnerHTML={{__html:image}}></div>
      }
     </>
     )
@@ -250,16 +276,24 @@ setOptionSelectedIndex(index);
  <section className=" w-full h-full flex flex-col">
      
     
-             <Progress  currentLength={questionIndex+1} totalLength={Questiondata.length}></Progress>
+             <Progress  currentLength={questionIndex+1} totalLength={Questiondata.length} correctRow={correctRow}></Progress>
 
-<div className=" relative  w-full  h-[calc(100vh-60px)] overflow-y-auto overflow-x-hidden p-10   flex  justify-start">
+<div className=" relative  w-full h-[calc(100vh-60px)] overflow-y-auto overflow-x-hidden py-10   flex  justify-center items-center">
       <AnimatePresence mode="wait">
-            < motion.div  key={questionIndex} initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.1, delay:0.3, ease:easeInOut}}  className={`  relative  w-full h-[100%] flex flex-col   items-center  gap-5  md:gap-10 transition-all duration-300 ease-out`}>
+            < motion.div  key={questionIndex} initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.1, delay:0.3, ease:easeInOut}}  className={`  relative  w-[412px] md:w-[540px] h-[100%] flex flex-col   items-center  gap-5  md:gap-10 transition-all duration-300 ease-out`}>
 
                 {/* here the question */}
+                 
+             <div className=" w-full  flex  gap-1 pl-6  font-Nunito   text-[16px] tracking-wide">
 
-             <div className=" w-full max-w-[700px] md:max-w-[700px] flex gap-1 px-10   font-Nunito   text-[16px] md:text-[18px] tracking-wide  font-medium">
-             <span>{questionIndex+1}.</span> <Markdown rehypePlugins={rehypeKatex} remarkPlugins={remarkMath}>{user.language ==="english"?question.question_name.english: question.question_name.hindi}</Markdown></div>
+             <span>{(questionIndex+1)}.</span>
+                 
+             <p className=" w-full h-auto flex flex-col gap-2 font-normal">
+               <ReactMarkdown 
+            rehypePlugins={[rehypeKatex]} remarkPlugins={[remarkMath]}>{user.language ==="english"?(question.question_name.english).replace(/<br>/g, '\n\n'): question.question_name.hindi}</ReactMarkdown>
+             </p> 
+
+             </div>
             
             {/* here the image */}
 
@@ -279,7 +313,7 @@ setOptionSelectedIndex(index);
     </div>
 }
 
-          <div className={`   ${question.question_type === "DND" ? " flex gap-2 " : "flex flex-col gap-3  md:grid md:grid-cols-2 md:gap-5"}font-Nunito text-black
+          <div className={`   ${question.question_type === "DND" ? " flex gap-2 " : "flex flex-col gap-2 md:gap-2"}font-Nunito text-black
            `}>
 
             {
@@ -294,7 +328,7 @@ setOptionSelectedIndex(index);
                         ${OptionSelectedIndex === index ? " shadow-box_blue border-box_blue_border text-box_blue_text " : correctIndex === index ?  correct ? " shadow-box_coreect border-box_correct_border  text-box_coreect_text" : "  shadow-box_wrong border-box_wrong_border text-box_wrong_text" : "  shadow-grey_shadow border-border_grey text-black"   }
                           `} onClick={(e)=>FillBox(e, index)}>
 
-                          <Markdown  remarkPlugins={remarkMath} rehypePlugins={rehypeKatex}>{item}</Markdown>
+                          <Markdown  remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>{item}</Markdown>
 
                         </div>
 
@@ -313,18 +347,18 @@ setOptionSelectedIndex(index);
                     }
                   }}
                   animate={{scale:0.96}}
-                 key={index} className={` relative w-[300px] border-[2px] border-solid p-2   min-h-[52px]  rounded-[10px] flex  gap-5 items-center cursor-pointer  transition-all duration-100 ease-in-out ${OptionSelectedIndex === index ? "border-border_blue" : correctIndex === index ?  correct ? " border-border_green" : " border-border_red" : "border-check_grey"   }`} onClick={()=>HandleSelectoption(index)}>
+                 key={index} className={` relative w-[370px] md:w-[540px]  border-[2px] border-solid  pt-[16px] pb-[16px]  rounded-[12px] flex gap-2 items-center cursor-pointer  transition-all duration-100 ease-in-out ${OptionSelectedIndex === index ? "border-border_blue text-text_blue" : correctIndex === index ?  correct ? " border-border_green" : " border-border_red" : "border-check_grey"   }`} onClick={()=>HandleSelectoption(index)}>
                   
                    
-                   <p  className={` w-[22px] h-[22px] text-[13px] flex justify-center items-center ${OptionSelectedIndex  === index ?   " bg-tick_bg_blue text-white " : correctIndex === index ? correct ? " bg-tick_bg_green text-white" : " bg-tick_bg_red text-white" : " text-black  bg-tick_bg"}  rounded-full font-semibold`}>
+                   <span  className={` ml-2 flex-shrink-0   font-Nunito w-[22px] h-[22px]  text-[13px] flex justify-center items-center ${OptionSelectedIndex  === index ?   " bg-tick_bg_blue text-white " : correctIndex === index ? correct ? " bg-tick_bg_green text-white" : " bg-tick_bg_red text-white" : " text-black  bg-tick_bg"}  rounded-full font-semibold`}>
 
                   {user.language === "english"? String.fromCharCode(65+index) : String.fromCharCode(2325 + index)}
                         
-                      </p>
+                      </span>
 
-                    <div className=" font-Nunito font-medium text-[14px] "> 
+                    <span className=" font-Nunito  text-[16px] font-normal "> 
                       <Markdown  remarkPlugins={remarkMath} rehypePlugins={rehypeKatex}>{item}</Markdown>
-                      </div>
+                      </span>
 
                   {
                     correctIndex === index ? correct ? <div  className=" w-[15px] h-[15px] absolute top-[-5px] right-[-5px] rounded-sm bg-green_tick_rectangle"><TiTick size="15" color="white"></TiTick></div> : <div className=" w-[15px] h-[15px] absolute top-[-5px] right-[-5px] rounded-sm bg-red_tick_rectangle"><IoClose color="white" size="15" stroke="5"></IoClose></div> : null
@@ -355,10 +389,9 @@ setOptionSelectedIndex(index);
 
  <div className=" sticky z-50 bottom-0  w-full h-[100px] border-[1px] border-solid flex justify-center items-center  border-border_grey">
  
-  <button className={` mr-10 w-[50px] h-[45px]  font-Nunito text-lg  font-medium rounded-lg  bg-background_black shadow-black text-white flex justify-center items-center top-5" `} onClick={()=>setQuetsionIndex((prev)=>prev-1)} > <IoIosArrowBack  size={25} color="white"/></button>
-
- <button className={`w-[300px] h-[48px]  font-Nunito text-lg  font-medium rounded-full   ${isOptionSelect  ? "bg-background_black shadow-black text-white" : " bg-check_grey  text-black"}`} onClick={HandleCheck}>check</button>
-  <button className={` ml-10 w-[50px] h-[45px]  font-Nunito text-lg  font-medium rounded-lg  bg-background_black shadow-black text-white flex justify-center items-center top-5" `} onClick={()=>setQuetsionIndex((prev)=>prev+1)} ><GrFormNext size={25} color="white" ></GrFormNext></button>
+  <button className={` mr-10 w-[50px] h-[45px]  font-Nunito text-lg  font-medium rounded-lg  bg-background_black shadow-black text-white flex justify-center items-center top-5" `} onClick={()=>setQuetsionIndex((prev)=>prev-1)} > <IoIosArrowBack  size={25} color="white"/></button> 
+ <button className={`w-[90%] md:w-[300px] h-[48px]  font-Nunito text-lg  font-medium rounded-full   ${isOptionSelect  ? "bg-background_black shadow-black text-white" : " bg-check_grey  text-black"}`} onClick={HandleCheck}>check</button>
+   <button className={` ml-10 w-[50px] h-[45px]  font-Nunito text-lg  font-medium rounded-lg  bg-background_black shadow-black text-white flex justify-center items-center top-5" `} onClick={()=>setQuetsionIndex((prev)=>prev+1)} ><GrFormNext size={25} color="white" ></GrFormNext></button> 
  </div>
 
  {/* here the continue end */}
@@ -408,6 +441,8 @@ setOptionSelectedIndex(index);
 
              {/* here the explaintion  */}
           {explanation ? <Explanation data={Questiondata[questionIndex]}></Explanation> :  null}
+          {!user.isPremium && user.Hearts <1 && <SubscriptionModel></SubscriptionModel>}
+
 
 
   

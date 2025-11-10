@@ -6,15 +6,16 @@ import { getUser } from "../../happyexamReducer/auth";
 import { IconBase } from "react-icons/lib";
 import { interpolate } from "motion/react";
  import {English, Hindi, Tenth, ITTJEE, Youtube, Instagram, Google, Family, Time} from "../../svgicon/icon";
+ import {DotLottieReact} from "@lottiefiles/dotlottie-react"
 
 
  
 function Welcome(){
 
   const welcomeData= [
-        {ask:"Select you langauge...", key:"language", element:[{data:"english",icon:English},{data:"हिंदी",icon:Hindi}]},
-        {ask:"Select you class...",  key:"class_name", element:[{data:"10", icon:Tenth}]},
-        {ask:"Where from you hear...", key:"find", element:[
+        {ask:"Select you langauge", key:"language", element:[{data:"english",icon:English},{data:"हिंदी",icon:Hindi}]},
+        {ask:"Select you class",  key:"class_name", element:[{data:"10", icon:Tenth}]},
+        {ask:"Where from you hear", key:"find", element:[
             {data:"Youtube", icon:Youtube}, 
             {data:"Facebook/Instagram", icon:Instagram},
             {data:"Google Search" , icon:Google},
@@ -22,7 +23,7 @@ function Welcome(){
 
         ]},
         {
-         ask:"How much time you spent...",
+         ask:"How much time you spent",
          key:"time",
          element:[
             {data:"5 min", icon:Time},
@@ -89,8 +90,16 @@ setSelectcardIndex(null);
         <section className=" relative w-full h-full flex flex-col gap-[50px]  items-center py-10 overflow-hidden">
 
        
-            <div className=" w-[280px] h-[60px] flex justify-center items-center  font-Nunito  text-[18px] text-black font-medium">
-                {welcomeData[welcomeIndex].ask}
+            <div className=" w-full h-[60px] flex gap-5 justify-center items-center text-black">
+                <span>  
+     <DotLottieReact
+      src="Logo.lottie"
+      loop
+      autoplay
+        style={{ width: '70px', height: '70px' }}
+    />
+                </span>
+                <span className=" font-Space_Grotesk border-[2px] border-solid border-border_grey px-4 py-3 rounded-xl font-medium ">{welcomeData[welcomeIndex].ask}</span>
                </div>
 
             {/* option data */}

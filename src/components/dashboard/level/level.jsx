@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { LockIcon, LockIconBlue} from "../../../svgicon/icon"
+import {LevelNormal, LevelSolve, LevelCompleted} from "../../../svgicon/icon"
 import LottieLoading from "../../../loading/loading";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,11 +19,12 @@ function Level() {
     const location = useLocation()
 
     const startX = window.innerWidth / 2;
-    const startY = 130;
+    const startY = 110;
     const params = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate()
-    console.log(params)
+  const chapter = location?.state?.chapter
+  console.log(chapter)
 
     if(!user.id){
         navigate("/")
@@ -52,11 +53,10 @@ function Level() {
        <>
         {
             Loading ? (<div className=" relative w-full  h-screen
-                flex items-center justify-center"><LottieLoading></LottieLoading> </div>)
-                :<div className="   relative top-[100px] flex flex-col justify-center items-center">
-                    <div></div>
+                flex items-center justify-center"><LottieLoading></LottieLoading> </div>) :
+                <div className="   relative top-[20px] flex flex-col gap-10 justify-center items-center">
 
-                    {/* here the level content start */}
+                    {/* here the level part */}
                     <div className=" w-full  relative h-auto flex flex-col  justify-center items-center">
 
                         {
@@ -71,10 +71,7 @@ function Level() {
                                     }} onClick={() => navigatQuestion(item.level_number)} >
 
                                        
-                                        <div className=" flex justify-center items-center flex-col">
-                                            <div>  { index === 0  ?LockIconBlue(index+1) :  LockIcon( index+1)}</div>
-                                            </div>
-
+                                      <p>{item.isCompleted? LevelCompleted : item.isSolveable   ?  LevelSolve : LevelNormal }</p>
                                       
 
                                     </div>
@@ -84,7 +81,14 @@ function Level() {
 
                     </div>
                 </div>
+            
 
+
+
+
+
+
+                
         }
   </>
     )

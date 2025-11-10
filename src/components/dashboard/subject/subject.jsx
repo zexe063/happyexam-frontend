@@ -1,7 +1,6 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useRef, useState} from "react";
-import Quest from "./subcomponents/quest/quest";
 import Streak from "./subcomponents/streak/streak";
 
  import {  getRecommendedChapter, getCourse} from "../../../happyexamReducer/happyexam";
@@ -14,7 +13,8 @@ import Streak from "./subcomponents/streak/streak";
   import {EffectCards, Pagination} from "swiper/modules"
   import LottieLoading from "../../../loading/loading";
 import "./subject.css"
-
+import LeaderBoard from "./subcomponents/leaderboard/leaderboard";
+import Premium from "./subcomponents/premium/premium";
 
 
 function Subject(){
@@ -28,7 +28,6 @@ function Subject(){
    const mounted = useRef(false)
    const params = useParams()
    
-console.log(user)
 
  if(!user.id){
   navigate("/")
@@ -60,7 +59,7 @@ const [width, setWidth] = useState(0);
 
   const isDesktop = width >= 768;
 
-console.log(isDesktop)
+
 
 
 
@@ -72,10 +71,16 @@ console.log(isDesktop)
         :   
              RecommendedChapter?.length ===0 ? <Error></Error>  
 
-     : <section className=" relative w-full h-[cal(100vh-70px)]  flex flex-col gap-5">
-  
-    <div className="relative w-[364px] h-[424px] md:w-[600px] md:h-[500px]">
+     : <section className=" relative w-full h-[cal(100vh-70px)]  items-center flex flex-col justify-center md:flex-row gap-5 md:gap-10 mt-5 overflow-auto">
+   <div className=" flex flex-col justify-center items-center gap-4">
 
+<Streak></Streak>
+{!user.isPremium && isDesktop && <Premium></Premium>}
+{isDesktop && <LeaderBoard></LeaderBoard>}
+   </div>
+
+
+ <div className="relative w-[364px] h-[424px] md:w-[550px] md:h-[500px]  self-start">
 <Swiper
 key={isDesktop ? 'desktop' : 'mobile'} 
       modules={isDesktop ? [EffectCards] : [Pagination]}
@@ -122,7 +127,8 @@ key={isDesktop ? 'desktop' : 'mobile'}
       })}
     </Swiper>
 </div> 
-    
+{!user.isPremium && !isDesktop && <Premium></Premium>}
+ {!isDesktop && <LeaderBoard></LeaderBoard>}    
 
 </section>
 

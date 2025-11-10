@@ -87,7 +87,7 @@ module.exports = {
         //  blue color start
          background_blue:"#F1FAFF",
          border_blue: "#6875f9",
-         text_blue:"#5791CF",
+         text_blue:"#0414c8",
          text_solution:"#0D5484",
          step_blue:"#004FEC",
          solution_blue:"#467FF1",
@@ -101,6 +101,8 @@ module.exports = {
           start_background:"#456DFF",
           recommended_color:"#033dfc",
           recommended_background:"hsl(226,90%,93.6%)",
+        
+
           
          
         //  yellow
@@ -118,7 +120,13 @@ module.exports = {
          footer_text:"#083156",
          
 // balck
-background_black:"#000c"      
+background_black:"#000c",
+
+// GRADIENT
+
+
+        premium_button :"#FFC107"
+        
 
       },
 
@@ -131,6 +139,7 @@ background_black:"#000c"
         streak_yellow:"#F5BF41",
         week_grey:"A79797",
         week_yellow:"FEB200",
+        coming_soon:"#5AA0F1"
       },
 
       borderColor:{
@@ -139,6 +148,8 @@ background_black:"#000c"
         Chemistry_border:"#A4BAF7",
         Biology_border:"#79F48E"
       },
+  
+      
 
       boxShadow:{
         button_yellow:" 0px 3px 0px #EBB900",
@@ -162,8 +173,14 @@ background_black:"#000c"
          box_blue :"0px 2px 0px #375ce3",
         box_coreect :"0px 2px 0 0 #15b441",
         box_wrong:"0px 2px 0px #e14b4b",
-        start : "0px 3px 0px #213C9E"
+        start : "0px 3px 0px #213C9E",
+
+        // GRADIENT
+      premium_shadow:"0px 3px 0px #C3950B",
+      premiumUnlock_shadow:"0px 3px 0px #E74CFC"
       
+    
+         
         
       },
   
@@ -173,13 +190,15 @@ background_black:"#000c"
         JetBarins:["JetBrains Mono", "monospace"],
         // everett: ['TWK Everett', 'sans-serif']
 
-        Nunito:["Work Sans", 'sans-serif'],
+        // Nunito:["Work Sans", 'sans-serif'],
+         Nunito:["cofo-brilliant", 'sans-serif'],
         Space_Grotesk:["Space Grotesk", "sans-serif"]
          
       
 
 
       },
+  
       
       backgroundImage:{
         "Maths" :  `linear-gradient(to top, rgba(213, 226, 252, 0.7) 0%, white 100%), url("/Vector1.png")`,
@@ -193,7 +212,9 @@ background_black:"#000c"
         "chapter_gradeint": "linear-gradient(to top, #CCDEFF, #FFFFFF)",
         "motivated_gradeint":  "linear-gradient(to top, #FDFECD, #FFFFFF)",
         "payment_gradeint":  "linear-gradient(to top, #B5FCBD, #FFFFFF)",
-        "Testimonials" : "url('/Testimonials.png')"
+        "Testimonials" : "url('/Testimonials.png')",
+        premium_gradient: 'linear-gradient(135deg,#EEF2FE 14.42%,#F7EBCA 39.35%,#ECE7D8 71.76%,#FBCEE2 94.22%)',
+        premiumUnlock_gradient:'linear-gradient(90deg, #ABBDFF 0%, #E350E3 50%, #F7C325 100%)'
         
       },
      

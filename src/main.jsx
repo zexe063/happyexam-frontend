@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { version } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
@@ -20,7 +20,10 @@ import LandingPage from './landingpage/landingpage';
 import LevelComplete from './components/LevelComplete/LevelComplete';
 import Profile from './components/profile/profile';
 import Signup from './components/auth/signup/signup';
+import Avatar from './components/avatar/avatar';
 import { PersistGate } from 'redux-persist/integration/react';
+import Subscription from './components/subscription/subscription';
+
 
 
 const router = createBrowserRouter(
@@ -37,12 +40,14 @@ const router = createBrowserRouter(
     <Route path='/course/:class_name' element=<Chapter></Chapter> ></Route>
    <Route path='/course/:class_name/:subject_name/:chapter_name' element=<Level></Level>></Route>
    <Route path='/profile' element=<Profile></Profile>></Route>
+   <Route path='/avatar' element=<Avatar />></Route>
   
    </Route>
 
    <Route path='/course/:class_name/:subject_name/:chapter_name/:level_name' element=<Question></Question>></Route>
    <Route path='/course/:class_name/:subject_name/:chapter_name/:level_name/Completed' element=<LevelComplete></LevelComplete>></Route>
    <Route path='/signup' element=<Signup></Signup>></Route>
+   <Route path='/subscription' element=<Subscription/>></Route>
     
    <Route path='*'></Route> 
   
@@ -59,7 +64,7 @@ const HappyexampersistConfig = {
 const authpersistConfig = {
   key:"auth",
   storage,
-  whitelist:['user']
+  whitelist:['user'],
 
 }
 

@@ -37,7 +37,7 @@ function Chapter(){
      
 
         dispatch(getLevel({class_name:data.class_name, subject_name:data.subject_name.english,chapter_name:data.chapter_name.english}))
-    navigate(`/course/${data.class_name}/${data.subject_name.english}/${data.chapter_name.english}`, {state:{isClick:true}})
+    navigate(`/course/${data.class_name}/${data.subject_name.english}/${data.chapter_name.english}`, {state:{isClick:true, chapter:data}})
 
 
     }

@@ -5,13 +5,12 @@
 
 
 
-
 @font-face {
-  font-family: 'StyreneB-Regular';
-  src: url('StyreneB-Regular.otf') format('opentype');
-  font-weight: 500; /* Black typically corresponds to font-weight 900 */
+  font-family: 'cofo-brilliant';
+  src: url('/cofo-brilliant.woff2') format('woff2');
+  font-weight: 500;
   font-style: normal;
-  font-display: swap; /* Improves loading behavior */
+  font-display: swap;
 }
 
 html, body, #root {
@@ -19,7 +18,7 @@ html, body, #root {
   width: 100%;
   margin: 0;
   padding: 0;
-  /* user-select: none; */
-   box-sizing: border-box;
-
+  box-sizing: border-box;
+  font-family: 'cofo-brilliant', sans-serif; /* Add this */
 }
+

@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import { getUser } from "../../../happyexamReducer/auth";
 import { useDispatch } from "react-redux";
-
+import { AvatarImage } from "../../../config/constant";
 
 
 function Signup(){
@@ -10,8 +10,8 @@ function Signup(){
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [SignupData, setSignData] = useState({});
-    
-
+   
+   
     function handleSignup(e){
     setSignData((prev)=>({...prev, [e.target.title]:e.target.value}))
     }
@@ -22,8 +22,9 @@ function Signup(){
    let Id = ''
    for(let i=0; i<20; i++){
    Id +=   value[Math.floor(Math.random()*value.length)];
-    }      
-    const userData = {id:Id, ...location.state, ...SignupData, Examkey:3, OnStreak:0, LongestStreak:0 , HEP:10}
+    }  
+
+    const userData = {id:Id, ...location.state, ...SignupData, Hearts:3, OnStreak:0, LongestStreak:0 , HEP:10, LevelCompleted:[], Avatar: AvatarImage[Math.floor(Math.random()*10)], isPremium:false}
      dispatch(getUser(userData))
      
       navigate(`/home/${userData.class_name}`)
