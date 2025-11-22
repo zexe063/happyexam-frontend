@@ -1,7 +1,8 @@
-import { animate, motion, useMotionValue, useTransform } from "motion/react"
 import { useEffect } from "react"
+import { animate, motion, useMotionValue, useTransform } from "motion/react"
 
-export default function Motion( {value}) {
+
+export default function MotionCounter( {value}) {
 
     const count = useMotionValue(0)
     const rounded = useTransform(() => Math.round(count.get()))

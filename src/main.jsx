@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { configureStore, combineReducers} from '@reduxjs/toolkit';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import happyexamReducer from "./happyexamReducer/happyexam";
 import  authReducer from "./happyexamReducer/auth"
 import { Route, Router, RouterProvider,createBrowserRouter, createRoutesFromChildren} from 'react-router-dom';
@@ -12,14 +12,15 @@ import storage from "redux-persist/lib/storage"
 import sessionStorage from 'redux-persist/es/storage/session';
 import Welcome from './components/welcome/welcome';
 import Dashboard from './components/dashboard/dashboard';
-import Subject from './components/dashboard/subject/subject';
+import Home from './components/dashboard/home/home';
 import Chapter from './components/dashboard/chapter/chapter';
 import Level from './components/dashboard/level/level';
-import Question from './components/dashboard/question/question';
+import Question from './components/question/question';
 import LandingPage from './landingpage/landingpage';
 import LevelComplete from './components/LevelComplete/LevelComplete';
 import Profile from './components/profile/profile';
 import Signup from './components/auth/signup/signup';
+import Login from './components/auth/login/login';
 import Avatar from './components/avatar/avatar';
 import { PersistGate } from 'redux-persist/integration/react';
 import Subscription from './components/subscription/subscription';
@@ -33,21 +34,25 @@ const router = createBrowserRouter(
   <Route path='/' element=<LandingPage></LandingPage>></Route>
    </Route>
    
-   <Route path='/welcome' element=<Welcome />></Route>
+   <Route  path='/welcome' element=<Welcome />></Route>
+   <Route path='/signup' element=<Signup></Signup>></Route>
+   <Route path='/login' element=<Login></Login>></Route>
+    <Route path='/profile' element=<Profile></Profile>></Route>
+   <Route path='/avatar' element=<Avatar />></Route>
+   <Route path='/subscription' element=<Subscription/>></Route>
+   
    <Route path='/' element=<Dashboard />> 
 
-   <Route path='/home/:class_name' element=<Subject></Subject>></Route>
-    <Route path='/course/:class_name' element=<Chapter></Chapter> ></Route>
-   <Route path='/course/:class_name/:subject_name/:chapter_name' element=<Level></Level>></Route>
-   <Route path='/profile' element=<Profile></Profile>></Route>
-   <Route path='/avatar' element=<Avatar />></Route>
+   <Route path='/home/:class_name' element=<Home />></Route>
+    <Route path='/course/:class_name' element=<Chapter /> ></Route>
+   <Route path='/course/:class_name/:subject_name/:chapter_name' element=<Level />></Route>
   
    </Route>
 
    <Route path='/course/:class_name/:subject_name/:chapter_name/:level_name' element=<Question></Question>></Route>
    <Route path='/course/:class_name/:subject_name/:chapter_name/:level_name/Completed' element=<LevelComplete></LevelComplete>></Route>
-   <Route path='/signup' element=<Signup></Signup>></Route>
-   <Route path='/subscription' element=<Subscription/>></Route>
+  
+ 
     
    <Route path='*'></Route> 
   

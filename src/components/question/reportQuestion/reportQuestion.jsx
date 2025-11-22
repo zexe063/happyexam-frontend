@@ -1,8 +1,8 @@
 import { useState } from "react"
-import { IoClose } from "react-icons/io5"
 import { useDispatch } from "react-redux"
-import { ToggleReport } from "../../../../happyexamReducer/happyexam"
-import { createReportQuestion } from "../../../../happyexamReducer/happyexam"
+import { IoClose } from "react-icons/io5"
+import { ToggleReport } from "../../../happyexamReducer/happyexam"
+import { createReportQuestion } from "../../../happyexamReducer/happyexam"
 
 
 function ReportQuestion({questionId}){
@@ -19,11 +19,10 @@ function ReportQuestion({questionId}){
     const dispatch = useDispatch()
     const [value,setvalue] = useState()
   
-
-
     function CreateReportHandle(e, id){
         setvalue({id:id, questionId:questionId, value:e.target.value})
     }
+    
     return(
         <div className="fixed w-full h-full bg-black inset-0 bg-opacity-50   z-50 transition-all duration-100 ease-in-out flex justify-center items-center">
 

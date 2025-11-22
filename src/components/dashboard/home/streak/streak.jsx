@@ -1,6 +1,5 @@
 
-  import { color } from "motion/react";
-import { StreakChecked, StreakUnchecked} from "../../../../../svgicon/icon";
+import { StreakChecked, StreakUnchecked} from "../../../../svgicon/icon";
 
 function Streak(){
 

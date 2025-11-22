@@ -1,20 +1,21 @@
-
-import { IoClose, IoTerminalSharp } from "react-icons/io5";
+import  { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ExplanationOpenOrClose } from "../../../../happyexamReducer/happyexam";
+
 import Markdown from "react-markdown";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
-import { combineSlices } from "@reduxjs/toolkit";
-import React, { useState } from "react";
-import continueAudio from "../../../../audio/continue.mp3";
+import 'katex/dist/katex.min.css'
 import "./explanation.css"
-import 'katex/dist/katex.min.css';
+
+import { IoClose} from "react-icons/io5";
+import { ExplanationOpenOrClose } from "../../../happyexamReducer/happyexam";
+import continueAudio from "../../../audio/continue.mp3";
+
 
 function Explanation({data}){
 
-  const user = useSelector((state)=>state.auth.user);
- const [solutionIndex, setSolutionIndex] = React.useState(0);
+const user = useSelector((state)=>state.auth.user);
+const [solutionIndex, setSolutionIndex] = useState(0);
 const [solution, setsolution] = useState(!data.explanation ?  [data.solution[solutionIndex]] : null);
 const [continueSound] = useState(new Audio(continueAudio))
 const explanation =  useSelector((state)=>state.happyexam.explanation);
@@ -52,7 +53,7 @@ const explanation =  useSelector((state)=>state.happyexam.explanation);
         <div className="  p-2  text-[18px] font-normal trackWing-wide text-start font-Nunito flex flex-col
          gap-1 ">
           <Markdown rehypePlugins={[rehypeKatex]} remarkPlugins={[remarkMath]}>
-           {user.language === 'english' ? (data.explanation.english).replace(/<br>/g, '\n\n') : (data.explanation.hindi).replace(/<br>/g, '\n\n') }</Markdown>
+           {user.userPreference.language === 'english' ? (data.explanation.english).replace(/<br>/g, '\n\n') : (data.explanation.hindi).replace(/<br>/g, '\n\n') }</Markdown>
           </div> 
 
           :  
@@ -76,7 +77,7 @@ const explanation =  useSelector((state)=>state.happyexam.explanation);
 {/* her ethe calcultion  */}
 
        <Markdown rehypePlugins={[rehypeKatex]} remarkPlugins={[remarkMath]}>
-        {(user.language === "english" ? 
+        {(user.userPreference.language === "english" ? 
     item.value.calculation.english : 
     item.value.calculation.hindi
   ).replace(/<br>/g, '\n\n')}

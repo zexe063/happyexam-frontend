@@ -24,8 +24,10 @@ function HomeHeader(){
        <div className= "  flex justify-center items-center gap-2 font-bold text-xl md:text-2xl font-Nunito"><img className=" w-[50px] h-[50px] object-contain" src={HappyexamLogo} /><span>HappyExam</span></div>
 
   <div className=" flex justify-center items-center gap-2 pr-2">
-    {/* <div className=" w-[70px] h-[35px] md:w-[80px] md:h-[40px] rounded-full flex justify-center items-center border-[2px] border-solid border-x-border_grey font-Nunito text-black">Log in</div> */}
-  <div className="   w-[80px] h-[35px] md:w-[100px] md:h-[45px] rounded-full bg-button_green text-white flex justify-center items-center font-semibold font-Nunito  cursor-pointer"  onClick={getStartHandle}>Get Start</div>
+
+  <div className="   w-[80px] h-[35px] md:w-[100px] md:h-[45px] rounded-full bg-button_green text-white flex justify-center items-center font-medium text-sm font-Nunito  cursor-pointer"  onClick={getStartHandle}>Get Start</div>
+    <div className="   w-[80px] h-[35px] md:w-[100px] md:h-[45px] border-[2px] border-solid border-border_grey  rounded-full flex justify-center items-center font-medium text-sm font-Nunito  cursor-pointer"  onClick={()=>navigate("/login")}>Login</div>
+ 
   </div>
 
         </nav>

@@ -4,10 +4,8 @@ import { ToggleSetting } from "../../../happyexamReducer/auth";
 
 function Setting(){
 
-    
-    const user = useSelector((state)=>state.auth.user);
-    console.log(user)
     const dispatch = useDispatch()
+    const user = useSelector((state)=>state.auth.user);
     
 
 

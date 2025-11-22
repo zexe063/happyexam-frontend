@@ -1,24 +1,37 @@
-import { use, useState } from "react"
-import { PremiumHappyexamLogo, UnlimitedheartsIcon, Notes, Videoads, Newcontent} from "../../svgicon/icon"
+import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { UnlockPremium } from "../../happyexamReducer/auth";
+
+import { PremiumHappyexamLogo, UnlimitedheartsIcon, Notes, Videoads, Newcontent} from "../../svgicon/icon"
+import { userProgressEvent } from "../../happyexamReducer/auth";
+
 
 
 function Subscription(){
 const user = useSelector((state)=>state.auth.user)
 const dispatch = useDispatch()
- const navigate = useNavigate()
+const navigate = useNavigate()
+const [lock, setLock] = useState(true);
+const[ isLoading,setIsLoading]= useState(false)
+    
 
-    const [lock, setLock] = useState(true);
+    function HandleSubscription(){
+        if(!lock) return navigate(`/home/${user.userPreference.class_name}`);
+setLock(false);
+    setIsLoading(true)
 
-    function Premiumiunlock(){
-        if(lock){
-          setLock(false);
-          dispatch(UnlockPremium())
-           return;   
-        }
-  navigate(`/home/${user.class_name}`)
+         dispatch(userProgressEvent({action:"SUBSCRIPTION", userId:user._id})).then((res)=>{
+            console.log(res)
+            if(res?.payload?._id) {
+                setIsLoading(false);
+                setLock(false);
+            }
+            else {
+                setIsLoading(false);
+                setLock(true);
+            }
+         })
+        
     }
     const list = [
         {id:1, value:"Unlimited Hearts", icon:UnlimitedheartsIcon},
@@ -55,12 +68,21 @@ const dispatch = useDispatch()
 
 :  <div className=" flex flex-col justify-center items-center mt-10">
                 <div>{PremiumHappyexamLogo}</div>
-                <p className="w-[400px] md:w-full font-Nunito font-semibold md:text-[36px] text-[28px] flex justify-center items-center font tracking-wider ">Congratulations {user.Firstname}</p>
+                <p className="w-[400px] md:w-full font-Nunito font-semibold md:text-[36px] text-[28px] flex justify-center items-center font tracking-wider ">Congratulations {user.first_name}</p>
                 <p className="w-[400px] md:w-full font-Nunito md:text-[18px] text-[16px]  flex justify-center items-center font tracking-wider">you unlock the premium</p>
             </div>
            }
 
-        <button className="w-[350px] h-[48px] font-Nunito text-[16px] font-semibold tracking-wider bg-premiumUnlock_gradient shadow-premiumUnlock_shadow rounded-full text-white " onClick={()=>Premiumiunlock()}>{lock? 'TRY FOR  ₹0.00': "Continue"}</button>
+        <button className="w-[350px] h-[48px] font-Nunito text-[16px] font-semibold tracking-wider bg-premiumUnlock_gradient shadow-premiumUnlock_shadow rounded-full  flex justify-center items-center text-white " onClick={HandleSubscription}>
+        {
+        lock ? 'TRY FOR  ₹0.00'
+
+        : isLoading ? 
+         <div className=" w-5 h-5 animate-spin rounded-full border-[2px] border-solid border-white border-t-[#E350E3]"></div>
+
+           : "Continue"
+           }
+           </button>
         </div>
     )
 }

@@ -1,44 +1,41 @@
+import "./home.css"
+import 'react-loading-skeleton/dist/skeleton.css'
 
 import { useDispatch, useSelector } from "react-redux";
-import React, { useEffect, useRef, useState} from "react";
-import Streak from "./subcomponents/streak/streak";
+import { useEffect, useRef, useState} from "react";
+import {useLocation, useNavigate, useParams} from 'react-router-dom'
+import Skeleton from 'react-loading-skeleton'
 
- import {  getRecommendedChapter, getCourse} from "../../../happyexamReducer/happyexam";
- import Error from "../../error/error";
-  import {useLocation, useNavigate, useParams} from 'react-router-dom'
-  import 'swiper/css';
-  import 'swiper/css/pagination';
-  import 'swiper/css/effect-cards';
-  import {Swiper, SwiperSlide} from "swiper/react"
-  import {EffectCards, Pagination} from "swiper/modules"
-  import LottieLoading from "../../../loading/loading";
-import "./subject.css"
-import LeaderBoard from "./subcomponents/leaderboard/leaderboard";
-import Premium from "./subcomponents/premium/premium";
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-cards';
+import {Swiper, SwiperSlide} from "swiper/react"
+import {EffectCards, Pagination} from "swiper/modules"
+
+import {getCourse} from "../../../happyexamReducer/happyexam";
+import LeaderBoard from './leaderboard/leaderboard';
+import Premium from "./Premium/premium";
 
 
-function Subject(){
+function Home(){
   const user = useSelector((state)=>state.auth.user)
-    const  RecommendedChapter = useSelector((state)=>state.happyexam.RecommendedChapter);
-    const Loading = useSelector((state)=>state.happyexam.Loading)
-    
-   const navigate = useNavigate();
-   const dispatch = useDispatch()
-   const location = useLocation()
-   const mounted = useRef(false)
-   const params = useParams()
-   
-
- if(!user.id){
+  const  recommendedChapter = useSelector((state)=>state.auth.user.recommendedChapter);
+  const Loading = useSelector((state)=>state.happyexam.Loading)
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const location = useLocation()
+  const mounted = useRef(false)
+  const params = useParams()
+  
+  if(!user?._id){
   navigate("/")
  }
    
    useEffect(()=>{
     if(!mounted.current && !location?.state?.isClick){
-    dispatch(getRecommendedChapter(params.class_name))
     mounted.current = true;
     }
-   },[])
+   },[user, navigate])
 
     function NavigateChapter(){
   dispatch(getCourse({classId:params.classId}))
@@ -65,22 +62,20 @@ const [width, setWidth] = useState(0);
 
     return(
        <>  
-       {
-          Loading ? (<div className="w-full 
-            h-screen flex items-center justify-center"><LottieLoading></LottieLoading></div>)
-        :   
-             RecommendedChapter?.length ===0 ? <Error></Error>  
+    
+    
+   <section className=" relative w-full h-[cal(100vh-70px)]  items-center flex flex-col justify-center md:flex-row gap-5 md:gap-10 mt-5 overflow-auto">
+   
 
-     : <section className=" relative w-full h-[cal(100vh-70px)]  items-center flex flex-col justify-center md:flex-row gap-5 md:gap-10 mt-5 overflow-auto">
-   <div className=" flex flex-col justify-center items-center gap-4">
-
-<Streak></Streak>
-{!user.isPremium && isDesktop && <Premium></Premium>}
-{isDesktop && <LeaderBoard></LeaderBoard>}
+   { isDesktop &&  <div className=" flex flex-col justify-center items-center gap-4">
+{!user.isPremium &&<Premium></Premium>}
+<LeaderBoard></LeaderBoard>
    </div>
+}
 
-
- <div className="relative w-[364px] h-[424px] md:w-[550px] md:h-[500px]  self-start">
+{ Loading ?  <Skeleton width={isDesktop ? 487 :  359} height={  isDesktop ?497 :420} borderRadius={20}></Skeleton>
+ :
+  <div className="relative w-[380px] h-[424px] md:w-[500px] md:h-[500px]  self-start pl-4">
 <Swiper
 key={isDesktop ? 'desktop' : 'mobile'} 
       modules={isDesktop ? [EffectCards] : [Pagination]}
@@ -102,21 +97,21 @@ key={isDesktop ? 'desktop' : 'mobile'}
    
     >
 
-      { RecommendedChapter?.map((item, index) => {
+      { recommendedChapter?.map((item, index) => {
         return (
           <SwiperSlide key={item._id} className=" !w-[99.6%] h-full rounded-3xl border-[2px] border-solid  border-border_grey box-border bg-white font-Nunito ">
            
            <div className=" h-full w-full flex flex-col justify-center  items-center  gap-10 ">
             <div className="flex flex-col gap-2 justify-center items-center">
             <p className=" inline-block font-semibold  rounded-full px-3 py-1 text-[12px] text-recommended_color bg-recommended_background tracking-wider">RECOMMENDED</p>
-            <p className=" font-bold text-[18px]">{user.language === "english" ? item.chapter_name.english : item.chapter_name.hindi}</p>
+            <p className=" font-bold text-[18px]">{user?.userPreference?.language === "english" ? item?.chapter_name?.english : item?.chapter_name?.hindi}</p>
             </div>
 
             <div>
-              <img src={item.chapter_image} className=" w-[152p] h-[152px] md:w-[182px] md:h-[182px] object-contain"></img>
+              <img src={item.chapter_image} className=" w-[152px] h-[152px] md:w-[182px] md:h-[182px] object-contain"></img>
             </div>
 
-            <div className=" w-[80%]">
+            <div className=" w-[90%]">
             <button className=" w-full bg-start_background shadow-start h-[48px] rounded-full text-white font-medium  text-[16px]" onClick={NavigateChapter}>Start</button>
             </div>
 
@@ -127,14 +122,17 @@ key={isDesktop ? 'desktop' : 'mobile'}
       })}
     </Swiper>
 </div> 
+
+}
 {!user.isPremium && !isDesktop && <Premium></Premium>}
  {!isDesktop && <LeaderBoard></LeaderBoard>}    
 
 </section>
 
-  }  
+
+  
   </>
        
     )
 }
-export default Subject;
+export default Home;

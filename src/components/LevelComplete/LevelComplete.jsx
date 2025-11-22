@@ -1,13 +1,12 @@
-import Motion from "../dashboard/question/Motion";
-import {LevelCompleteIcon2, HEPicon, correct, wrong} from "../../svgicon/icon"
+
+
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import Lottie from "lottie-react";
- import Confetti from 'react-confetti'
- import {useWindowSize} from "react-use"
+import {LevelCompleteIcon2, HEPicon, correct, wrong} from "../../svgicon/icon"
+
+
 function LevelComplete(){
 
-const questionAnalysis = useSelector((state)=>state.happyexam.questionAnalysis);
+
     const params = useParams();
     const navigate = useNavigate()
     const  location = useLocation();

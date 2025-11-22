@@ -7,10 +7,12 @@ import { Toaster } from "react-hot-toast";
 
 
 function App() {
-  const store = useSelector((state)=>state.happyexam);
+  
+
 
     return (
-    <div className=" w-full h-full" >
+    <div className="w-full h-full" >
+    
 <Toaster></Toaster>
   <HomeHeader></HomeHeader>
  

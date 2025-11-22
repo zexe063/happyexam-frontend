@@ -1,93 +1,88 @@
 
 
-
+import { useEffect, useState,useRef} from "react";
 import { useSelector,useDispatch } from "react-redux";
-import { InlineMath, BlockMath } from "react-katex";
- import "katex/dist/katex.min.css";
-import Progress from "../progress/progress";
-import { useEffect, useState } from "react";
-import { ExplanationOpenOrClose, getQuestion, ToggleReport } from "../../../happyexamReducer/happyexam";
 import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
-import correctAudio from "../../../audio/correct.mp3";
-import wrongAudio from "../../../audio/wrong.mp3";
-import clickAudio from "../../../audio/click.mp3";
-import nextAudio from "../../../audio/next.mp3";
-import dndAudio from "../../../audio/dnd.mp3";
-import LottieLoading from "../../../loading/loading";
 import {Howl, Howler} from 'howler';
-import { HeartsDecrease, HeartsRefill } from "../../../happyexamReducer/auth";
+import { easeOut } from "motion";
+import {motion,easeInOut,AnimatePresence, px, color} from "motion/react";
 
+import "katex/dist/katex.min.css";
+import  Markdown  from "react-markdown";
+import ReactMarkdown from 'react-markdown';
+import rehypeKatex from "rehype-katex";
+import remarkMath from "remark-math";
+
+import correctAudio from "../../audio/correct.mp3";
+import wrongAudio from "../../audio/wrong.mp3";
+import clickAudio from "../../audio/click.mp3";
+import nextAudio from "../../audio/next.mp3";
+import dndAudio from "../../audio/dnd.mp3";
+import LottieLoading from "../../loading/loading";
+import Progress from "./progress/progress";
 
 import { TiTick } from "react-icons/ti";
 import { IoClose, IoGitNetworkOutline, IoSpeedometer } from "react-icons/io5";
 import { MdOutlinedFlag } from "react-icons/md";
-import Explanation from "./explanation/explanation";
-import Motion from "./Motion";
-import {motion,easeInOut,AnimatePresence, px, color} from "motion/react";
-import { easeOut } from "motion";
-import Error from "../../error/error";
-import ReportQuestion from "./ReportQuestion/ReportQuestion";
-import { useRef } from "react";
-import { increaseHEP, UserLevelCompleted } from "../../../happyexamReducer/auth";
-import Loading from "../../../loading/loading";
-import Lottie from "lottie-react";
-import tick from "./tick.json";
-import  Markdown  from "react-markdown";
- import ReactMarkdown from 'react-markdown';
-import rehypeKatex from "rehype-katex";
-import remarkMath from "remark-math";
-import { correctIcon,wrongIcon } from "../../../svgicon/icon";
 import { GrFormNext } from "react-icons/gr";
 import { IoIosArrowBack } from "react-icons/io";
+import { correctIcon,wrongIcon } from "../../svgicon/icon";
+
+import { ExplanationOpenOrClose, getQuestion, ToggleReport } from "../../happyexamReducer/happyexam";
+import { increaseHEP,userProgressEvent } from "../../happyexamReducer/auth";
+import Explanation from "./explanation/explanation";
+import MotionCounter from "../motionCounter/motionCounter";
+import Error from "../error/error";
+import Loading from "../../loading/loading";
+import ReportQuestion from "./ReportQuestion/ReportQuestion";
 import SubscriptionModel from "./subscriptionModel/subscriptionModel";
 
 
 function Question(){
 
+    const params = useParams();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-   const dispatch = useDispatch();
-    const  Questiondata = useSelector((state)=>state.happyexam.question);
-    const  Leveldata =  useSelector((state)=>state.happyexam.level);
-    
+    const user = useSelector((state)=>state.auth.user);
+    const Questiondata = useSelector((state)=>state.happyexam.question);
+    const Leveldata =  useSelector((state)=>state.happyexam.level)
     const explanation = useSelector((state)=>state.happyexam.explanation);
     const ToggleReportValue = useSelector((state)=>state.happyexam.ToggleReport);
-    const user = useSelector((state)=>state.auth.user);
-    console.log(user)
     const Loading = useSelector((state)=>state.happyexam.Loading);
-
-
-     const [isOptionSelect,SetisOptionSelect] = useState(false);
+    
+    const mounted = useRef(false);
+    const [isOptionSelect,SetisOptionSelect] = useState(false);
     const [OptionSelectedIndex, setOptionSelectedIndex] = useState(null)
     const [correct, setCorrect]  = useState(false)
-  const [correctIndex, setCorrectIndex] = useState(null);
+    const [correctIndex, setCorrectIndex] = useState(null);
     const [attempt, setAttempt] = useState(false);
     const [questionIndex, setQuetsionIndex] = useState(0);
-   const question =Questiondata[questionIndex];
-   const [questionAnalysisData, setQuestionAnaylsisData] = useState({correct:0, wrong:0})
-  //  const [correctSound] = useState((new Audio(correctAudio)))
+    const question =Questiondata[questionIndex];
+    const [questionAnalysisData, setQuestionAnaylsisData] = useState({correct:0, wrong:0})
+    const [isLevelLoading, setIsLevelLoading] = useState(false);
+    const  blank  = useRef();
+    const  [FillUp, setFillUp] = useState(false);
+    const [correctRow, setCorrectRow]= useState(0);
 
-  const correctSound = new Howl({
-    src:[correctAudio]
-  })
-   const wrongSound = new Howl({
-    src:[wrongAudio]
-  })
-   const clickSound = new Howl({
-    src:[clickAudio]
-  })
-   const nextSound  = new Howl({
-    src:[nextAudio]
-  })
-   const dndSound = new Howl({
-    src:[dndAudio]
-  })
-   const mounted = useRef(false);
- const params = useParams();
- const location = useLocation();
- const navigate = useNavigate();
-const  blank  = useRef();
-const  [FillUp, setFillUp] = useState(false);
- const [correctRow, setCorrectRow]= useState(0);
+    const correctSound = new Howl({
+      src:[correctAudio]
+     })
+    const wrongSound = new Howl({
+      src:[wrongAudio]
+      })
+    const clickSound = new Howl({
+      src:[clickAudio]
+     })
+    const nextSound  = new Howl({
+      src:[nextAudio]
+      })
+    const dndSound = new Howl({
+      src:[dndAudio]
+     })
+
+ 
 
 
 
@@ -141,12 +136,12 @@ setOptionSelectedIndex(index);
 },10)
 
 }
-// end of if and elese
+// end of if and else
 
   }
  
 
- if(!user.id){
+ if(!user?._id){
   navigate("/")
  }
 
@@ -191,22 +186,36 @@ setOptionSelectedIndex(index);
 
  // CHECK CORRECT ROW;
  setCorrectRow(0)
-  !user.isPremium && dispatch(HeartsDecrease())
+ const action = {action:"HEART-LOST", userId:user._id}
+  !user.isPremium && dispatch(userProgressEvent(action));
+   
       
     }
    }
  
    function HandleContinue(e){
-  
+    
     if(attempt){
   
       if(questionIndex ===  Questiondata.length-1){
-
+   setIsLevelLoading(true)
          dispatch(increaseHEP(+questionAnalysisData.correct*10))
-        const  obj = {chapterId:Leveldata[0].chapterId, chapter_name:{...Leveldata[0].chapter_name},levelId:Questiondata[0].levelId}
-          dispatch(UserLevelCompleted(obj))
-        navigate(`/course/${params.class_name}/${params.subject_name}/${params.chapter_name}/${params.level_name}/completed`,{state:{questionAnalysisData:questionAnalysisData}})
-        return;
+        const LevelCompletedData = {userId:user._id, action:"LEVEL-COMPLETED", payload:{chapterId:Leveldata[0].chapterId, chapter_name:{...Leveldata[0].chapter_name},levelId:Questiondata[0].levelId, HEP:questionAnalysisData.correct*10}};
+       
+
+          dispatch(userProgressEvent(LevelCompletedData)).then((res)=>{
+             
+             if(res?.payload?._id){
+              setIsLevelLoading(false);
+              return navigate(`/course/${params.class_name}/${params.subject_name}/${params.chapter_name}/${params.level_name}/completed`,{state:{questionAnalysisData:questionAnalysisData}})
+             }
+             else{
+              setIsLevelLoading(false);
+           alert("something went wrong")
+             }
+          })
+
+        
       }
       else{
         
@@ -290,7 +299,7 @@ setOptionSelectedIndex(index);
                  
              <p className=" w-full h-auto flex flex-col gap-2 font-normal">
                <ReactMarkdown 
-            rehypePlugins={[rehypeKatex]} remarkPlugins={[remarkMath]}>{user.language ==="english"?(question.question_name.english).replace(/<br>/g, '\n\n'): question.question_name.hindi}</ReactMarkdown>
+            rehypePlugins={[rehypeKatex]} remarkPlugins={[remarkMath]}>{user?.userPreference?.language ==="english"?(question.question_name.english).replace(/<br>/g, '\n\n'): question.question_name.hindi}</ReactMarkdown>
              </p> 
 
              </div>
@@ -318,7 +327,7 @@ setOptionSelectedIndex(index);
 
             {
               
-              question.option?.[user.language === "english"?"english" : "hindi"].map((item,index)=>{
+              question.option?.[user?.userPreference?.language === "english"?"english" : "hindi"].map((item,index)=>{
                       
                 return question.question_type === "DND" ? (
                       <div  className="w-[48px] h-[48px] rounded-lg bg-[#f2f2f2]">
@@ -352,7 +361,7 @@ setOptionSelectedIndex(index);
                    
                    <span  className={` ml-2 flex-shrink-0   font-Nunito w-[22px] h-[22px]  text-[13px] flex justify-center items-center ${OptionSelectedIndex  === index ?   " bg-tick_bg_blue text-white " : correctIndex === index ? correct ? " bg-tick_bg_green text-white" : " bg-tick_bg_red text-white" : " text-black  bg-tick_bg"}  rounded-full font-semibold`}>
 
-                  {user.language === "english"? String.fromCharCode(65+index) : String.fromCharCode(2325 + index)}
+                  {user?.userPreference?.language === "english"? String.fromCharCode(65+index) : String.fromCharCode(2325 + index)}
                         
                       </span>
 
@@ -410,11 +419,11 @@ setOptionSelectedIndex(index);
       <span>{correct ? correctIcon : wrongIcon}</span>
       <p className="font-Nunito text-black text-[22px]  md:text-[16px]  flex justify-center items-center gap-2 font-semibold">
 
-        {user.language === "english" ? correct ? " Correct" : "here is answer" : correct ? "सही जवाब" : "आपका उत्तर है:" }
+        {user?.userPreference?.language === "english" ? correct ? " Correct" : "here is answer" : correct ? "सही जवाब" : "आपका उत्तर है:" }
         {
-        correct ?  <span className=" text-[14px]  text-text_motion_green"> +<Motion value={15}></Motion></span> 
+        correct ?  <span className=" text-[14px]  text-text_motion_green"> +<MotionCounter value={10} /></span> 
         :
-        <span>  {user.language === "english"? String.fromCharCode(65+question.answer) : String.fromCharCode(2325 + question.answer)}</span>
+        <span>  {user?.userPreference?.language === "english"? String.fromCharCode(65+question.answer) : String.fromCharCode(2325 + question.answer)}</span>
         }
 
       </p>
@@ -425,7 +434,18 @@ setOptionSelectedIndex(index);
 
     <div className=" mb-2 flex justify-between px-2">
       <button  onClick={()=>dispatch(ExplanationOpenOrClose(true))} className="w-[30%] h-[48px] bg-why_grey shadow-why text-black font-Nunito font-medium rounded-full">Why?</button>
-      <button className={`w-[65%] h-[48px] text-white font-Nunito font-medium rounded-full ${correct ? "bg-button_green  shadow-correct_shadow" : "bg-background_black shadow-black"}`} onClick={HandleContinue}>{Questiondata.length-1 === questionIndex  ? "Level complete" : "Continue"}</button>
+
+      <button  className={`w-[65%] h-[48px] text-white font-Nunito font-medium rounded-full ${correct ? "bg-button_green  shadow-correct_shadow" : "bg-background_black shadow-black"} flex justify-center items-center`} onClick={HandleContinue}>
+
+        {
+        Questiondata.length-1 === questionIndex  ? isLevelLoading ? 
+
+       <div className={` w-5 h-5 animate-spin rounded-full border-[2px] border-solid border-white ${correct? "border-t-[#29cc57]" : "border-t-[#000000cc]"}  `}></div>
+        : "Level complete"
+        :"Continue"
+        }
+        
+        </button>
     </div>
   </div>
 
@@ -441,7 +461,7 @@ setOptionSelectedIndex(index);
 
              {/* here the explaintion  */}
           {explanation ? <Explanation data={Questiondata[questionIndex]}></Explanation> :  null}
-          {!user.isPremium && user.Hearts <1 && <SubscriptionModel></SubscriptionModel>}
+          {!user.isPremium && user.hearts <1 && <SubscriptionModel></SubscriptionModel>}
 
 
 

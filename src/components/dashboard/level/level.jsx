@@ -1,32 +1,31 @@
 import { useEffect, useRef, useState } from "react";
-import {LevelNormal, LevelSolve, LevelCompleted} from "../../../svgicon/icon"
-import LottieLoading from "../../../loading/loading";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+
+import LottieLoading from "../../../loading/loading";
+import { LevelNormal, LevelSolve, LevelCompleted } from "../../../svgicon/icon"
 import { getLevel, getQuestion } from "../../../happyexamReducer/happyexam";
-import Error from "../../error/error";
 
 
 
 function Level() {
 
-    
-
-    const level = useSelector((state) => state.happyexam.level);
-    const Loading = useSelector((state) => state.happyexam.Loading);
-    const user = useSelector((state)=>state.auth.user)
-    const mounted = useRef(false)
-    const location = useLocation()
-
-    const startX = window.innerWidth / 2;
-    const startY = 110;
     const params = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate()
-  const chapter = location?.state?.chapter
-  console.log(chapter)
 
-    if(!user.id){
+    const user = useSelector((state)=>state.auth.user)
+    const level = useSelector((state) => state.happyexam.level);
+    const Loading = useSelector((state) => state.happyexam.Loading);
+
+    const mounted = useRef(false)
+    const location = useLocation()
+    const startX = window.innerWidth / 2;
+    const startY = 110;
+    const chapter = location?.state?.chapter
+
+
+    if(!user?._id){
         navigate("/")
        }
 
@@ -81,13 +80,6 @@ function Level() {
 
                     </div>
                 </div>
-            
-
-
-
-
-
-
                 
         }
   </>
@@ -95,5 +87,6 @@ function Level() {
 }
 
 export default Level;
+
 
 

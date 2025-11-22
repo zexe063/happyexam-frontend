@@ -12,6 +12,36 @@ module.exports = {
   theme: {
     extend: {
       colors:{
+
+
+   gray:{
+    50: "#fcf9f9",
+    A50: "#FFF0F0",
+    B50: "#FEEDED",
+
+    100: "#f7f7f7",
+    A100: "#F8F4F4",
+    B100: "#F7F3F3",
+    C100: "#F1EFEF",
+    D100: "#FCD6D6",
+    
+    200: "#e8e8e8",
+    A200: "#EEEDED",
+    B200: "#E6E0E0",
+    C200: "#E5E5E5",
+    
+    300: "#E3E3E3",
+    A300: "#EAD9D9",
+    B300: "#DFBBBB",
+    
+    400: "#afafaf",
+    
+    800: "#041326",
+    A800: "#061527",
+    
+    why: "rgba(0, 0, 0, 0.05)",
+  },
+
           level_grey:"#E5E5E5",
           level_text_grey:"#e8e8e8",
           check_grey:"#F1EFEF",
@@ -20,7 +50,7 @@ module.exports = {
           option_background_grey:"#FEEDED",
           option_text_grey:"#DFBBBB",
           linear_grey:"#FFF0F0",
-           border_grey:"#e5e5e5",
+          border_grey:"#e5e5e5",
            background_grey:"#e8e8e8",
            text_grey:"#E3E3E3",
            chapter_text_grey:'#FCD6D6',
@@ -123,8 +153,6 @@ module.exports = {
 background_black:"#000c",
 
 // GRADIENT
-
-
         premium_button :"#FFC107"
         
 
@@ -201,18 +229,13 @@ background_black:"#000c",
   
       
       backgroundImage:{
-        "Maths" :  `linear-gradient(to top, rgba(213, 226, 252, 0.7) 0%, white 100%), url("/Vector1.png")`,
-        'Physics': 'linear-gradient(to top, rgba(255, 230, 162, 0.7) 0%, white 100%), url("/Vector2.png")',
-        "Chemistry" :  'linear-gradient(to top, rgba(213, 226, 252, 0.7) 0%, white 100%), url("/Vector3.png")',
-        "Biology" :  'linear-gradient(to top, rgba(167, 255, 171, 0.7) 0%, white 100%), url("/Vector4.png")',
+       
         "clip" : 'url("/clip.png")',
          "header":`linear-gradient(to top, white,transparent), url("/header.svg")`,
-         
         "subject_gradeint": "linear-gradient(to top, #FFF7EE, #FFFFFF)",
         "chapter_gradeint": "linear-gradient(to top, #CCDEFF, #FFFFFF)",
         "motivated_gradeint":  "linear-gradient(to top, #FDFECD, #FFFFFF)",
         "payment_gradeint":  "linear-gradient(to top, #B5FCBD, #FFFFFF)",
-        "Testimonials" : "url('/Testimonials.png')",
         premium_gradient: 'linear-gradient(135deg,#EEF2FE 14.42%,#F7EBCA 39.35%,#ECE7D8 71.76%,#FBCEE2 94.22%)',
         premiumUnlock_gradient:'linear-gradient(90deg, #ABBDFF 0%, #E350E3 50%, #F7C325 100%)'
         

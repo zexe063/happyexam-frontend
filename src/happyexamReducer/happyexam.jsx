@@ -1,12 +1,11 @@
 
 import {  createAsyncThunk, createSlice } from "@reduxjs/toolkit"
- import axios from "axios"
-import {useSelector} from 'react-redux'
+import axios from "../config/axiosInstance"
 
 export const getRecommendedChapter = createAsyncThunk(
   "getRecommendedChapter",
   async(class_name)=>{
-const HometData =  await axios.get(`https://happyexambackend2-0.vercel.app/home/${class_name}`)
+const HometData =  await axios.get(`/home/${class_name}`)
 return HometData.data
   } 
 )
@@ -15,7 +14,7 @@ return HometData.data
 export const getCourse = createAsyncThunk(
   "getCourse",
   async({class_name})=>{
-    const CourseData = await axios.get(`https://happyexambackend2-0.vercel.app/course/${class_name}`)
+    const CourseData = await axios.get(`/course/${class_name}`)
     return CourseData.data
   }
 )
@@ -23,29 +22,9 @@ export const getCourse = createAsyncThunk(
 export const getLevel = createAsyncThunk(
   "getLevel",
   async({class_name,subject_name, chapter_name}, thunkAPI)=>{
-    const state  = thunkAPI.getState();
-    const LevelCompleted = state.auth.user.LevelCompleted;
-    const LevelData = await axios.get(`https://happyexambackend2-0.vercel.app/level/${class_name}/${subject_name}/${chapter_name}`)
-  
-   const chapter =  LevelCompleted.find((item)=> item.chapterId === LevelData.data[0].chapterId)?.levels || []
-   const NewLevel = LevelData.data.map((level)=>{
-  return {...level, isCompleted: chapter.includes(level._id )}
-   })
+    const LevelData = await axios.get(`/level/${class_name}/${subject_name}/${chapter_name}`, {withCredentials:true})
 
-   for(let i=0; i<NewLevel.length;i++){
-     if(!NewLevel[i]?.isCompleted) {
-         NewLevel[i] = {...NewLevel[i], isSolveable:true}
-         break;
-     }
-   }
-
-   console.log(NewLevel)
-
-   
-    
- 
-    
-     return NewLevel
+  return LevelData.data;
   } 
 )
 
@@ -53,7 +32,7 @@ export const getQuestion = createAsyncThunk(
   "getQuestion",
   async({class_name,subject_name, chapter_name, level_name})=>{
     
-    const QuestionData = await axios.get(`https://happyexambackend2-0.vercel.app/question/${class_name}/${subject_name}/${chapter_name}/${level_name}`);
+    const QuestionData = await axios.get(`/question/${class_name}/${subject_name}/${chapter_name}/${level_name}`);
     return QuestionData.data;
   }
 )
@@ -61,7 +40,7 @@ export const getQuestion = createAsyncThunk(
 export const  createReportQuestion =   createAsyncThunk(
   "createReportQuetsion",
   async(ReportValue)=>{
-    const  data = await axios.post("https://happyexambackend2-0.vercel.app/ReportQuestion",{questionId:ReportValue.questionId, value:ReportValue.value});
+    const  data = await axios.post("/ReportQuestion",{questionId:ReportValue.questionId, value:ReportValue.value});
    console.log(data)
       if(data.status === 200){
         // toast.success("Report Sucessful")

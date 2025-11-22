@@ -1,13 +1,13 @@
+import { useEffect, useRef } from "react";
 import { useLocation, useNavigate,useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {  getCourse, getLevel } from "../../../happyexamReducer/happyexam";
+
 import LottieLoading from "../../../loading/loading";
 import Error from "../../error/error";
-import React, { useEffect, useRef } from "react";
+import { getCourse, getLevel } from "../../../happyexamReducer/happyexam";
 
-import { SwiperSlide, Swiper } from "swiper/react";
-import 'swiper/css';
-import "./chapter.css"
+
+
 
 function Chapter(){
 
@@ -23,7 +23,7 @@ function Chapter(){
     const params = useParams();
    
 
-    if(!user.id){
+    if(!user?._id){
         navigate("/")
        } 
     useEffect(()=>{
@@ -73,7 +73,7 @@ function Chapter(){
           {subject.chapter && subject.chapter.length > 0 ? 
 
        <div className=" flex flex-col gap-2">
-        <p className=" font-Nunito font-semibold text-[24px] ml-6">{user.language ==="english"?subject.subject_name.english : subject.subject_name.hindi}</p>
+        <p className=" font-Nunito font-semibold text-[24px] ml-6">{user?.userPreference?.language ==="english"?subject.subject_name.english : subject.subject_name.hindi}</p>
 
 {/* here the chapter render */}
         <div className=" w-full   items-center  overflow-x-auto flex  gap-3 px-5 py-2 bg-course_grey" id="chapter" >
@@ -85,10 +85,10 @@ function Chapter(){
                         <div key={chapter._id} className=" mt-2 md:mt-8 flex flex-col gap-2 justify-start items-center h-[230px] md:h-[260px]">
                             
                             <div  key={index} className="select-none  flex justify-center items-center w-[150px] h-[150px] md:w-[180px] md:h-[175px] bg-white border-[2px] border-solid border-border_grey rounded-[20px] shadow-grey_shadow cursor-pointer font-Nunito text-[12px] md:text-[15px]" onClick={()=>navigateLevel(chapter)}> 
-                               {chapter?.chapter_image ? <img  src={chapter.chapter_image} style={{width:"100px", height:"100px", objectFit:"contain"}}></img> : "image not found"}
+                               {chapter?.chapter_image ? <img  src={chapter?.chapter_image} style={{width:"100px", height:"100px", objectFit:"contain"}}></img> : "image not found"}
                             </div>
                             <p className=" font-Nunito text-center font-medium">
-                                {user.language ==="english" ? chapter.chapter_name.english : chapter.chapter_name.hindi}
+                                {user?.userPreference?.language ==="english" ? chapter.chapter_name.english : chapter.chapter_name.hindi}
                             </p>
             
                           </div>

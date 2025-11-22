@@ -1,27 +1,46 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "../config/axiosInstance";
+
+
+
+
+export const userSignup = createAsyncThunk(
+  "userSignup",
+ async(UsersignupData)=>{
+   const  data = await axios.post("/user/signup", UsersignupData);
+    if(data.status === 200) return data.data;
+     else{
+  alert("something went wrong.please try again later?")
+ }
+ }
+)
+export const userLogin = createAsyncThunk(
+  "userLogin",
+ async(UserloginData)=>{
+   const  data = await axios.post("/user/login", UserloginData, {withCredentials:true});
+    if(data.status === 200) return data.data;
+    else alert("something went wrong.please try again later?")
+ 
+ }
+)
+
+export const userProgressEvent = createAsyncThunk(
+  "userProgressEvent",
+  async(userProgressEventData)=>{
+    const data = await axios.put("/user/progress/event", userProgressEventData);
+    
+   if(data.status === 200) return data.data.response;
+    else alert("something went wrong.please try again later?")
+  }
+)
+
 
 
 
 const auth = createSlice({
     name:"auth",
     initialState:{
-        user:{
-          id:null,
-          Firstname:null,
-          Lastname:null,
-          email:null,
-          class_name:null,
-          language: null,
-          find:null,
-          time:null,
-          ExamKey:0,
-          OnStreak:0,
-          LongestStreak:0,
-          HEP:0,
-         LevelCompleted:[1,2,3]
-          
-    
-        }
+        user:{}
     },
     reducers:{
       getUser: (state,action)=>{
@@ -36,43 +55,51 @@ const auth = createSlice({
           state.user.HEP +=  action.payload
          },
 
-         UserLevelCompleted:(state,action)=>{
-           
-           const  obj = {chapterId:action.payload.chapterId, chapter_name:{...action.payload.chapter_name},levels:[action.payload.levelId]}
-
-          if(state.user.LevelCompleted.length  === 0){ state.user.LevelCompleted.push(obj)}
-          
-  else{  
-   
-  state.user.LevelCompleted.some((item)=>item.chapterId === action.payload.chapterId)  ?
-
-   state.user.LevelCompleted.forEach((item)=>  item.chapterId === action.payload.chapterId  ?  item.levels.some((id)=> id  ===  action.payload.levelId) ? null :  item.levels.push(action.payload.levelId ) : null ) :
-   
-   state.user.LevelCompleted.push(obj)
-
-  }
-           
-         },
 
          UserAvatarSave:(state,action)=>{
-         state.user.Avatar =  action.payload;
-         },
-
-        
-         HeartsDecrease :(state,action)=>{
-          state.user.Hearts -= 1
-         },
-         HeartsRefill:(state,action) =>{
-            state.user.Hearts = 3
-         },
-        UnlockPremium:(state,action)=>{
-        state.user.isPremium = true
-        }
-     
+         state.user.avatar =  action.payload;
+         }
          
+    },
+
+    extraReducers:(builder)=>{
+       builder.addCase(userSignup.pending, (state,action)=>{
+        
+       })
+
+        builder.addCase(userSignup.fulfilled, (state,action)=>{
+            state.user  = action.payload;
+        })
+         builder.addCase(userSignup.rejected, (state,action, err)=>{
+           console.log(err)
+           
+         })
+
+           builder.addCase(userLogin.pending, (state,action)=>{
+        
+       })
+
+        builder.addCase(userLogin.fulfilled, (state,action)=>{
+           state.user = action.payload;
+           
+        })
+         builder.addCase(userLogin.rejected, (state,action, err)=>{
+           console.log(err)
+           
+         })
+
+        builder.addCase(userProgressEvent.fulfilled,(state,action)=>{
+          state.user = action.payload || state.user;
+         
+
+        })
+
+         builder.addCase(userProgressEvent.rejected,(state,action,err)=>{
+          console.log(err)
+         })
     }
 })
 
-export const  { getUser, ToggleSetting, increaseHEP, UserLevelCompleted, UserAvatarSave, HeartsDecrease, HeartsRefill, UnlockPremium} = auth.actions
+export const  {  getUser, ToggleSetting, increaseHEP, UserAvatarSave} = auth.actions
 
 export default auth.reducer;
