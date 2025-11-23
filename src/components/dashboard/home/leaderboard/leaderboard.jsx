@@ -34,7 +34,7 @@ return (
 <div className=" relative w-[90%] h-[55px]  rounded-2xl  bg-[#f7f7f7] flex items-center justify-between px-6">
         
         <div className=" flex items-center gap-5">
-            <img className=" w-[48px] h-[48px] rounded-full inline-block"  src={`../Avatar/${user?.avatar?.id}.svg`} style={{backgroundColor:`${user?.avatar?.bgcolor}`}} ></img>
+            <img className=" w-[48px] h-[48px] rounded-full inline-block"  src={`/Avatar/${user?.avatar?.id}.svg`} style={{backgroundColor:`${user?.avatar?.bgcolor}`}} ></img>
              <p className=" text-[#AfAfaf] font-medium tracking-wide text-[15px] ">{user?.first_name}</p>
         </div>
 

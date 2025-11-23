@@ -1,5 +1,12 @@
 
 
+
+
+
+
+
+
+
 import { useEffect, useState,useRef} from "react";
 import { useSelector,useDispatch } from "react-redux";
 import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
@@ -51,6 +58,7 @@ function Question(){
     const explanation = useSelector((state)=>state.happyexam.explanation);
     const ToggleReportValue = useSelector((state)=>state.happyexam.ToggleReport);
     const Loading = useSelector((state)=>state.happyexam.Loading);
+      const isServerError = useSelector((state)=>state.happyexam.isServerError);
     
     const mounted = useRef(false);
     const [isOptionSelect,SetisOptionSelect] = useState(false);
@@ -63,7 +71,7 @@ function Question(){
     const [questionAnalysisData, setQuestionAnaylsisData] = useState({correct:0, wrong:0})
     const [isLevelLoading, setIsLevelLoading] = useState(false);
     const  blank  = useRef();
-    const  [FillUp, setFillUp] = useState(false);
+    const [FillUp, setFillUp] = useState(false);
     const [correctRow, setCorrectRow]= useState(0);
 
     const correctSound = new Howl({
@@ -268,6 +276,9 @@ setOptionSelectedIndex(index);
 
 
    
+       function HandleRetry(){
+         dispatch(getQuestion(params))
+       }
 
     
     return(
@@ -277,7 +288,7 @@ setOptionSelectedIndex(index);
     (<div className=" w-full
     h-full flex items-center justify-center"><LottieLoading></LottieLoading></div>)
 
-    :Questiondata?.length  === 0 ? (<Error></Error>)
+    : isServerError? <Error HandleRetry={HandleRetry}></Error>
 
     : 
 

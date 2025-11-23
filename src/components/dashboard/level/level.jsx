@@ -1,10 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import LottieLoading from "../../../loading/loading";
 import { LevelNormal, LevelSolve, LevelCompleted } from "../../../svgicon/icon"
 import { getLevel, getQuestion } from "../../../happyexamReducer/happyexam";
+
+import Error from "../../error/error";
 
 
 
@@ -14,9 +16,12 @@ function Level() {
     const dispatch = useDispatch();
     const navigate = useNavigate()
 
+
     const user = useSelector((state)=>state.auth.user)
     const level = useSelector((state) => state.happyexam.level);
     const Loading = useSelector((state) => state.happyexam.Loading);
+    const isServerError = useSelector((state)=>state.happyexam.isServerError);
+    
 
     const mounted = useRef(false)
     const location = useLocation()
@@ -46,13 +51,18 @@ function Level() {
     }
 
 
+    function HandleRetry(){
+      dispatch(getLevel(params))
+    }
+
 
     return (
 
        <>
         {
-            Loading ? (<div className=" relative w-full  h-screen
-                flex items-center justify-center"><LottieLoading></LottieLoading> </div>) :
+            Loading ? (<div className=" relative w-full  h-screenflex items-center justify-center"><LottieLoading></LottieLoading> </div>) :
+              
+            isServerError ? <Error HandleRetry={HandleRetry}></Error> : 
                 <div className="   relative top-[20px] flex flex-col gap-10 justify-center items-center">
 
                     {/* here the level part */}

@@ -26,7 +26,7 @@ function Home(){
   const location = useLocation()
   const mounted = useRef(false)
   const params = useParams()
-  
+
   if(!user?._id){
   navigate("/")
  }

@@ -1,4 +1,4 @@
-import React, { version } from 'react';
+import React, { lazy } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
@@ -8,22 +8,23 @@ import happyexamReducer from "./happyexamReducer/happyexam";
 import  authReducer from "./happyexamReducer/auth"
 import { Route, Router, RouterProvider,createBrowserRouter, createRoutesFromChildren} from 'react-router-dom';
 import {persistStore, persistReducer}  from "redux-persist"
+import { PersistGate } from 'redux-persist/integration/react';
 import storage from "redux-persist/lib/storage"
 import sessionStorage from 'redux-persist/es/storage/session';
-import Welcome from './components/welcome/welcome';
-import Dashboard from './components/dashboard/dashboard';
-import Home from './components/dashboard/home/home';
-import Chapter from './components/dashboard/chapter/chapter';
-import Level from './components/dashboard/level/level';
-import Question from './components/question/question';
-import LandingPage from './landingpage/landingpage';
-import LevelComplete from './components/LevelComplete/LevelComplete';
-import Profile from './components/profile/profile';
-import Signup from './components/auth/signup/signup';
-import Login from './components/auth/login/login';
-import Avatar from './components/avatar/avatar';
-import { PersistGate } from 'redux-persist/integration/react';
-import Subscription from './components/subscription/subscription';
+
+const Welcome  = lazy(()=>import('./components/welcome/welcome'));
+const Dashboard  = lazy(()=>import('./components/dashboard/dashboard'));
+const Home = lazy(()=> import('./components/dashboard/home/home'));
+const  Chapter = lazy(()=>import('./components/dashboard/chapter/chapter'));
+const Level  =  lazy(()=>import('./components/dashboard/level/level'));
+const  Question  = lazy(()=>import( './components/question/question'));
+const  LandingPage  = lazy(()=>import('./landingpage/landingpage'));
+const  LevelComplete = lazy(()=>import('./components/LevelComplete/LevelComplete'));
+const  Profile  = lazy(()=>import('./components/profile/profile'));
+const Signup = lazy(()=>import('./components/auth/signup/signup'));
+const Login =  lazy(()=>import('./components/auth/login/login'));
+const Avatar = lazy(()=>import('./components/avatar/avatar'));
+const Subscription = (()=>import('./components/subscription/subscription'));
 
 
 

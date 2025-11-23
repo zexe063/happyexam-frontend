@@ -47,7 +47,7 @@ function Header(){
   
 
  <div className=" w-[35px] h-[35px] rounded-full cursor-pointer" onClick={()=>navigate("/profile")} style={{backgroundColor:`${user?.avatar?.bgcolor}`}}>
-   <img src={`../Avatar/${user?.avatar?.id}.svg`}  alt="avatar" className=" rounded-full"></img>
+   <img src={`/Avatar/${user?.avatar?.id}.svg`}  alt="avatar" className=" rounded-full"></img>
      </div>
 
       </div>

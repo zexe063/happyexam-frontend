@@ -34,7 +34,7 @@ const user = useSelector((state)=>state.auth.user);
         <div className=" relative w-[90%] h-[200px]  rounded-xl flex justify-center items-center" style={{backgroundColor:`${user?.avatar?.bgcolor}`}}>
     <button className="w-[40px] h-[36px] rounded-xl shadow-grey_shadow border-[2px] border-solid border-border_grey bg-white  absolute right-3 top-2 flex justify-center items-center" onClick={()=>navigate("/avatar")}><MdEdit size={21}></MdEdit></button>
 
-            <img src={`../Avatar/${user?.avatar?.id}.svg`} width={180} height={180}></img>
+            <img src={`/Avatar/${user?.avatar?.id}.svg`} width={180} height={180}></img>
         </div>
         <div className=" font-Nunito text-base self-start border-b-[2px] border-solid border-border_grey w-[90%] p-2 py-4 ml-4">
             <p className=" font-semibold text-[15px]" >{user?.first_name}</p>

@@ -12,13 +12,14 @@ import { getCourse, getLevel } from "../../../happyexamReducer/happyexam";
 function Chapter(){
 
 
-      
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const location = useLocation() 
+
+    const user = useSelector((state)=>state.auth.user);
     const course = useSelector((state)=>state.happyexam.course);
     const Loading = useSelector((state) => state.happyexam.Loading);
-    const user = useSelector((state)=>state.auth.user);
-    const navigate =useNavigate()
-    const dispatch = useDispatch()
-    const location =  useLocation()
+    const isServerError = useSelector((state)=>state.happyexam.isServerError)
     const mounted = useRef(false)
     const params = useParams();
    
@@ -26,6 +27,7 @@ function Chapter(){
     if(!user?._id){
         navigate("/")
        } 
+
     useEffect(()=>{
         if(!mounted.current && !location?.state?.isClick){
           dispatch(getCourse(params))
@@ -42,7 +44,9 @@ function Chapter(){
 
     }
 
-    
+    function HandleRetry(){
+       dispatch(getCourse(user.userPreference.class_name))
+    }
    
 
 
@@ -55,7 +59,7 @@ function Chapter(){
           Loading ? (<div className="w-full 
             h-screen flex items-center justify-center"><LottieLoading></LottieLoading></div>)
         :   
-             course?.length ===0 ? <Error></Error>  
+              isServerError ? <Error HandleRetry={HandleRetry}></Error>  
 
      :
       <section className=" relative  py-10  w-full h-[calc(100vh-70px)] overflow-x-hidden">

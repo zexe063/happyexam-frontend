@@ -6,32 +6,46 @@ import axios from "../config/axiosInstance";
 
 export const userSignup = createAsyncThunk(
   "userSignup",
- async(UsersignupData)=>{
+ async(UsersignupData, {rejectWithValue})=>{
+  try{
    const  data = await axios.post("/user/signup", UsersignupData);
-    if(data.status === 200) return data.data;
-     else{
-  alert("something went wrong.please try again later?")
- }
+     return data.data;
+  } 
+  catch(err){
+    return rejectWithValue(err.response.data || {err:"Something went wrong"});  
+  }
+  
+     
  }
 )
 export const userLogin = createAsyncThunk(
   "userLogin",
- async(UserloginData)=>{
-   const  data = await axios.post("/user/login", UserloginData, {withCredentials:true});
-    if(data.status === 200) return data.data;
-    else alert("something went wrong.please try again later?")
- 
+ async(UserloginData, {rejectWithValue})=>{
+
+  try{
+
+   const  data = await axios.post("/user/login", UserloginData);
+    return data.data;
+  }
+  catch(err){ 
+   return rejectWithValue(err?.response?.data);
+  }
+
+
  }
 )
 
 export const userProgressEvent = createAsyncThunk(
   "userProgressEvent",
-  async(userProgressEventData)=>{
-    const data = await axios.put("/user/progress/event", userProgressEventData);
-    
-   if(data.status === 200) return data.data.response;
-    else alert("something went wrong.please try again later?")
+  async(userProgressEventData, {rejectWithValue})=>{
+  try{
+   const  {data} = await axios.put("/user/progress/event", userProgressEventData);
+    return data.response
   }
+  catch(err){
+       return rejectWithValue(err.response.data);
+  }
+}
 )
 
 
@@ -63,39 +77,30 @@ const auth = createSlice({
     },
 
     extraReducers:(builder)=>{
-       builder.addCase(userSignup.pending, (state,action)=>{
-        
-       })
 
         builder.addCase(userSignup.fulfilled, (state,action)=>{
             state.user  = action.payload;
         })
-         builder.addCase(userSignup.rejected, (state,action, err)=>{
-           console.log(err)
+         builder.addCase(userSignup.rejected, (state,action)=>{
+           
            
          })
 
-           builder.addCase(userLogin.pending, (state,action)=>{
         
-       })
-
         builder.addCase(userLogin.fulfilled, (state,action)=>{
            state.user = action.payload;
            
         })
-         builder.addCase(userLogin.rejected, (state,action, err)=>{
-           console.log(err)
+         builder.addCase(userLogin.rejected, (state,action)=>{
            
          })
 
         builder.addCase(userProgressEvent.fulfilled,(state,action)=>{
-          state.user = action.payload || state.user;
+            Object.assign(state.user, action.payload);
          
-
         })
 
-         builder.addCase(userProgressEvent.rejected,(state,action,err)=>{
-          console.log(err)
+         builder.addCase(userProgressEvent.rejected,(state,action)=>{
          })
     }
 })
