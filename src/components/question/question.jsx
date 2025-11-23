@@ -40,7 +40,6 @@ import { increaseHEP,userProgressEvent } from "../../happyexamReducer/auth";
 import Explanation from "./explanation/explanation";
 import MotionCounter from "../motionCounter/motionCounter";
 import Error from "../error/error";
-import Loading from "../../loading/loading";
 import ReportQuestion from "./ReportQuestion/ReportQuestion";
 import SubscriptionModel from "./subscriptionModel/subscriptionModel";
 
