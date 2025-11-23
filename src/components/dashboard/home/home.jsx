@@ -14,7 +14,7 @@ import {EffectCards, Pagination} from "swiper/modules"
 
 import {getCourse} from "../../../happyexamReducer/happyexam";
 import LeaderBoard from './leaderboard/leaderboard';
-import Premium from "./Premium/premium";
+import Premium from "./premium/premium";
 
 
 function Home(){
