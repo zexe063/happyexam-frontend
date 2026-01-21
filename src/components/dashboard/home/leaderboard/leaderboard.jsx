@@ -10,8 +10,8 @@ return (
 
     <>
     {
-         Loading? <Skeleton width={360} height={400} borderRadius={16}></Skeleton> : 
-    <section className=" w-[360px] max-w-[400px]  h-[440px] border-[2px] border-solid border-border_grey flex flex-col justify-center items-center rounded-2xl">
+         Loading? <Skeleton width={325} height={400} borderRadius={16}></Skeleton> : 
+    <section className=" w-[325px] relative border-[2px] border-solid border-border_grey flex flex-col justify-center items-center rounded-3xl  py-2">
         <div className=" self-start flex gap-4 ml-8">
             <img src="/icons/league.svg" width={60} height={60}/>
             <p className=" font-Nunito flex justify-center items-center flex-col tracking-wide gap-[1px]">
@@ -24,13 +24,13 @@ return (
         </div>
 
         <div className=" mr-5">
-           <img src="/icons/leaderboard.svg" width={300} height={300}/>
+           <img src="/icons/leaderboard.svg" width={260} height={260}/>
         </div>
 
       
 
 
-<div className=" relative w-[90%] h-[55px]  rounded-2xl  bg-[#f7f7f7] flex items-center justify-between px-6">
+ <div className=" relative w-[90%] h-[55px]  rounded-2xl  bg-[#f7f7f7] flex items-center justify-between px-6">
         
         <div className=" flex items-center gap-5">
             <img className=" w-[48px] h-[48px] rounded-full inline-block"  src={`/avatar/${user?.avatar?.id}.svg`} style={{backgroundColor:`${user?.avatar?.bgcolor}`}} ></img>
@@ -39,7 +39,7 @@ return (
 
            
              <p className=" text-gray-400 z-50">{user.HEP}</p>
-      </div>
+      </div> 
     </section>
 }
     </>

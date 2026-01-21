@@ -34,6 +34,7 @@ import ProtectedRoute from './auth/ProtectedRouted';
 import PublicRoute from './auth/PublicRouter';
 
 
+const production = false
 
 
 
@@ -63,7 +64,7 @@ const router = createBrowserRouter(
   
    </Route>
 
-   <Route path='/course/:class_name/:subject_name/:chapter_name/:level_name' element=<ProtectedRoute><Question /></ProtectedRoute>></Route>
+   <Route path='/course/:class_name/:subject_name/:chapter_name/:level_name' element=<Question />></Route>
    <Route path='/course/:class_name/:subject_name/:chapter_name/:level_name/Completed' element= <ProtectedRoute> <LevelComplete / ></ProtectedRoute>></Route>
   
  

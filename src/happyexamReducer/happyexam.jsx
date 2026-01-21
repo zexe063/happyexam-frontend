@@ -6,6 +6,7 @@ import axios from "../config/axiosInstance"
 
 
 
+
 export const getCourse = createAsyncThunk(
   "getCourse",
   async({class_name}, {rejectWithValue})=>{

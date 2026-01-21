@@ -25,8 +25,8 @@ import { MdOutlinedFlag } from "react-icons/md";
 import { GrFormNext } from "react-icons/gr";
 import { IoIosArrowBack } from "react-icons/io";
 
-import { ExplanationOpenOrClose, getQuestion } from "@/happyexamReducer/happyexam";
-import { increaseHEP,userProgressEvent } from "@/happyexamReducer/auth";
+import { ExplanationOpenOrClose, getQuestion} from "@/happyexamReducer/happyexam";
+import { increaseHEP,userProgressEvent} from "@/happyexamReducer/auth";
 import Explanation from "./explanation/explanation";
 import MotionCounter from "../motionCounter/motionCounter";
 import NetworkError from "../error/NetworkError";
@@ -53,6 +53,7 @@ function Question(){
     const Loading = useSelector((state)=>state.happyexam.Loading);
     const isNetworkError = useSelector((state)=>state.happyexam.isServerError);
     const isServerError = useSelector((state)=>state.happyexam.isServerError);
+  
   
   
     const [isOptionSelect,SetisOptionSelect] = useState(false);
@@ -264,8 +265,8 @@ setOptionSelectedIndex(index);
              <Progress  currentLength={questionIndex+1} totalLength={Questiondata?.length} correctRow={correctRow}></Progress>
 
 <div className=" relative  w-full h-[calc(100vh-60px)] overflow-y-auto overflow-x-hidden py-10   flex  justify-center items-center">
-      <AnimatePresence mode="wait">
 
+      <AnimatePresence mode="wait">
             < motion.div  key={questionIndex} initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.1, delay:0.3, ease:easeInOut}}  className={`  relative  w-[412px] md:w-[540px] h-[100%] flex flex-col   items-center  gap-5  md:gap-10 transition-all duration-300 ease-out`}>
 
                 {/* here the question */}
@@ -278,7 +279,7 @@ setOptionSelectedIndex(index);
                  
              <div className=" w-full h-auto flex flex-col gap-2 font-normal">
                <ReactMarkdown 
-            rehypePlugins={[rehypeKatex]} remarkPlugins={[remarkMath]}>{user?.userPreference?.language ==="english"?(question?.question_name?.english)?.replace(/<br>/g, '\n\n'): question?.question_name?.hindi}</ReactMarkdown>
+            rehypePlugins={[rehypeKatex]} remarkPlugins={[remarkMath]}>{(user?.userPreference?.language ==="english"?question?.question_name?.english : question?.question_name?.hindi)?.replace(/<br>/g, '\n\n')}</ReactMarkdown>
              </div> 
 
              </div>
@@ -294,39 +295,14 @@ setOptionSelectedIndex(index);
           {/* here the option */}
           <div className="  relative  w-full justify-center items-center flex flex-col gap-5">
 
-            {/* here the blank */}
-            {
-  question?.question_type ==="DND" && <div  className=" w-[100px] h-[100px] border-[2px] border-dashed border-gray-200 rounded-lg flex justify-center items-center">
-    <div ref={blank} className=" w-[48px] h-[48px] bg-gray-100 rounded-lg"></div>
-    </div>
-}
-
-          <div className={`   ${question?.question_type === "DND" ? " flex gap-2 " : "flex flex-col gap-2 md:gap-2"}font-Nunito text-black
+          <div className={`  w-full   ${question?.question_type === "DND" ? "grid grid-cols-2 grid-rows-2 gap-1" : "flex flex-col gap-2"} font-Nunito text-black
            `}>
 
             {
               
               question?.option?.[user?.userPreference?.language === "english"?"english" : "hindi"].map((item,index)=>{
                       
-                return question.question_type === "DND" ? (
-                      <div  className="w-[48px] h-[48px] rounded-lg bg-gray-100">
-
-                        <div className={`  flex justify-center items-center cursor-grabbing select-none  w-[48px] h-[48px] bg-white rounded-lg border-[2px] border-solid
-
-                        ${OptionSelectedIndex === index ? " shadow-btn-box-blue border-blue-500 text-btn-box-blue_text " : correctIndex === index ?  correct ? " shadow-btn-box-correct border-green-B700  text-green-B700" : "  border-red-500 shadow-btn-box-wrong text-red-500" : "  shadow-btn-grey border-gray-200 text-black"   }
-                          `} onClick={(e)=>FillBox(e, index)}>
-
-                          <Markdown  remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>{item}</Markdown>
-
-                        </div>
-
-                        </div>
-                      
-                    ) :
-
-                     (
-                 
-           
+                return  (
                   <motion.div  whileTap={{ 
                     scale: 0.95,
                     transition:{
@@ -335,7 +311,7 @@ setOptionSelectedIndex(index);
                     }
                   }}
                   animate={{scale:0.96}}
-                 key={index} className={` relative w-[370px] md:w-[540px]  border-[2px] border-solid  pt-[16px] pb-[16px]  rounded-[12px] flex gap-2 items-center cursor-pointer  transition-all duration-100 ease-in-out ${OptionSelectedIndex === index ? "border-blue-400 text-blue-600" : correctIndex === index ?  correct ? " border-green-400" : " border-red-B500" : "border-gray-A100"   }`} onClick={()=>HandleSelectoption(index)}>
+                 key={index} className={` w-[95%] md:[90%]  border-[2px] border-solid  pt-[16px] pb-[16px]  rounded-[12px] flex gap-2 items-center cursor-pointer  transition-all duration-100 ease-in-out ${OptionSelectedIndex === index ? "border-blue-400 text-blue-600" : correctIndex === index ?  correct ? " border-green-400" : " border-red-B500" : "border-gray-A100"   }`} onClick={()=>HandleSelectoption(index)}>
                   
                    
                    <span  className={` ml-2 flex-shrink-0   font-Nunito w-[22px] h-[22px]  text-[13px] flex justify-center items-center ${OptionSelectedIndex  === index ?   " bg-blue-A400 text-white " : correctIndex === index ? correct ? " bg-green-500  text-white" : " bg-red-400 text-white" : " text-black  bg-gray-50"}  rounded-full font-semibold`}>
@@ -375,11 +351,8 @@ setOptionSelectedIndex(index);
 
  {/* here the contiue system  */}
 
- <div className=" sticky z-50 bottom-0  w-full h-[100px] border-[1px] border-solid flex justify-center items-center  border-gray-200">
- 
-  {/* <button className={` mr-10 w-[50px] h-[45px]  font-Nunito text-lg  font-medium rounded-lg  bg-black shadow-btn-black text-white flex justify-center items-center top-5" `} onClick={()=>setQuetsionIndex((prev)=>prev-1)} > <IoIosArrowBack  size={25} color="white"/></button>  */}
- <button className={`w-[90%] md:w-[300px] h-[48px]  font-Nunito text-lg  font-medium rounded-full   ${isOptionSelect  ? "bg-black shadow-btn-black text-white" : " bg-black/5  text-gray-500"}`} onClick={HandleCheck}>check</button>
-   {/* <button className={` ml-10 w-[50px] h-[45px]  font-Nunito text-lg  font-medium rounded-lg  bg-black shadow-btn-black text-white flex justify-center items-center top-5" `} onClick={()=>setQuetsionIndex((prev)=>prev+1)} ><GrFormNext size={25} color="white" ></GrFormNext></button>  */}
+ <div className=" sticky z-50 bottom-0  w-full h-[100px] border-[1px] border-solid flex justify-center items-center  border-gray-200"> 
+ <button className={`w-[90%] md:w-[300px] h-[48px]  font-Nunito text-lg  font-medium rounded-full   ${isOptionSelect  ? "bg-black shadow-btn-black text-white" : " bg-black/5  text-gray-500"}`} onClick={HandleCheck}>check</button> 
  </div>
 
  {/* here the continue end */}

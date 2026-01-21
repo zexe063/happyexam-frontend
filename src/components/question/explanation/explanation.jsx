@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import  { useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Markdown from "react-markdown";
@@ -13,13 +13,12 @@ import continueAudio from "@/audio/continue.mp3";
 
 
 function Explanation({data}){
-
+  
 const user = useSelector((state)=>state.auth.user);
 const [solutionIndex, setSolutionIndex] = useState(0);
 const [solution, setsolution] = useState(!data.explanation ?  [data.solution[solutionIndex]] : null);
 const [continueSound] = useState(new Audio(continueAudio))
 const explanation =  useSelector((state)=>state.happyexam.explanation);
-
 
   const dispatch = useDispatch();
     function handleExplanationClose(){
@@ -64,14 +63,14 @@ const explanation =  useSelector((state)=>state.happyexam.explanation);
               solution?.map((item)=>{
                
               
-               return <section className="  flex flex-col  font-Nunito gap-3">
+               return <section  key={item._id} className="  flex flex-col  font-Nunito gap-3">
 
                 {/*here the terms  */}
-       <h3 className=" font-semibold"><Markdown rehypePlugins={[rehypeKatex]} remarkPlugins={[remarkMath]}>{item.terms?.english}</Markdown>  </h3>
+       <h3 className=" font-semibold"> <Markdown rehypePlugins={[rehypeKatex]} remarkPlugins={[remarkMath]}>{user.userPreference.language === "english" ? item.terms?.english : item.terms?.hindi}</Markdown> </h3>
 
        {item.value && 
 
-       <div className=" w-full h-auto flex flex-col gap-8 justify-center items-center"> 
+       <div  className=" w-full h-auto flex flex-col gap-8 justify-center items-center"> 
        {/* here the image of explaintion  */}
        {item.value.image && <img src={item.value.image} className=" w-[200px] h-[200px]"></img>}
 {/* her ethe calcultion  */}

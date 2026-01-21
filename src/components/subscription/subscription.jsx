@@ -56,7 +56,7 @@ const[ isLoading,setIsLoading]= useState(false)
             {
                 list?.map((item)=>{
                     return (
-                        <div className=" flex items-center gap-2">
+                        <div key={item.id} className=" flex items-center gap-2">
                         <div><img src={item.icon} width={40}height={40} /></div>
                         <p className=" font-Nunito text-[20px]">{item.value}</p>
                         </div>
@@ -74,13 +74,13 @@ const[ isLoading,setIsLoading]= useState(false)
            }
 
         <button className="w-[350px] h-[48px] font-Nunito text-[16px] font-semibold tracking-wider bg-gradient-premium-unlock shadow-btn-premium-unlock rounded-full  flex justify-center items-center text-white " onClick={HandleSubscription}>
-        {
-        isLoading ? lock ? 
-         <div className=" w-5 h-5 animate-spin rounded-full border-[2px] border-solid border-white border-t-[#E350E3]"></div>
+        
+       {
+        isLoading ?   <div className=" w-5 h-5 animate-spin rounded-full border-[2px] border-solid border-white border-t-[#E350E3]"></div>  : lock ? 'TRY FOR  ₹0.00' : 'Continue'
+       }
 
-           : "Continue" : 'TRY FOR  ₹0.00'
+           
 
-           }
            </button>
         </div>
     )

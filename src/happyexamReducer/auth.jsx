@@ -114,7 +114,7 @@ const auth = createSlice({
          UserAvatarSave:(state,action)=>{
          state.user.avatar =  action.payload;
          }
-         
+       
     },
 
     extraReducers:(builder)=>{

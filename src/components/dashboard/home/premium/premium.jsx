@@ -11,10 +11,10 @@ function Premium(){
     
     return(
         <>
-      {Loading ? <Skeleton  width={350} height={150} borderRadius={16}></Skeleton> 
+      {Loading ? <Skeleton  width={325} height={150} borderRadius={16}></Skeleton> 
 
        :
-       <section className=" w-[350px]  h-[150px]  bg-premium_gradient border-[2px] border-solid border-gray-200 flex flex-col justify-around items-center rounded-2xl">
+       <section className=" w-[325px]  h-[150px]  bg-premium_gradient border-[2px] border-solid border-gray-200 flex flex-col justify-around items-center rounded-2xl">
 
 
 <div className=" flex justify-center items-center gap-2 ml-3">

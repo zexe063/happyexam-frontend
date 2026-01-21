@@ -69,10 +69,10 @@ const [width, setWidth] = useState(0);
        <>  
     
     
-   <section className=" relative w-full h-[cal(100vh-70px)]  items-center flex flex-col justify-center md:flex-row gap-5 md:gap-10 mt-5 overflow-auto">
+   <section className=" relative w-full min-h-[calc(100vh-70px)] pb-2  md:pb-0 items-center flex flex-col justify-center md:flex-row gap-5 md:gap-16 mt-5 overflow-auto">
    
 
-   { isDesktop &&  <div className=" flex flex-col justify-center items-center gap-4">
+   { isDesktop &&  <div className="relaive flex flex-col gap-4 md:self-start md:mt-6">
 {!user.isPremium &&<Premium></Premium>}
 <LeaderBoard></LeaderBoard>
    </div>
@@ -80,7 +80,7 @@ const [width, setWidth] = useState(0);
 
 { Loading ?  <Skeleton width={isDesktop ? 487 :  359} height={  isDesktop ?497 :420} borderRadius={20}></Skeleton>
  :
-  <div className="relative w-[412px] h-[424px] md:w-[550px] md:h-[500px]  self-start">
+  <div className="relative w-full h-[424px] md:w-[480px] md:h-[500px] px-6 md:px-0 md:self-start md:mt-6">
 <Swiper
 key={isDesktop ? 'desktop' : 'mobile'} 
       modules={isDesktop ? [EffectCards] : [Pagination]}
@@ -98,14 +98,14 @@ key={isDesktop ? 'desktop' : 'mobile'}
       } : false}
       
     slidesPerView={1}  
-     className="w-[90%] h-full pl-2 flex flex-col gap-5"
+     className="w-full h-full"
    
     >
 
       { recommendedChapter?.map((item, index) => {
         
         return (
-          <SwiperSlide key={item._id} className=" !w-[99.6%] h-full rounded-3xl border-[2px] border-solid  border-gray-200 box-border bg-white font-Nunito ">
+          <SwiperSlide key={item._id} className=" h-full rounded-3xl border-[2px] border-solid  border-gray-200 box-border bg-white font-Nunito ">
            
            <div className=" h-full w-full flex flex-col justify-center  items-center  gap-10 ">
             <div className="flex flex-col gap-2 justify-center items-center">
@@ -142,3 +142,8 @@ key={isDesktop ? 'desktop' : 'mobile'}
     )
 }
 export default Home;
+
+
+
+
+
