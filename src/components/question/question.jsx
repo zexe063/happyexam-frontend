@@ -330,9 +330,8 @@ function Question(){
              {ToggleReportValue? <ReportQuestion questionId={question?._id}></ReportQuestion> : null}
 
              {/* here the explaintion  */}
-             {/* <AnimatePresence> */}
           {explanation && <Explanation data={questionData[questionIndex]}></Explanation>}
-          {/* </AnimatePresence> */}
+        
           {!user.isPremium && user.hearts <1 && <SubscriptionModel></SubscriptionModel>}
 
 

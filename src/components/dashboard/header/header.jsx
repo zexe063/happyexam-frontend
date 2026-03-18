@@ -1,8 +1,7 @@
 
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { MdHome} from "react-icons/md";
-import { FaGraduationCap } from "react-icons/fa";
+
 
 
 
@@ -47,8 +46,8 @@ function Header(){
 
   
 
- <div className=" w-[35px] h-[35px] rounded-full cursor-pointer" onClick={()=>navigate("/profile")} style={{backgroundColor:`${user?.avatar?.bgcolor}`}}>
-   <img src={`/avatar/${user?.avatar?.id}.svg`}  alt="avatar" className=" rounded-full"></img>
+ <div className=" w-[36px] h-[36px] rounded-full cursor-pointer object-contain flex justify-center items-center" onClick={()=>navigate("/profile")} style={{backgroundColor:`${user?.avatar?.bgcolor}`}}>
+   <img src={`/avatar/${user?.avatar?.id}.svg`}  alt="avatar" className="w-7 h-7 object-contain"></img>
      </div>
 
       </div>

@@ -55,17 +55,17 @@ const [id, setId] = useState(0);
 
     
     return(
-        <section className=" relative w-full h-[calc(100vh-70px)] flex justify-center items-center overflow-x-hidden mt-5">
+        <section className=" relative w-full min-h-[calc(100vh-70px)] flex justify-center overflow-x-hidden mt-5">
           
-       <div className=" w-[412px] md:w-[600px] h-full  flex  items-center flex-col gap-5">
+       <div className=" w-[412px] md:w-[600px]  h-full  flex  items-center flex-col gap-5">
 
       <div className=" self-end pr-6 cursor-pointer" onClick={()=>navigate("/setting/account")}><MdSettings size={25} color="#e5e5e5"/></div>
 
-        <div className=" relative w-[90%] h-[200px]  rounded-xl flex justify-center items-center" style={{backgroundColor:`${user?.avatar?.bgcolor}`}}>
+        <div className=" relative w-[90%] h-[220px] md:h-[230px] rounded-xl flex justify-center items-end" style={{backgroundColor:`${user?.avatar?.bgcolor}`}}>
 
        <button className="w-[40px] h-[36px] rounded-xl shadow-btn-grey border-[2px] border-solid border-gray-200 bg-white  absolute right-3 top-2 flex justify-center items-center" onClick={()=>navigate("/avatar")}><MdEdit size={21}></MdEdit></button>
 
-      <img src={`/avatar/${user?.avatar?.id}.svg`} width={180} height={180}></img>
+      <img src={`/avatar/${user?.avatar?.id}.svg`} ></img>
         </div>
 
         <div className=" font-Nunito text-base self-start border-b-[2px] border-solid border-gray-200 w-[90%] p-2 py-4 ml-4">

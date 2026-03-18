@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 const axiosInstance = axios.create({
-    baseURL:"https://api.happyexam.in/",
+    baseURL:"http://localhost:3000/",
     withCredentials:true
 })
 
