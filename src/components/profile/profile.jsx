@@ -100,13 +100,13 @@ const [id, setId] = useState(0);
 
          <div  className=" w-full self-start px-4 flex  justify-between">
                 <p className=" text-lg text-gray-400">Language</p>
-                <div className="w-[200px] h-[48px] bg-gray-100 flex  gap-2 items-center justify-between  rounded-lg px-1">
+                <div className="w-[200px] h-[40px] bg-gray-100 flex  gap-2 items-center justify-between  rounded-full px-1">
                 
                 { 
                 langauge.map((item)=>{
               return (
                 <React.Fragment key={item.id}>
-                 <div className={` h-10 ${user.userPreference.language === item.name   && " bg-blue-B400"}  flex flex-1 justify-center items-center gap-2 rounded-xl cursor-pointer`}  onClick={()=>{Handlelanguage(item)}}>
+                 <div className={` h-8 ${user.userPreference.language === item.name   && "bg-black text-white"}  flex flex-1 justify-center items-center gap-2 rounded-full cursor-pointer`}  onClick={()=>{Handlelanguage(item)}}>
                     {id === item.id  ? <div className=" w-5 h-5 animate-spin rounded-full border-[2px] border-solid border-black border-t-gray-200"> </div>
                      : 
                      <>
