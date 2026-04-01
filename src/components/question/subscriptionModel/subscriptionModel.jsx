@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom"
-
 import { userProgressEvent } from "@/happyexamReducer/auth";
-
 import { IoClose } from "react-icons/io5";
-
+import { motion } from "motion/react";
 
 
 
@@ -15,6 +13,7 @@ function SubscriptionModel(){
     const params = useParams()
     const user = useSelector((state)=>state.auth.user);
     const [isLoading, setIsLoading]  = useState(false);
+    const isMobile =  window.innerWidth <= 768;
 
 
     function HandleRefill(){
@@ -32,14 +31,21 @@ function SubscriptionModel(){
           })
     }
     return(
-        <div className=" fixed flex justify-center items-center w-full h-full bg-black bg-opacity-20 inset-0 z-50 ">
+
+ <div className=" fixed flex justify-center items-end md:items-center w-full h-full bg-black/50 bg-opacity-50 inset-0 z-50 ">
  
- <div  className=" relative shadow-2xl w-[350px] h-[400px] md:w-[400px] md:h-[450px] bg-white rounded-2xl font-Nunito flex flex-col justify-center items-center gap-5">
+    <motion.div 
+    initial={isMobile?{y:"100%"}:{opacity:0}}
+    animate={isMobile?{y:0}:{opacity:1}}
+    exit={isMobile?{y:"100%"} : {opacity:0}}
+    transition={{ type: "spring", damping: 30, stiffness: 280 }}
+
+  className=" fixed shadow-2xl w-full h-[400px] md:w-[400px] md:h-[450px] bg-white rounded-2xl font-Nunito flex flex-col justify-center items-center gap-5">
 
 <div className="  absolute top-5 right-5 cursor-pointer" onClick={()=>navigate(`/course/${params.class_name}/${params.subject_name}/${params.chapter_name}`)}><IoClose size={25}></IoClose></div>
 
-   <p className=" font-semibold text-[24px]">You have 0 Hearts</p>
-<img src="/icons/premiumHeart.svg" width={150} height={150} />
+   <p className=" font-semibold text-[20px]">You have 0 Hearts</p>
+<img src="/icons/premiumHeart.svg" width={120} height={120} />
 <button className=" w-[90%] h-[45px] bg-yellow-500 shadow-btn-yellow rounded-full" onClick={()=>navigate('/subscription')}>Unlock premium</button>
 <button className=" font-medium text-[16px] tracking-wider text-blue-500" onClick={HandleRefill}>
 
@@ -49,7 +55,7 @@ function SubscriptionModel(){
           }
         
 </button>
- </div>
+ </motion.div>
 
 
         </div>

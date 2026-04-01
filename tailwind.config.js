@@ -52,7 +52,8 @@ green: {
   A400: "#5488f9",             
   B400: "#456dff",             
   500: "#375ce3",              
-  A500: "#033dfc",           
+  A500: "#033dfc",    
+  B500:"#1cb0f6",       
   600: "#0414c8",              
   900: "#083156",              
   950: "#041326"
@@ -77,6 +78,7 @@ green: {
         'btn-correct': "0px 4px 0px #15b441",
         'btn-green':"0px 4px 0px #1f9941",
         'btn-black': "0px 4px 0px #000000",
+        'btn-blue':"0px 3px 0px #1899d6",
         'btn-why':"0 4px 0 0 #0000001a",
         'btn-box-blue':"0px 2px 0px #375ce3",
         'btn-box-correct':"0px 2px 0px #15b441",

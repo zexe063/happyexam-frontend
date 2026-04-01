@@ -14,10 +14,9 @@ const[ isLoading,setIsLoading]= useState(false)
 
     
   const list = [
-        {id:1, value:"Unlimited Hearts", icon:"/icons/unlimitedHearts.svg"},
+        {id:1, value:"Unlimited Hearts", icon:"/icons/premiumHeart.svg"},
         {id:2, value:"All chapters Notes", icon:"/icons/notes.svg"},
-        {id:3, value:"No Video Ads", icon:"/icons/videoAds.svg"},
-        {id:4, value:"New chapter added continuosly", icon:"/icons/newContent.svg"}
+        {id:3, value:"No Video Ads", icon:"/icons/videoAds.svg"}
     ]
 
     function HandleSubscription(){

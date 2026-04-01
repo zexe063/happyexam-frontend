@@ -44,7 +44,7 @@ const isMobile = window.innerWidth < 768
         animate={isMobile ? { y: 0 } : { x: 0 }}
         exit={isMobile ? { y: "100%" } : { x: "100%" }}
         transition={{ type: "spring", damping: 30, stiffness: 280 }}
-      className={` w-full fixed bg-white shadow-2xl rounded-2xl overflow-auto  bottom-0 md:right-0  h-[90vh] md:w-[720px]  md:h-[100vh]`}>
+  className={` w-full fixed bg-white shadow-2xl rounded-2xl overflow-auto  bottom-0 md:right-0  h-[90vh] md:w-[720px]  md:h-[100vh]`}>
 
 
 

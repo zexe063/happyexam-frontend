@@ -35,11 +35,11 @@ function Header(){
 
  <div className="  text-[18px] flex justify-center items-center gap-1 font-semibold">
   { 
-   user.isPremium ?  <span><img src="/icons/unlimitedHearts.svg" width={35} height={35}/></span> 
+   user.isPremium ?  <span><img src="/icons/premiumHeart.svg" width={28} height={28}/></span> 
    :  
    <>
-  <span><img src={`${user?.hearts < 1 ? "/icons/refillHeart.svg" : "/icons/hearts.svg"}`} width={24} height={24}/></span> 
-  <span className=" font-Nunito font-semibolc text-[16px] text-pink-700">{user?.hearts}</span> 
+  <span><img src="/icons/hearts.svg" width={28} height={28}/></span> 
+  <span className=" font-Nunito font-semibold text-[16px] text-black">{user?.hearts}</span> 
   </> 
    }
   </div>

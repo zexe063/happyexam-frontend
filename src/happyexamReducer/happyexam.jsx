@@ -176,10 +176,11 @@ const happyexam = createSlice({
                  state.Loading = true;
                  state.isNetworkError = false;
                  state.isServerError = false
+                
                })
 
               builder.addCase(getQuestion.fulfilled,(state,action)=>{
-                state.question = action.payload?.data?.result || []
+                state.question = action.payload?.data?.result.map((item)=> ({...item , isAttempt:false, optionSelectedIndex:null})) || []
                 state.Loading = false
                 state.isUserVerified = false;
                 state.isNetworkError = false;

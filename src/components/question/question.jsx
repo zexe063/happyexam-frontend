@@ -50,15 +50,16 @@ function Question(){
     const user = useSelector((state)=>state.auth.user);
     const data = useSelector((state)=>state.happyexam.question);
     const [questionData, setQuestionData] = useState(data); 
+
     const explanation = useSelector((state)=>state.happyexam.explanation);
     const ToggleReportValue = useSelector((state)=>state.happyexam.ToggleReport);
     const Loading = useSelector((state)=>state.happyexam.Loading);
     const isNetworkError = useSelector((state)=>state.happyexam.isServerError);
     const isServerError = useSelector((state)=>state.happyexam.isServerError);
     const [questionIndex, setQuetsionIndex] = useState(0);
-    
     const question =questionData[questionIndex];
-    const [questionAnalysisData, setQuestionAnaylsisData] = useState({correct:0, wrong:0})
+    const [questionAnalysisData, 
+      setQuestionAnaylsisData] = useState({correct:0, wrong:0})
     const [isLevelLoading, setIsLevelLoading] = useState(false);
     const [correctRow, setCorrectRow]= useState(0);
 
@@ -93,16 +94,14 @@ function Question(){
 
    function HandleSelectoption(selectedIndex){
   
-    if(question.isAttempt) return   null;
+    if(question.isAttempt) return null;
     clickSound.play()
      setQuestionData((prev)=> prev.map((item, index)=> questionIndex === index  ?  {...item, optionSelectedIndex:selectedIndex} : item))
-
- 
 
    }
 
    function HandleCheck(){
-      if(question.isAttempt) return null;
+      if(question.isAttempt || question.optionSelectedIndex === null) return null;
     if(question.answer === question.optionSelectedIndex) {
       correctSound.play()
       setQuestionAnaylsisData((prev)=>({...prev, correct:prev.correct+1}))
